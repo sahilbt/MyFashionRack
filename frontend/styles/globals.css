@@ -1,12 +1,11 @@
 :root{
     background-color: #3c3c3c;
     color: #FFFFFF;
+    margin: 0;
+    padding: 0;
 }
 
 .navBar{
-    width: 100vw;
-}
-
-.login{
-    margin: auto;
+    display:flex;
+    justify-content: right;
 }
