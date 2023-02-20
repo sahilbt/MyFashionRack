@@ -12,10 +12,18 @@ export default function LandingNav(){
             className="h-60 w-auto mt-9"
                 src = {Logo}
             />
-            <a href="#" className="text-2xl mt-20">Login</a>
-            <a href="#" className="text-2xl">Sign Up</a>
-            
-            <div className="flex-row absolute bottom-0 justify-center items-center">
+
+            <div className="absolute flex flex-col gap-y-4 justify-center items-center h-screen">
+                <div className="text-center">
+                    <a href="#" className="text-2xl">Login</a>
+                </div>
+                <div className="text-center">
+                    <a href="#" className="text-2xl">Sign Up</a>
+                </div>
+
+            </div>
+
+            <div className="flex-row absolute bottom-0">
                 <div className="text-center">
                     <a href="#" className="text-xl">About</a>
                 </div>
@@ -23,25 +31,25 @@ export default function LandingNav(){
                 <div className="flex ml-6 mr-6 gap-6">
                     <a href="#">
                         <Image
-                            className = "h-24"
+                            className = "h-16"
                             src = {Insta}
                         />
                     </a>
                     <a href="#">
                         <Image
-                            className = "h-24"
+                            className = "h-16"
                             src = {Twit}
                         />
                     </a>
                     <a href="#">
                         <Image
-                            className = "h-24"
+                            className = "h-16"
                             src = {Facebook}
                         />
                     </a>
                     <a href="#">
                         <Image
-                            className = "h-24"
+                            className = "h-16"
                             src = {Mail}
                         />
                     </a>
