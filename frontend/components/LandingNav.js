@@ -14,33 +14,39 @@ export default function LandingNav(){
             />
             <a href="#" className="text-2xl mt-20">Login</a>
             <a href="#" className="text-2xl">Sign Up</a>
-            <a href="#" className="text-xl mt-56">About</a>
-            <div className="flex ml-6 mr-6 gap-6">
-                <a href="#">
-                    <Image
-                        className = "h-24"
-                        src = {Insta}
-                    />
-                </a>
-                <a href="#">
-                    <Image
-                        className = "h-24"
-                        src = {Twit}
-                    />
-                </a>
-                <a href="#">
-                    <Image
-                        className = "h-24"
-                        src = {Facebook}
-                    />
-                </a>
-                <a href="#">
-                    <Image
-                        className = "h-24"
-                        src = {Mail}
-                    />
-                </a>
-            </div>
+            
+            <div className="flex-row absolute bottom-0 justify-center items-center">
+                <div className="text-center">
+                    <a href="#" className="text-xl">About</a>
+                </div>
+
+                <div className="flex ml-6 mr-6 gap-6">
+                    <a href="#">
+                        <Image
+                            className = "h-24"
+                            src = {Insta}
+                        />
+                    </a>
+                    <a href="#">
+                        <Image
+                            className = "h-24"
+                            src = {Twit}
+                        />
+                    </a>
+                    <a href="#">
+                        <Image
+                            className = "h-24"
+                            src = {Facebook}
+                        />
+                    </a>
+                    <a href="#">
+                        <Image
+                            className = "h-24"
+                            src = {Mail}
+                        />
+                    </a>
+                </div>
+            </div>          
         </div>
     )
 }
