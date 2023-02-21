@@ -2,7 +2,7 @@ import Image from "next/image"
 import Logo from "../public/LogoWhite.png"
 import Insta from "../public/instagram.svg"
 import Twit from "../public/twitter.svg"
-import Facebook from "../public/facebook-f.svg"
+import Facebook from "../public/square-facebook.svg"
 import Mail from "../public/envelope-solid.svg"
 
 export default function LandingNav(){
@@ -14,54 +14,49 @@ export default function LandingNav(){
             />
 
             <div className="absolute flex flex-col gap-y-4 justify-center items-center h-screen">
-                <div className="text-center">
-                    <a href="#" className="text-2xl group">
-                        Login
-                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
-                    </a>
-                </div>
-                <div className="text-center">
-                    <a href="#" className="text-2xl group">
-                        Sign Up
-                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
-                    </a>
-
-                </div>
-
+                <a href="#" className="text-2xl group">
+                    Login
+                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
+                </a>
+                <a href="#" className="text-2xl group">
+                    Sign Up
+                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
+                </a>
             </div>
 
-            <div className="flex absolute bottom-0">
-                <div className="text-center">
-                    <a href="#" className="text-xl group">
-                        About
-                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
-                    </a>
-                </div>
-
-                <div className="flex ml-6 mr-6 gap-6">
-                    <a href="#">
+            <div className="flex flex-col items-center absolute bottom-0">
+                <a href="#" className="text-xl group mb-3">
+                    About
+                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
+                </a>
+                <div className="flex ml-6 mr-6 gap-6 mb-3">
+                    <a href="#" className="group">
                         <Image
-                            className = "h-16"
+                            className="h-10"
                             src = {Insta}
                         />
+                        <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                     </a>
-                    <a href="#">
+                    <a href="#" className="group">
                         <Image
-                            className = "h-16"
+                            className="h-10"
                             src = {Twit}
                         />
+                        <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                     </a>
-                    <a href="#">
+                    <a href="#" className="group">
                         <Image
-                            className = "h-16"
+                            className="h-10"
                             src = {Facebook}
                         />
+                        <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                     </a>
-                    <a href="#">
+                    <a href="#" className="group">
                         <Image
-                            className = "h-16"
+                            className="h-10"
                             src = {Mail}
                         />
+                        <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                     </a>
                 </div>
             </div>          
