@@ -40,6 +40,10 @@ const userSchema = mongoose.Schema({
         type: Array,
         default: []
     },
+    followingStyles: {
+        type: Array,
+        default: []
+    },
     pictureRef: {
         type:String
     }
