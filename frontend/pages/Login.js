@@ -5,9 +5,10 @@ import SignIn from "../components/SignIn.js"
 export default function Login() {
     return (
         <div className="flex flex-col items-center justify-center w-screen h-screen text-center bg-darkGrey">
-            <div className="flex items-center w-screen content-center">
-                <div className="w-1/2 scale-50 grid place-items-center">
+            <div className="flex w-screen items-center content-center">
+                <div className="w-1/2 grid place-items-center">
                     <Image
+                        className="scale-75"
                         src = {Logo}
                     />
                 </div>
