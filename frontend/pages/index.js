@@ -1,10 +1,15 @@
 import LandingNav from "../components/LandingNav"
 import zod from "../public/unknown-52.jpeg"
 import Image from "next/image"
+import Head from "next/head"
 
 export default function index(){
     return(
         <div>
+            <Head>
+                <title>MyFashionRack</title>
+            </Head>
+            
             <div className="h-screen">
                 <Image
                     className="-z-10 fixed opacity-30 h-screen w-auto object-left object-cover left-0"
