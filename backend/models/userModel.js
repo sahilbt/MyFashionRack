@@ -9,13 +9,6 @@ const userSchema = mongoose.Schema({
     lastName:{
         type: String
     },
-    username: {
-        type: String,
-        unique: true
-    },
-    password: {
-        type: String
-    },
     displayName:{
         type:String
     },
@@ -30,8 +23,8 @@ const userSchema = mongoose.Schema({
           type: String
         }
     },
-    age: {
-        type: Number
+    birthday: {
+        type: String
     },
     phoneNumber:{
         type: String
@@ -50,6 +43,12 @@ const userSchema = mongoose.Schema({
 
 })
 
-userSchema.plugin(passportLocalMongoose)
+userSchema.plugin(passportLocalMongoose,{
+    selectFields : 'firstName lastName displayName address age phoneNumber following followingStyles pictureRef'
+})
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema)
+
+
+
+

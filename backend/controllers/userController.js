@@ -1,15 +1,27 @@
-const express = require("express");
 const User = require("../models/userModel");
-const session = require("express-session");
 const passport = require("passport");
-const passportLocalMongoose = require("passport-local-mongoose");
 
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 const registerUser = (req,res) => {
-    User.register({username: req.body.username, location: req.body.location}, req.body.password, (err,user) => {
+
+    var newUser = new User({
+        username: req.body.username,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName, 
+        displayName: req.body.displayName, 
+        address: {
+            country:req.body.country,
+            city: req.body.city ,
+            street: req.body.street
+        },
+        birthday: req.body.birthday,
+        phoneNumber: req.body.phoneNumber    
+    })
+
+    var callback = (err,newUser) => {
         if(err){
             console.log(err);
         }else{
@@ -19,9 +31,31 @@ const registerUser = (req,res) => {
                 //res.redirect("/protected");
             })
         }
+    }
+    User.register(newUser, req.body.password, callback);
+}
+
+const logInUser = (req,res) => {
+    var returningUser = new User({
+        username: req.body.username,
+        password: req.body.password
+    });
+
+    req.login(returningUser, (err) => {
+        if(err) {
+            console.log(err);
+        }else{
+            passport.authenticate("local");
+            res.send("User has been logged in")
+        }
     })
 }
 
+const logOutUser = (req,res) => {
+    req.logout();
+    res.send("User has been logged out");
+}
+ 
 const protected = (req,res) => {
     if(req.isAuthenticated()){
         res.send("Protected Route Accessed")
@@ -33,5 +67,7 @@ const protected = (req,res) => {
 
 module.exports = {
     registerUser,
-    protected
+    protected,
+    logInUser,
+    logOutUser
 }
