@@ -10,16 +10,21 @@ const app = express();
 const cors = require('cors');
 app.use(cors())
 app.use(express.json());
+const MongoDBStore = require("connect-mongodb-session")(session);
 
 app.use(express.urlencoded({extended: false}));
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended:false}));
-
+const sessionStore = new MongoDBStore({
+  uri: process.env.MONGO_URL,
+  collection: 'sessions'
+});
 
 app.use(session({
     secret: process.env.SECRET_COOKIE,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store:sessionStore
   }))
 
 
