@@ -1,9 +1,33 @@
 const User = require("../models/userModel");
 const passport = require("passport");
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+
+passport.serializeUser(function(user, cb) {
+    process.nextTick(function() {
+      cb(null, { id: user.id, username: user.username });
+    });
+  });
+  
+  passport.deserializeUser(function(user, cb) {
+    process.nextTick(function() {
+      return cb(null, user);
+    });
+  });
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    callbackURL: "http://localhost:8000/authentication/google/access",
+    userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
 
 const registerUser = (req,res) => {
 
@@ -65,9 +89,24 @@ const protected = (req,res) => {
     } 
 }
 
+const googleAuth = (req,res) => {
+    console.log("hi");
+    passport.authenticate("google", {scope: ['profile']})
+}
+
+const googleAuthCallback = (req,res) => {
+  passport.authenticate('google', { failureRedirect: '/' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  }
+};
+
 module.exports = {
     registerUser,
     protected,
     logInUser,
-    logOutUser
+    logOutUser,
+    googleAuth,
+    googleAuthCallback
 }

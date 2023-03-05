@@ -1,6 +1,6 @@
 const mongoose= require("mongoose");
 const passportLocalMongoose = require("passport-local-mongoose");
-
+var findOrCreate = require('mongoose-findorcreate');
 
 const userSchema = mongoose.Schema({
     firstName:{
@@ -39,6 +39,9 @@ const userSchema = mongoose.Schema({
     },
     pictureRef: {
         type:String
+    },
+    googleId:{
+        type:String
     }
 
 })
@@ -46,6 +49,7 @@ const userSchema = mongoose.Schema({
 userSchema.plugin(passportLocalMongoose,{
     selectFields : 'firstName lastName displayName address age phoneNumber following followingStyles pictureRef'
 })
+userSchema.plugin(findOrCreate);
 
 module.exports = mongoose.model("User", userSchema)
 
