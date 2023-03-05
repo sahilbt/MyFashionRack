@@ -20,10 +20,11 @@ export default function LandingNav(){
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                 </Link>
 
-                <a href="#" className="text-2xl group">
+     
+                <Link href="SignUp" className = "text-2xl group">
                     Sign Up
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
-                </a>
+                </Link>
             </div>
 
             <div className="flex flex-col items-center absolute bottom-0">
