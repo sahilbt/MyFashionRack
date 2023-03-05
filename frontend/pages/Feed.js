@@ -41,6 +41,42 @@ export default function Feed() {
                     </div>
                 </div>
             </div>
+
+
+            <div className='w-screen  h-96  text-white mt-10'>
+                <div className="grid place-items-center">
+                    <div className="flex justify-between  h-96 w-[80%]">
+                        <div className="bg-lightGrey h-96 w-60 rounded-xl outline outline-1 outline-pink">
+                            
+                        </div>
+
+                        <div className="grid gap-9">
+                            <div className="bg-lightGrey h-60 w-60 rounded-xl outline outline-1 outline-pink">
+                            
+                            </div>
+                            
+
+                            <div className="bg-lightGrey h-60 w-60 rounded-xl outline outline-1 outline-pink">
+                            
+                            </div>
+
+
+
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div className="h-96 w-12 bg-black">
+
+            </div> 
+            <div className="h-96 w-12 bg-black">
+
+            </div> 
         </div>
     )
 }

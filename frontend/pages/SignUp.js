@@ -20,6 +20,7 @@ export default function SignUp() {
                         <input type="email" name="email" placeholder="email" className="px-4 h-14 w-96 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"/>
                         <input type="password" name="password" placeholder="password" className="px-4 h-14 w-96 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"/>
                         <input type="password" name="verify" placeholder="verify password" className="px-4 h-14 w-96 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"/>
+
                         <button className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]">
                             Sign Up
                         </button>
