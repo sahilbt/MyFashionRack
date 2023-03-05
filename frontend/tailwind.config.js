@@ -13,6 +13,9 @@ module.exports = {
             'lightGrey' : '#353535',
             'white' : '#FFFFFF'
         },
+        scale:{
+            '30': '0.3'
+        },
     },
   },
   plugins: [],
