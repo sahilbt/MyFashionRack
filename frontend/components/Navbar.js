@@ -8,9 +8,9 @@ import AccountButton from "../public/account-button.svg"
 export default function Navbar(params) {
     return(
         <div>
-            <div className='w-screen  h-24  text-white bg-pink'>
+            <div className='w-screen  h-20  text-white bg-pink'>
                 <div className="grid place-items-center">
-                    <div className="flex justify-between items-center h-24 w-[80%]">     
+                    <div className="flex justify-between items-center h-20 w-[80%]">     
                         <div className="flex items-center space-x-6">
                             <Link href="/Feed">
                                 <Image
