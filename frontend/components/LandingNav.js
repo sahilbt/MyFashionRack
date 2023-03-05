@@ -15,7 +15,7 @@ export default function LandingNav(){
             />
 
             <div className="absolute flex flex-col gap-y-4 justify-center items-center h-screen">
-                <Link href="/Login" className="text-2xl group">
+                <Link href="/Feed" className="text-2xl group">
                     Login
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                 </Link>
