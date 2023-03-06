@@ -6,7 +6,7 @@ router.post('/register', registerUser);
 router.post('/login', logInUser);
 router.get('/logout', logOutUser);
 router.get('/protected', protected);
-//router.get('/google', googleAuth)
-//router.get('/google/access', googleAuthCallback);
+router.get('/google',googleAuth)
+router.get('/google/callback', googleAuthCallback);
 
 module.exports = router;
