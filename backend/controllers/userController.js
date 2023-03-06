@@ -88,13 +88,36 @@ const protected = (req,res) => {
     } 
 }
 
-const googleAuth = passport.authenticate('google', { scope: ['profile'] });
+const googleAuth = () => {
+    return passport.authenticate('google', { scope: ['profile'] });
+  };
 
+  const googleAuthCallback = (req, res) => {
+    passport.authenticate("google", (err, user, info) => {
+      if (err) {
+        // Handle error
+        return res.redirect("/login");
+      }
+      if (!user) {
+        // Handle authentication failure
+        return res.redirect("/login");
+      }
+      // Handle authentication success
+      req.logIn(user, (err) => {
+        if (err) {
+          return res.redirect("/login");
+        }
+        return res.redirect("/protected");
+      });
+    })(req, res);
+  };
 
-const googleAuthCallback = passport.authenticate('google', { failureRedirect: '/login' }, function(req, res) {
+const googleAuthCallback = () => {
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    function(req, res) {
     // Successful authentication, redirect home.
-    //res.redirect('/');
-  });
+    res.redirect('/');
+}};
 
 module.exports = {
     registerUser,
