@@ -30,6 +30,45 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+passport.serializeUser(function(user, cb) {
+    process.nextTick(function() {
+      cb(null, { id: user.id, username: user.username });
+    });
+  });
+  
+  passport.deserializeUser(function(user, cb) {
+    process.nextTick(function() {
+      return cb(null, user);
+    });
+  });
+
+passport.use(new GoogleStrategy({
+    clientID: "579605667751-fpifgfkci2ih9c0hvqaaoa11c1na6iv2.apps.googleusercontent.com",
+    clientSecret: "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",
+    callbackURL: "http://localhost:8000/authentication/google/callback",
+    userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+
+
+app.get('/authentication/google',
+  passport.authenticate('google', { scope: ['profile'] }), (req,res) => {
+    console.log(req)
+  });
+
+app.get('/authentication/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 
 
 app.use("/authentication", require("./routes/userRoutes"));

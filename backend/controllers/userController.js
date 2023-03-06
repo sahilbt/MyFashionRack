@@ -17,9 +17,9 @@ passport.serializeUser(function(user, cb) {
   });
 
 passport.use(new GoogleStrategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:8000/authentication/google/access",
+    clientID: "579605667751-fpifgfkci2ih9c0hvqaaoa11c1na6iv2.apps.googleusercontent.com",
+    clientSecret: "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",
+    callbackURL: "http://localhost:8000/auth/google/callback",
     userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -89,18 +89,29 @@ const protected = (req,res) => {
     } 
 }
 
-const googleAuth = (req,res) => {
-    console.log("hi");
-    passport.authenticate("google", {scope: ['profile']})
-}
+const googleAuth = () => {
+    return passport.authenticate('google', { scope: ['profile'] });
+  };
 
-const googleAuthCallback = (req,res) => {
-  passport.authenticate('google', { failureRedirect: '/' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  }
-};
+  const googleAuthCallback = (req, res) => {
+    passport.authenticate("google", (err, user, info) => {
+      if (err) {
+        // Handle error
+        return res.redirect("/login");
+      }
+      if (!user) {
+        // Handle authentication failure
+        return res.redirect("/login");
+      }
+      // Handle authentication success
+      req.logIn(user, (err) => {
+        if (err) {
+          return res.redirect("/login");
+        }
+        return res.redirect("/protected");
+      });
+    })(req, res);
+  };
 
 module.exports = {
     registerUser,
