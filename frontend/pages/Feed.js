@@ -6,7 +6,7 @@ export default function Feed() {
         <div className="w-full">
             <Navbar/>
 
-            <div className='w-full  h-9  text-white mt-10'>
+            <div className='w-full h-9 text-white mt-10'>
                 <div className="grid place-items-center">
                     <div className="flex justify-between items-center h-9 w-[80%] bg-lightGrey rounded-xl outline outline-1 outline-pink px-7">
                         <Link href="#" className="group">
