@@ -37,7 +37,6 @@ export default function Feed() {
                             Second-hand
                             <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                         </Link>
-
                     </div>
                 </div>
             </div>
@@ -55,7 +54,6 @@ export default function Feed() {
                             
                             </div>
                             
-
                             <div className="bg-lightGrey h-60 w-60 rounded-xl outline outline-1 outline-pink">
                             
                             </div>

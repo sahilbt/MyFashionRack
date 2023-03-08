@@ -21,7 +21,6 @@ export default function Navbar(params) {
                             <input type="text" name="search" placeholder="" className="px-4 h-10 w-80 bg-[#DE839A] text-white rounded-3xl outline outline-white outline-2 focus:outline focus:outline-white "/>
                         </div>
                         
-
                         <div className="flex space-x-14">
                             <div className="grid place-items-center gap-y-1">
                                 <Link href="#">
@@ -34,7 +33,6 @@ export default function Navbar(params) {
                                     New Post
                                 </div>
                             </div>
-
 
                             <div className="grid place-items-center gap-y-1">
                                 <Link href="#">
