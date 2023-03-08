@@ -3,10 +3,10 @@ import Navbar from "../components/Navbar"
 
 export default function Feed() {
     return(
-        <div>
+        <div className="w-full">
             <Navbar/>
 
-            <div className='w-screen  h-9  text-white mt-10'>
+            <div className='w-full  h-9  text-white mt-10'>
                 <div className="grid place-items-center">
                     <div className="flex justify-between items-center h-9 w-[80%] bg-lightGrey rounded-xl outline outline-1 outline-pink px-7">
                         <Link href="#" className="group">
@@ -43,7 +43,7 @@ export default function Feed() {
             </div>
 
 
-            <div className='w-screen  h-96  text-white mt-10'>
+            <div className='w-full  h-96  text-white mt-10'>
                 <div className="grid place-items-center">
                     <div className="flex justify-between  h-96 w-[80%]">
                         <div className="bg-lightGrey h-96 w-60 rounded-xl outline outline-1 outline-pink">
@@ -59,24 +59,14 @@ export default function Feed() {
                             <div className="bg-lightGrey h-60 w-60 rounded-xl outline outline-1 outline-pink">
                             
                             </div>
-
-
-
-
-                            
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div className="h-screen">
 
-
-            <div className="h-96 w-12 bg-black">
-
-            </div> 
-            <div className="h-96 w-12 bg-black">
-
-            </div> 
+            </div>
         </div>
     )
 }

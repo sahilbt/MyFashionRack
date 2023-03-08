@@ -4,9 +4,9 @@ import Link from "next/Link"
 
 export default function Login() {
     return (
-        <div className="flex flex-col items-center justify-center w-screen h-screen text-center bg-darkGrey">
-            <div className="flex w-screen items-center content-center">
-                <div className="w-screen grid place-items-center">
+        <div className="flex flex-col items-center justify-center w-full h-screen text-center bg-darkGrey">
+            <div className="flex w-full items-center content-center">
+                <div className="w-full grid place-items-center">
                     <div className="w-32 mb-6">
                         <Link href="/">
                             <Image
