@@ -1,10 +1,10 @@
-import Image from "next/image"
+import Image from "next/Image"
 import Logo from "../public/LogoWhite.png"
 import Insta from "../public/instagram.svg"
 import Twit from "../public/twitter.svg"
 import Facebook from "../public/square-facebook.svg"
 import Mail from "../public/envelope-solid.svg"
-import Link from "next/link"
+import Link from "next/Link"
 
 export default function LandingNav(){
     return(
@@ -15,7 +15,7 @@ export default function LandingNav(){
             />
 
             <div className="absolute flex flex-col gap-y-4 justify-center items-center h-screen">
-                <Link href="/Feed" className="text-2xl group">
+                <Link href="/Login" className="text-2xl group">
                     Login
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                 </Link>
