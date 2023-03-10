@@ -48,24 +48,22 @@ export default function Feed() {
             </div>
 
 
-            <div className='w-full  h-96  text-white mt-10'>
-                <div className="grid place-items-center">
-                    <div className="flex justify-between h-96 w-[80%]">
-                        <div className="bg-lightGrey h-96 w-60 rounded-xl outline outline-1 outline-pink">
-                            
-                        </div>
-                        <div className="flex flex-col gap-9">
-                            {renderPosts}
+            <div className='w-full grid place-items-center h-96  text-white mt-10'>
+                <div className="flex justify-between h-96 w-[80%]">
+                    <div className="bg-lightGrey h-96 w-60 rounded-xl outline outline-1 outline-pink">
+                        
+                    </div>
+                    <div className="flex flex-col gap-9">
+                        {renderPosts}
+                    </div>
+                    
+                    <div className="grid gap-9">
+                        <div className="bg-lightGrey h-60 w-60 rounded-xl outline outline-1 outline-pink">
+                        
                         </div>
                         
-                        <div className="grid gap-9">
-                            <div className="bg-lightGrey h-60 w-60 rounded-xl outline outline-1 outline-pink">
-                            
-                            </div>
-                            
-                            <div className="bg-lightGrey h-60 w-60 rounded-xl outline outline-1 outline-pink">
-                            
-                            </div>
+                        <div className="bg-lightGrey h-60 w-60 rounded-xl outline outline-1 outline-pink">
+                        
                         </div>
                     </div>
                 </div>
