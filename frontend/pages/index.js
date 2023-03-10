@@ -1,7 +1,7 @@
 import LandingNav from "../components/LandingNav"
 import zod from "../public/unknown-52.jpeg"
-import Image from "next/image"
-import Head from "next/head"
+import Image from "next/Image"
+import Head from "next/Head"
 
 export default function index(){
     return(

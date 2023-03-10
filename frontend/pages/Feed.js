@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "next/Link"
 import Navbar from "../components/Navbar"
 
 export default function Feed() {

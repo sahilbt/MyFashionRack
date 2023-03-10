@@ -1,7 +1,7 @@
 
 import Image from "next/Image"
 import Logo from "../public/LogoPink.png"
-import Link from "next/link"
+import Link from "next/Link"
 
 
 export default function Register() {
