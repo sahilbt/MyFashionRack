@@ -1,5 +1,6 @@
 import Image from "next/Image"
 import Logo from "../public/LogoPink.png"
+import Google from "../public/google.svg"
 import Link from "next/Link"
 
 export default function Login() {
@@ -26,6 +27,7 @@ export default function Login() {
                         <div className="absolute px-5 bg-darkGrey text-white">OR</div>
                     </div>
                     <button className="bg-darkGrey text-white rounded-3xl mt-4 w-64 h-12 outline outline-2 outline-white hover:outline-pink">
+                        <Image src = {Google} className="h-1/2 w-auto inline-block mr-3"/>
                         Continue with Google
                     </button>
                     <div className="flex text-white">
