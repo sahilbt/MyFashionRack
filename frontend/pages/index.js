@@ -47,7 +47,7 @@ export default function index(){
                         </div>
                     </motion.div>
                 </div>
-                <div className="flex justify-center items-center gap-3 mb-24">
+                <div className="flex flex-row justify-center items-center gap-y-3 gap-x-20 mb-24 h-64">
                     <motion.div className="text-white text-3xl max-w-md text-center min-h-full flex items-center justify-center"
                         initial={{x:-100}}
                         whileInView={{x:0}}
@@ -65,7 +65,7 @@ export default function index(){
                         <Image src = {Illustration2}/>
                     </motion.div>
                 </div>
-                <div className="flex justify-center items-center gap-3 mb-24">
+                <div className="flex flex-row justify-center items-center gap-y-3 gap-x-20 mb-24 h-64">
                     <motion.div className="w-1/3 h-auto"
                         initial={{x:-100}}
                         whileInView={{x:0}}
@@ -83,8 +83,8 @@ export default function index(){
                         </div>
                     </motion.div>
                 </div>
-                <div className="flex justify-center items-center gap-3">
-                <motion.div className="text-white text-3xl max-w-md text-center min-h-full flex items-center justify-center"
+                <div className="flex flex-row justify-center items-center gap-y-3 gap-x-20 mb-24 h-64">
+                    <motion.div className="text-white text-3xl max-w-md text-center min-h-full flex items-center justify-center"
                         initial={{x:-100}}
                         whileInView={{x:0}}
                         transition={{duration:0.7}}
