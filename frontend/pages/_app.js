@@ -1,4 +1,4 @@
-import '@/styles/globals.css'
+import '../styles/globals.css'
 import {Bree_Serif} from '@next/font/google'
 
 const font = Bree_Serif({
