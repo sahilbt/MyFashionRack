@@ -29,7 +29,7 @@ export default function index(){
                 </div>
             </div>
             <div className="py-40 bg-darkGrey mr-64">
-                <div className="flex flex-row justify-center items-center gap-y-3 gap-x-20 mb-24 h-72">
+                <div className="flex flex-row justify-center items-center gap-y-3 gap-x-20 mb-24 min-h-72">
                     <motion.div className="w-1/3 h-auto"
                         initial={{x:-100}}
                         whileInView={{x:0}}
@@ -37,25 +37,21 @@ export default function index(){
                     >
                         <Image src = {Illustration1}/>
                     </motion.div>
-                    <motion.div className="text-white text-3xl max-w-md text-center min-h-full flex items-center justify-center"
+                    <motion.div className="text-white text-3xl max-w-md text-center min-h-full flex items-center justify-center grow"
                         initial={{x:100}}
                         whileInView={{x:0}}
                         transition={{duration:0.7}}
                     >
-                        <div>
-                            See a fit that you're feeling? Give it a like so you can return to it later!
-                        </div>
+                        See a fit that you're feeling? Give it a like so you can return to it later!
                     </motion.div>
                 </div>
-                <div className="flex flex-row justify-center items-center gap-y-3 gap-x-20 mb-24 h-72">
+                <div className="flex flex-row justify-center items-center gap-y-3 gap-x-20 mb-24 min-h-72">
                     <motion.div className="text-white text-3xl max-w-md text-center min-h-full flex items-center justify-center"
                         initial={{x:-100}}
                         whileInView={{x:0}}
                         transition={{duration:0.7}}
                     >
-                        <div>
-                            See a fit Only like specific pieces of the outfit? Don't worry, there are links to each individual article of clothing!
-                        </div>
+                        See a fit Only like specific pieces of the outfit? Don't worry, there are links to each individual article of clothing!
                     </motion.div>
                     <motion.div className="w-1/3 h-auto"
                         initial={{x:100}}
@@ -65,7 +61,7 @@ export default function index(){
                         <Image src = {Illustration2}/>
                     </motion.div>
                 </div>
-                <div className="flex flex-row justify-center items-center gap-y-3 gap-x-20 mb-24 h-72">
+                <div className="flex flex-row justify-center items-center gap-y-3 gap-x-20 mb-24 min-h-72">
                     <motion.div className="w-1/3 h-auto"
                         initial={{x:-100}}
                         whileInView={{x:0}}
@@ -78,20 +74,16 @@ export default function index(){
                         whileInView={{x:0}}
                         transition={{duration:0.7}}
                     >
-                        <div>
-                            Only like certain styles? You can filter your feed to only show the selected style!
-                        </div>
+                        Only like certain styles? You can filter your feed to only show the selected style! 
                     </motion.div>
                 </div>
-                <div className="flex flex-row justify-center items-center gap-y-3 gap-x-20 mb-24 h-72">
+                <div className="flex flex-row justify-center items-center gap-y-3 gap-x-20 mb-24 min-h-72">
                     <motion.div className="text-white text-3xl max-w-md text-center min-h-full flex items-center justify-center"
                         initial={{x:-100}}
                         whileInView={{x:0}}
                         transition={{duration:0.7}}
                     >
-                        <div>
-                            Ready to find new inspiration for your style? Create an account or log in today!
-                        </div>
+                        Ready to find new inspiration for your style? Create an account or log in today!
                     </motion.div>
                     <motion.div className="w-1/3 h-auto"
                         initial={{x:100}}
