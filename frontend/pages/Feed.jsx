@@ -1,6 +1,6 @@
 import Link from "next/Link"
-import Navbar from "../components/Navbar"
-import Post from "../components/Post"
+import Navbar from "../components/Navbar.jsx"
+import Post from "../components/Post.jsx"
 import posts from "../posts"
 
 export default function Feed() {

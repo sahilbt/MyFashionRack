@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import Backdrop from "./Backdrop"
+import Backdrop from "./Backdrop.jsx"
 import Image from "next/Image"
 
 export default function Modal({data, handleClick}){
@@ -12,11 +12,8 @@ export default function Modal({data, handleClick}){
                 </div>
 
 
-                    {/* <div className="w-1/2">
-                        fedfdf
-                    </div> */}
 
-                <div className="flex-col ">
+                <div className="flex-col">
                     <div>
                         {data.Username}
                     </div>

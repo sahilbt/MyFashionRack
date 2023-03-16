@@ -1,5 +1,5 @@
 import Image from "next/Image"
-import Modal from "./Modal"
+import Modal from "./Modal.jsx"
 import { useState } from "react"
 import { AnimatePresence } from "framer-motion"
 

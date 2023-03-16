@@ -1,4 +1,4 @@
-import LandingNav from "../components/LandingNav"
+import LandingNav from "../components/LandingNav.jsx"
 import zod from "../public/unknown-52.jpeg"
 import Image from "next/Image"
 import Head from "next/Head"
