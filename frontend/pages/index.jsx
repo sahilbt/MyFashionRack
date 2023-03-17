@@ -77,7 +77,7 @@ export default function index(){
                         Only like certain styles? You can filter your feed to only show the selected style! 
                     </motion.div>
                 </div>
-                <div className="flex flex-row justify-center items-center gap-y-3 gap-x-20 mb-24 min-h-72">
+                <div className="flex flex-row justify-center items-center gap-y-3 gap-x-20 min-h-72">
                     <motion.div className="text-white text-3xl max-w-md text-center min-h-full flex items-center justify-center"
                         initial={{x:-100}}
                         whileInView={{x:0}}
