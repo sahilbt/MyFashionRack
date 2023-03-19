@@ -30,15 +30,30 @@ const userSchema = mongoose.Schema({
         type: String
     },
     following: {
-        type: Array,
-        default: []
+        type: Map,
+        of: Boolean
+    },
+    followers: {
+        type: Map,
+        of: Boolean
     },
     followingStyles: {
-        type: Array,
-        default: []
+        type: Map,
+        of: Boolean
     },
     pictureRef: {
-        type:String
+        public_id:{
+            type:String
+        },
+        url:{
+            type:String
+        },
+        height: {
+            type:Number
+        },
+        width: {
+            type:Number
+        }
     },
     googleId:{
         type:String
@@ -47,7 +62,7 @@ const userSchema = mongoose.Schema({
 })
 
 userSchema.plugin(passportLocalMongoose,{
-    selectFields : 'firstName lastName displayName address age phoneNumber following followingStyles pictureRef'
+    selectFields : 'firstName lastName displayName address age phoneNumber following followers followingStyles pictureRef'
 })
 userSchema.plugin(findOrCreate);
 

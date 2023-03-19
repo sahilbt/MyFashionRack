@@ -1,32 +1,5 @@
 const User = require("../models/userModel");
-const passport = require("passport");
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
-passport.use(User.createStrategy());
-
-passport.serializeUser(function(user, cb) {
-    process.nextTick(function() {
-      cb(null, { id: user.id, username: user.username });
-    });
-  });
-  
-  passport.deserializeUser(function(user, cb) {
-    process.nextTick(function() {
-      return cb(null, user);
-    });
-  });
-
-passport.use(new GoogleStrategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:8000/authentication/google/callback",
-    userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }
-));
+const passport = require("../configuration/passport-config");
 
 const registerUser = (req,res) => {
 
@@ -49,9 +22,7 @@ const registerUser = (req,res) => {
             console.log(err);
         }else{
             passport.authenticate("local")(req,res, ()=> {
-                console.log("Session Created");
-                res.send("Created Session for Registered User")
-                //res.redirect("/protected");
+                res.status(200).json({ message: 'User authenticated' });
             })
         }
     }
@@ -66,10 +37,10 @@ const logInUser = (req,res) => {
 
     req.login(returningUser, (err) => {
         if(err) {
-            console.log(err);
+            res.status(401).json({ message: 'User not authenticated' });
         }else{
             passport.authenticate("local");
-            res.send("User has been logged in")
+            res.status(200).json({ message: 'Authentication successful'});
         }
     })
 }
@@ -79,27 +50,24 @@ const logOutUser = (req,res) => {
     res.send("User has been logged out");
 }
  
-const protected = (req,res) => {
-    if(req.isAuthenticated()){
-        res.send("Protected Route Accessed")
-    }else{
-        res.send("error")
-        console.log("Access to protected route not granted")
-    } 
-}
+// const protected = (req,res) => {
+//     if(req.isAuthenticated()){
+//         res.send("Protected Route Accessed")
+//     }else{
+//         res.send("error")
+//         console.log("Access to protected route not granted")
+//     } 
+// }
 
 const googleAuth = passport.authenticate('google', { scope: ['profile'] });
 
-  
-
-  const googleAuthCallback = passport.authenticate('google', { failureRedirect: '/login' }, function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
+const googleAuthCallback = passport.authenticate('google', { failureRedirect: '/login' }, function(req, res) {
+  // Successful authentication, redirect home.
+  res.status(200).json({ message: 'Authentication successful'});
+});
 
 module.exports = {
     registerUser,
-    protected,
     logInUser,
     logOutUser,
     googleAuth,
