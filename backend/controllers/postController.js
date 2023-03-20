@@ -8,9 +8,7 @@ const createPost = async (req,res) => {
 
     //have to save userID in frontend
     const { image, userID, username, description, outfitPieces, styleTags } = req.body;
-    
     let result;
-    const mappedOutfitPieces = outfitPieces.map(item => new Map(Object.entries(item)));
     
     try {
         const result = await cloudinary.uploader.upload(image);
@@ -24,11 +22,12 @@ const createPost = async (req,res) => {
             userID,
             username,
             description,
-            pictureRef: {public_id:result.public_id,
-                        url:result.url, width: result.width,
-                        height: result.width},
+            pictureRef:{public_id:result.public_id,
+                url:result.url, width: result.width,
+                height: result.width
+            },
             like: {},
-            mappedOutfitPieces,
+            outfitPieces,
             styleTags
         })
         await post.save();
@@ -39,10 +38,12 @@ const createPost = async (req,res) => {
     }   
 }
 
+//.populate() must have the pictureRef and display name or else request just loads
 const getPostsFromUser = async(req,res) => {
+    
     const { userID } = req.body;
     try {
-        const post  = await Post.find({userID}).populate(userID, "pictureRef");
+        const post  = await Post.find({userID}).populate("user", "pictureRef", "displayName");
         res.status(200).json(post);
     } catch (error) {
         res.status(404);
@@ -52,7 +53,7 @@ const getPostsFromUser = async(req,res) => {
 const getUserFeed = async(req,res) => {
     const { userID } = req.body;
     try{
-        const user = await User.findById(userID, "following").populate(userID, "pictureRef").lean();
+        const user = await User.findById(userID, "following").populate("user", "pictureRef", "displayName").lean();
         const followingUserID = user.following;
         const posts = Post.find({userID: {$in: followingUserID}}).lean();
         res.status(200).json({allPosts: posts}, {userInfo: user});
@@ -67,7 +68,7 @@ const getFollowingStyles = async (req,res) => {
     try{
         const user = await User.findById(userID, "followingStyles").lean();
         const userStyles = user.followingStyles;
-        const posts = await Post.find({userID: {$in: userStyles}}).populate(userID, "pictureRef").lean();
+        const posts = await Post.find({userID: {$in: userStyles}}).populate("user", "pictureRef", "displayName").lean();
         res.status(200).json(posts);
     } 
     catch(error){
@@ -78,7 +79,7 @@ const getFollowingStyles = async (req,res) => {
 const getPostsFromAStyle = async (req,res) => {
     const style = req.params.id
     try{
-        const posts = await Post.find({styleTags: style}).populate(userID, "pictureRef").lean();
+        const posts = await Post.find({styleTags: style}).populate("user", "pictureRef", "displayName").lean();
         res.status(200).json(posts);
     } 
     catch(error){

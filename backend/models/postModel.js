@@ -1,12 +1,9 @@
 const mongoose = require("mongoose");
 
 const postSchema = mongoose.Schema({
-    userID:{
+    user:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    },
-    username:{
-        type:String,
     },
     description:{
         type:String
@@ -23,15 +20,16 @@ const postSchema = mongoose.Schema({
         },
         width: {
             type:Number
-        }
+        },
+        default:{}
     },
     like:{
         type: Map,
         of: Boolean
     },
     outfitPieces: [{
-        type: Map,
-        of: String
+        name:String,
+        link:String
     }],
     styleTags:{
         type: Array,
