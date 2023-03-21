@@ -1,6 +1,13 @@
 import Navbar from "../components/Navbar"
+import ProfilePost from "../components/ProfilePost"
+import posts from "../posts"
 
 export default function UserProfile(){
+    const renderPosts = posts.map(post => {
+        return(
+            <ProfilePost {...post}/>
+        )
+    })
     return(
         <div className="w-full">
             <Navbar />
@@ -14,14 +21,17 @@ export default function UserProfile(){
 
                         </div>
                     </div>
-                    <div className="w-3/4 text-center h-20 pb-4 ">
-                        <h1 className="text-white text-4xl">
+                    <div className="w-3/4 h-20 pb-4 ">
+                        <h1 className="w-full text-center text-white text-4xl">
                            Your Wardrobe
                         </h1>
-                        <h1 className="text-[#808080] text-3xl">
+                        <h1 className="w-full text-center text-[#808080] text-3xl">
                             40 Outfits
                         </h1>
                         <div className=" mt-4 border w-full"></div>
+                        <div className="grid grid-cols-3 grid-flow-row gap-9 mt-10">
+                            {renderPosts}
+                        </div>
                     </div>
                 </div>
             </div>

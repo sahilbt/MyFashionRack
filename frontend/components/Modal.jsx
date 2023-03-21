@@ -6,24 +6,24 @@ import Link from "next/Link"
 export default function Modal({data, handleClick}){
     const renderLinks = data.Clothing.map(clothing => {
         return(
-            <Link href={clothing.Link} className="bg-pink rounded-full px-3 text-xs">{clothing.Name}</Link>
+            <Link href={clothing.Link} className="bg-pink rounded-full px-3 text-sm" target="_blank">{clothing.Name}</Link>
         )
     })
     const renderStyles = data.Styles.map(style => {
         return(
-            <div className="bg-pink rounded-full px-3 text-xs">
+            <div className="bg-pink rounded-full px-3 text-sm">
                 {style}
             </div>
         )
     })
     return(
         <Backdrop handleClick={handleClick}>
-            <motion.div onClick={(event) => event.stopPropagation()} className="bg-lightGrey w-3/5 h-2/3 grid grid-cols-2 rounded-lg">
+            <motion.div onClick={(event) => event.stopPropagation()} className="bg-lightGrey w-3/5 h-2/3 grid grid-cols-2 rounded-lg text-white">
                 <div className="relative bg-black rounded-l-lg">
                     <Image alt="Outfit" className="object-contain" src={data.Image} fill />
                 </div>
-                <div className="flex flex-col w-full p-4 gap-3">
-                    <div className="border-b border-[#4F4F4F] py-2 text-lg">
+                <div className="flex flex-col w-full pt-4 pb-3 px-8 gap-3">
+                    <div className="border-b border-[#4F4F4F] pt-2 pb-4 text-lg">
                         {data.Username}
                     </div>
                     <div className="text-lg">
@@ -35,7 +35,7 @@ export default function Modal({data, handleClick}){
                     <div className="text-lg">
                         Pieces and Links
                     </div>
-                    <div className="border-b border-[#4F4F4F] pb-2 max-w-full h-[20%]">
+                    <div className="border-b border-[#4F4F4F] pb-2 max-w-full h-[25%]">
                         <div className="flex flex-wrap gap-3">
                             {renderLinks}
                         </div>
