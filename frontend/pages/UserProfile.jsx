@@ -22,6 +22,9 @@ export default function UserProfile(){
                             40 Outfits
                         </h1>
                         <div className=" mt-4 border w-full"></div>
+                        <div className="grid grid-cols-3">
+
+                        </div>
                     </div>
                 </div>
             </div>

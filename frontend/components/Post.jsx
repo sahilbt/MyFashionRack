@@ -11,25 +11,21 @@ export default function Post(props){
     }
     return(
         <div className="flex flex-col">
-            <AnimatePresence>
-                {modal && <Modal data={props} modal={modal} handleClick={handleClick}/>}
-            </AnimatePresence>
             <div className="bg-lightGrey p-2 rounded-t-xl">
                 <h1>{props.Username}</h1>
             </div>
-
-             <div>
-                <div className="bg-black h-[500px] relative">
-                    <Image onClick={handleClick} alt="Outfit" className="object-contain static" src={props.Image} fill />
+            <div onClick={handleClick}>
+                <div className="bg-black h-[500px] relative -z-10">
+                    <Image alt="Outfit" className="object-contain" src={props.Image} fill/>
                 </div>
-             </div>
-
-
-
+            </div>
             <div className="bg-lightGrey p-2 rounded-b-xl flex justify-between">
                 <h1>{props.Description}</h1>
                 <h1>{props.Likes}</h1>
             </div>
+            <AnimatePresence>
+                {modal && <Modal data={props} modal={modal} handleClick={handleClick}/>}
+            </AnimatePresence>
         </div>
     )
 }
