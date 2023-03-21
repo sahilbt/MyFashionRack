@@ -24,11 +24,7 @@ export function useMultistepForm(steps) {
       setCurrentStepIndex(index)
     }
 
-    function getWidth(){
 
-      var count = currentStepIndex/steps.length-1*100
-      return count.toString().concat("%")
-    }
 
     return {
       currentStepIndex,
@@ -39,6 +35,5 @@ export function useMultistepForm(steps) {
       goTo,
       next,
       back,
-      getWidth,
     }
   }
