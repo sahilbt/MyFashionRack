@@ -20,7 +20,7 @@ export default function Post(props){
                 </div>
             </div>
             <div className="bg-lightGrey p-2 rounded-b-xl flex justify-between">
-                <h1>{props.Description}</h1>
+                <h1>{props.Date}</h1>
                 <h1>{props.Likes}</h1>
             </div>
             <AnimatePresence>
