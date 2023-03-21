@@ -1,30 +1,30 @@
 export default[
-    // {
-    //     "Username" : "Ivari",
-    //     "Likes" : 200,
-    //     "Date" : "10-12-2023",
-    //     "Description" : "My chain so nice!",
-    //     "Clothing" : [
-    //         {
-    //             Name: "Glasses",
-    //             Link: "http://gabengu.me"
-    //         },
-    //         {
-    //             Name: "Shoes",
-    //             Link: "http://gabengu.me"
-    //         },
-    //         {
-    //             Name: "Pants",
-    //             Link: "http://gabengu.me"
-    //         },
-    //         {
-    //             Name: "Shirt",
-    //             Link: "http://gabengu.me"
-    //         }
-    //     ],
-    //     "Styles" : ["Streetwear", "Active-wear", "Casual"],
-    //     "Image" : "/gabe.jpg"
-    // },
+    {
+        "Username" : "Ivari",
+        "Likes" : 200,
+        "Date" : "10-12-2023",
+        "Description" : "My chain so nice!",
+        "Clothing" : [
+            {
+                Name: "Glasses",
+                Link: "http://gabengu.me"
+            },
+            {
+                Name: "Shoes",
+                Link: "http://gabengu.me"
+            },
+            {
+                Name: "Pants",
+                Link: "http://gabengu.me"
+            },
+            {
+                Name: "Shirt",
+                Link: "http://gabengu.me"
+            }
+        ],
+        "Styles" : ["Streetwear", "Active-wear", "Casual"],
+        "Image" : "/gabe.jpg"
+    },
     {
         "Username" : "Zodiarch",
         "Likes" : 200,
