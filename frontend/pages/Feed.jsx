@@ -48,12 +48,12 @@ export default function Feed() {
             </div>
 
 
-            <div className='w-full grid place-items-center h-96  text-white mt-10'>
-                <div className="flex justify-between h-96 w-[80%]">
+            <div className='w-full grid place-items-center text-white mt-10'>
+                <div className="flex justify-between w-[80%]">
                     <div className="bg-lightGrey h-96 w-60 rounded-xl outline outline-1 outline-pink">
                         
                     </div>
-                    <div className="flex flex-col gap-9">
+                    <div className="flex flex-col gap-9 w-[30%]">
                         {renderPosts}
                     </div>
                     
@@ -69,9 +69,7 @@ export default function Feed() {
                 </div>
             </div>
 
-            <div className="h-screen">
 
-            </div>
         </div>
     )
 }

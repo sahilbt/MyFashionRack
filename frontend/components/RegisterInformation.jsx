@@ -5,7 +5,7 @@ export default function RegisterInformation({handler1,setPage}) {
     function nextPage(){
         setPage(0);
     }
-    const { steps,currentStepIndex,step, back,next,goto,isFirstStep,isLastStep,getWidth} = useMultistepForm([
+    const {steps,currentStepIndex,step, back,next,goto,isFirstStep,isLastStep} = useMultistepForm([
         <div>
             <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Tell us your Name</h1>
             <div className="flex flex-row item justify-center">

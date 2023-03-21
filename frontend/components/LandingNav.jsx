@@ -20,7 +20,7 @@ export default function LandingNav(){
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                 </Link>
 
-                <Link href="/SignUp" className="text-2xl group">
+                <Link href="/Register" className="text-2xl group">
                     Sign Up
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                 </Link>
