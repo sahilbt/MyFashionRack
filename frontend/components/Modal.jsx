@@ -12,7 +12,7 @@ export default function Modal({data, handleClick}){
     const renderStyles = data.Styles.map(style => {
         return(
             <div className="bg-pink rounded-full px-3 text-sm">
-                {style}
+                <Link href={'/feed/styles/' + style} >{style}</Link>
             </div>
         )
     })

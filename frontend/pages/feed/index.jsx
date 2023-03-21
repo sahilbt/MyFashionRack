@@ -1,7 +1,7 @@
 import Link from "next/Link"
-import Navbar from "../components/Navbar.jsx"
-import Post from "../components/Post.jsx"
-import posts from "../posts"
+import Navbar from "../../components/Navbar.jsx"
+import Post from "../../components/Post.jsx"
+import posts from "../../posts"
 
 export default function Feed() {
     const renderPosts = posts.map(post => {

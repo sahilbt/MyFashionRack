@@ -13,10 +13,7 @@ export default function Post(props){
     return(
         <div className="flex flex-col">
             <div className="bg-lightGrey p-2 rounded-t-xl">
-                <Link href={"/users/" + props.Username}>
-                    
-                    <h1>{props.Username}</h1>
-                </Link>
+                <Link href={"/users/" + props.Username}>{props.Username}</Link>
                 
             </div>
             <div onClick={handleClick}>
