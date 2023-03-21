@@ -6,7 +6,7 @@ import Link from "next/Link"
 export default function Modal({data, handleClick}){
     const renderLinks = data.Clothing.map(clothing => {
         return(
-            <Link href={clothing.Link} className="bg-pink rounded-full px-3 text-sm">{clothing.Name}</Link>
+            <Link href={clothing.Link} className="bg-pink rounded-full px-3 text-sm" target="_blank">{clothing.Name}</Link>
         )
     })
     const renderStyles = data.Styles.map(style => {
