@@ -2,8 +2,33 @@ import Image from "next/Image"
 import Logo from "../public/LogoPink.png"
 import Google from "../public/google.svg"
 import Link from "next/Link"
+import { useState } from "react"
+import { useRouter } from 'next/router';
+
+import Axios from "axios";
 
 export default function Login() {
+    
+    const[fields,setFields] = useState({username: "", password: ""})
+    const router = useRouter();
+
+    const logInButton = (event) => {
+        event.preventDefault();
+        const url = "http://localhost:8000/authentication/login";
+        Axios.post(url, fields)
+          .then(function (response) {
+            if(response.status === 200){
+                router.push('/UserProfile');
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+            if(error.response.status === 401){
+                alert(error.response.message);
+            }
+          });
+    }
+
     return (
         <div className="flex flex-col items-center justify-center w-full h-screen text-center bg-darkGrey">
             <div className="flex w-full items-center content-center">
@@ -18,9 +43,13 @@ export default function Login() {
                     </div>
                     <h1 className="text-3xl text-white text-center pb-5">Login</h1>
                     <div className="flex flex-col items-center gap-y-6">
-                        <input type="email" name="email" placeholder="email" className="px-4 h-12 w-96 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"/>
-                        <input type="password" name="password" placeholder="password" className="px-4 h-12 w-96 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"/>
-                        <button className="bg-pink text-white rounded-3xl w-48 h-12 hover:bg-[#AA4E65]">
+                        <input type="email" name="email" placeholder="email" 
+                        onChange={(e)=> {setFields({...fields, username: e.target.value})}}
+                        className="px-4 h-12 w-96 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"/>
+                        <input type="password" name="password" placeholder="password" 
+                        onChange={(e)=> {setFields({...fields, password: e.target.value})}}
+                        className="px-4 h-12 w-96 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"/>
+                        <button className="bg-pink text-white rounded-3xl w-48 h-12 hover:bg-[#AA4E65]" onClick={logInButton}>
                             Login
                         </button>
                      <div className="relative flex items-center justify-center mt-4 border border-t w-96">

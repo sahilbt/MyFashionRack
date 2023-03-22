@@ -5,11 +5,8 @@ import { ReactElement, useState } from "react"
 
 export default function Register() {
     const[page,setPage] = useState(0)
-    const [form,setForm] = useState({email:"",password:"",verify:"",first:"",last:"",country:"",city:"",address:"",age:"",phone:"",display:""})
+    const [form,setForm] = useState({email:"",password:"",verify:"",first:"",last:"",country:"",city:"",address:"",birthday:"",phone:"",display:""})
 
-
-    
-    
     function handler1(event){
         setForm(prevForm =>{
             return{
@@ -18,7 +15,6 @@ export default function Register() {
         }
     })}
 
-   
     return (
         <form className="bg-darkGrey grid h-screen w-screen">
             {page==0 && <SignUp handler1 = {handler1} setPage = {setPage} form = {form}/>}
