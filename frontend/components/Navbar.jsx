@@ -54,7 +54,7 @@ export default function Navbar() {
                             </div>
 
                             <div className="grid place-items-center gap-y-1">
-                                <Link href="#">
+                                <Link href="/me">
                                     <Image
                                         className="w-auto h-10"
                                         src={AccountButton}
