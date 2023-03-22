@@ -28,7 +28,7 @@ const registerUser = async(req,res) => {
                 res.status(401).json({message: 'Email already exists' });
             }else{
                 passport.authenticate("local")(req,res, ()=> {
-                    res.status(200).json({ userObj: newUser, message: 'User authenticated'});
+                    res.status(200).json({userDetails: req.user, message: 'User authenticated'});
                 })
             }
         }
@@ -47,7 +47,7 @@ const logInUser = (req,res) => {
             res.status(401).send({ message: 'User not authenticated' });
         }else{
             passport.authenticate("local")(req,res, ()=> {
-                res.status(200).json({message: "authenticared"});
+                res.status(200).json({userDetails: req.user, message: "authenticared"});
             });
         }
     })

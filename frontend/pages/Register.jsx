@@ -3,6 +3,7 @@ import RegisterInformation from "../components/RegisterInformation.jsx"
 import { useMultistepForm } from "./RegisterHook.jsx";
 import { ReactElement, useState } from "react"
 
+
 export default function Register() {
     const[page,setPage] = useState(0)
     const [form,setForm] = useState({email:"",password:"",verify:"",first:"",last:"",country:"",city:"",address:"",birthday:"",phone:"",display:""})
