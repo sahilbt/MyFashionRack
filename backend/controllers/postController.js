@@ -142,7 +142,6 @@ const getRecommendedUsers = async(req,res) => {
         const followedUsers = user.following;
         const recommended = await User.find({_id:{$nin: followedUsers}}).limit(5);
         res.status(200).json(recommended);
-
     }
     catch(error){
         res.status(500).json({error: "Could not retrieve users"})
