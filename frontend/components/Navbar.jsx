@@ -4,8 +4,15 @@ import Logo from "../public/NavLogo.png"
 import AddButton from "../public/add-button.svg"
 import LogOutButton from "../public/logout-button.svg"
 import AccountButton from "../public/account-button.svg"
+import Axios from "axios";
 
 export default function Navbar() {
+    
+    const logOutButtonFunction = (event) => {
+        event.preventDefault();
+        const url = "http://localhost:8000/authentication/logout";   
+    }
+    
     return(
         <div>
             <div className='w-full  h-20  text-white bg-pink'>
@@ -38,6 +45,7 @@ export default function Navbar() {
                                     <Image
                                         className="w-auto h-10"
                                         src={LogOutButton}
+                                        onClick={logOutButtonFunction}
                                     />
                                 </Link>
                                 <div className="text-xs">

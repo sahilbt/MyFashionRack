@@ -1,32 +1,39 @@
 const User = require("../models/userModel");
 const passport = require("../configuration/passport-config");
 
-const registerUser = (req,res) => {
+const registerUser = async(req,res) => {
 
-    var newUser = new User({
-        username: req.body.username,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName, 
-        displayName: req.body.displayName, 
-        address: {
-            country:req.body.country,
-            city: req.body.city ,
-            street: req.body.street
-        },
-        birthday: req.body.birthday,
-        phoneNumber: req.body.phoneNumber    
-    })
+    let usernameExists = await User.exists({displayName: req.body.displayName});
 
-    var callback = (err,newUser) => {
-        if(err){
-            console.log(err);
-        }else{
-            passport.authenticate("local")(req,res, ()=> {
-                res.status(200).json({ message: 'User authenticated' });
-            })
-        }
+    if (usernameExists){
+        res.status(401).json({message: 'Display Name already exists'});
     }
-    User.register(newUser, req.body.password, callback);
+    else{
+        var newUser = new User({
+            username: req.body.username,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName, 
+            displayName: req.body.displayName, 
+            address: {
+                country:req.body.address.country,
+                city: req.body.address.city ,
+                street: req.body.address.street
+            },
+            birthday: req.body.birthday,
+            phoneNumber: req.body.phoneNumber    
+        })
+    
+        var callback = (err,newUser) => {
+            if(err){
+                res.status(401).json({message: 'Email already exists' });
+            }else{
+                passport.authenticate("local")(req,res, ()=> {
+                    res.status(200).json({ userObj: newUser, message: 'User authenticated'});
+                })
+            }
+        }
+        User.register(newUser, req.body.password, callback);
+    }
 }
 
 const logInUser = (req,res) => {
@@ -47,7 +54,7 @@ const logInUser = (req,res) => {
 
 const logOutUser = (req,res) => {
     req.logout();
-    res.send("User has been logged out");
+    res.status(200).json({ message: 'User logged out'});
 }
  
 // const protected = (req,res) => {
