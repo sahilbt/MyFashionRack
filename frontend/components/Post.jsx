@@ -2,6 +2,7 @@ import Image from "next/Image"
 import Modal from "./Modal.jsx"
 import { useState } from "react"
 import { AnimatePresence } from "framer-motion"
+import Link from 'next/link'
 
 export default function Post(props){
     const [modal, setModal] = useState(false)
@@ -12,7 +13,8 @@ export default function Post(props){
     return(
         <div className="flex flex-col">
             <div className="bg-lightGrey p-2 rounded-t-xl">
-                <h1>{props.Username}</h1>
+                <Link href={"/users/" + props.Username}>{props.Username}</Link>
+                
             </div>
             <div onClick={handleClick}>
                 <div className="bg-black h-[500px] relative -z-10">

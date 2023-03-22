@@ -67,7 +67,7 @@ export default function RegisterInformation({handler1,setPage,setForm,form}) {
         Axios.post(url, registerInformation)
           .then(function (response) {
             if(response.status === 200){
-                router.push('/UserProfile');
+                router.push('/me');
             }
           })
           .catch(function (error) {
