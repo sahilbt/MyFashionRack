@@ -2,6 +2,7 @@ import { useMultistepForm } from "../pages/RegisterHook.jsx";
 import { ReactElement, useState,useEffect} from "react";
 import Axios from "axios";
 import { useRouter } from 'next/router';
+Axios.defaults.withCredentials = true;
 
 
 

@@ -6,6 +6,7 @@ import { useState } from "react"
 import { useRouter } from 'next/router';
 
 import Axios from "axios";
+Axios.defaults.withCredentials = true;
 
 export default function Login() {
     
@@ -15,7 +16,7 @@ export default function Login() {
     const logInButton = (event) => {
         event.preventDefault();
         const url = "http://localhost:8000/authentication/login";
-        Axios.post(url, fields)
+        Axios.post(url, fields )
           .then(function (response) {
             if(response.status === 200){
                 router.push('/me');
@@ -23,9 +24,7 @@ export default function Login() {
           })
           .catch(function (error) {
             console.log(error);
-            if(error.response.status === 401){
-                alert(error.response.message);
-            }
+            
           });
     }
 

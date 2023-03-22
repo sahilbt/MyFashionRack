@@ -5,12 +5,21 @@ import AddButton from "../public/add-button.svg"
 import LogOutButton from "../public/logout-button.svg"
 import AccountButton from "../public/account-button.svg"
 import Axios from "axios";
+import { useRouter } from 'next/router';
 
 export default function Navbar() {
-    
+    const router = useRouter();
+
     const logOutButtonFunction = (event) => {
         event.preventDefault();
-        const url = "http://localhost:8000/authentication/logout";   
+        const url = "http://localhost:8000/authentication/logout";
+        Axios.get(url)
+        .then((response)=>{
+            router.push('/');
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
     }
     
     return(
