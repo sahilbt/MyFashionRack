@@ -1,5 +1,7 @@
 import '../styles/globals.css'
 import {Bree_Serif} from '@next/font/google'
+import { AppWrapper } from '../context/userContext'
+import { useState } from 'react'
 
 const font = Bree_Serif({
     weight : '400',
@@ -7,9 +9,13 @@ const font = Bree_Serif({
 })
 
 export default function App({ Component, pageProps }) {
+
+  
   return(
-    <main className = {font.className}>
-        <Component {...pageProps} />
-    </main>
+    <AppWrapper>
+      <main className = {font.className}>
+          <Component {...pageProps} />
+      </main>
+    </AppWrapper>
   )
 }

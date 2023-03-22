@@ -2,30 +2,33 @@ import Image from "next/Image"
 import Logo from "../public/LogoPink.png"
 import Google from "../public/google.svg"
 import Link from "next/Link"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { useRouter } from 'next/router';
+import { useAppContext } from "../context/userContext";
 
 import Axios from "axios";
+Axios.defaults.withCredentials = true;
 
 export default function Login() {
     
     const[fields,setFields] = useState({username: "", password: ""})
     const router = useRouter();
+    const { setUser } = useAppContext();
 
     const logInButton = (event) => {
         event.preventDefault();
         const url = "http://localhost:8000/authentication/login";
-        Axios.post(url, fields)
+        Axios.post(url, fields )
           .then(function (response) {
             if(response.status === 200){
-                router.push('/me');
+                setUser(response.data.userDetails)
+                router.push('/users/me');
             }
+
           })
           .catch(function (error) {
             console.log(error);
-            if(error.response.status === 401){
-                alert(error.response.message);
-            }
+            
           });
     }
 

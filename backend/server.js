@@ -7,13 +7,18 @@ const session = require("express-session");
 const passport = require("./configuration/passport-config");
 const passportLocalMongoose = require("passport-local-mongoose");
 const app = express();
-const cors = require('cors');
-app.use(cors())
 app.use(express.json());
 const MongoDBStore = require("connect-mongodb-session")(session);
 app.use(express.urlencoded({extended: false}));
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended:false}));
+const cors = require('cors');
+const corsOptions ={
+  origin:'http://localhost:3000', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
 
 const sessionStore = new MongoDBStore({
   uri: process.env.MONGO_URL,

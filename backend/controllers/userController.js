@@ -28,7 +28,7 @@ const registerUser = async(req,res) => {
                 res.status(401).json({message: 'Email already exists' });
             }else{
                 passport.authenticate("local")(req,res, ()=> {
-                    res.status(200).json({ userObj: newUser, message: 'User authenticated'});
+                    res.status(200).json({userDetails: req.user, message: 'User authenticated'});
                 })
             }
         }
@@ -44,17 +44,28 @@ const logInUser = (req,res) => {
 
     req.login(returningUser, (err) => {
         if(err) {
-            res.status(401).json({ message: 'User not authenticated' });
+            res.status(401).send({ message: 'User not authenticated' });
         }else{
-            passport.authenticate("local");
-            res.status(200).json({ message: 'Authentication successful'});
+            passport.authenticate("local")(req,res, ()=> {
+                res.status(200).json({userDetails: req.user, message: "authenticared"});
+            });
         }
     })
 }
 
 const logOutUser = (req,res) => {
-    req.logout();
-    res.status(200).json({ message: 'User logged out'});
+    req.logout((err)=>{
+        if(err){
+            res.status(500).json({message: "Error logging out"})
+        }else{
+            res.status(200).clearCookie('connect.sid', {
+                path: '/'
+              });
+            req.session.destroy(function (err) {
+                res.status(200).json({message: "bye"});
+            });
+        }
+    });
 }
  
 // const protected = (req,res) => {
