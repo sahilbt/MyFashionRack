@@ -1,6 +1,6 @@
-import Navbar from "../../components/Navbar"
-import ProfilePost from "../../components/ProfilePost"
-import posts from "../../posts"
+import Navbar from "../components/Navbar"
+import ProfilePost from "../components/ProfilePost"
+import posts from "../posts"
 
 export default function UserProfile(){
     const renderPosts = posts.map(post => {
