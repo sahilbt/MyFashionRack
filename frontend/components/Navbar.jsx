@@ -12,7 +12,7 @@ export default function Navbar() {
                 <div className="grid place-items-center">
                     <div className="flex justify-between items-center h-20 w-[80%]">     
                         <div className="flex items-center space-x-6">
-                            <Link href="/Feed">
+                            <Link href="/feed">
                                 <Image
                                     className="w-auto h-14"
                                     src = {Logo}

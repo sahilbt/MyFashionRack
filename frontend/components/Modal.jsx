@@ -6,13 +6,20 @@ import Link from "next/Link"
 export default function Modal({data, handleClick}){
     const renderLinks = data.Clothing.map(clothing => {
         return(
-            <Link href={clothing.Link} className="bg-pink rounded-full px-3 text-sm" target="_blank">{clothing.Name}</Link>
+            <Link href={clothing.Link} className="bg-pink rounded-full px-3 py-[2px] text-sm group" target="_blank">
+                {clothing.Name}
+                <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
+                </Link>
         )
     })
     const renderStyles = data.Styles.map(style => {
         return(
-            <div className="bg-pink rounded-full px-3 text-sm">
-                <Link href={'/feed/styles/' + style} >{style}</Link>
+            <div className="bg-pink rounded-full px-3 py-[2px] text-sm group">
+                <Link href={'/feed/explore/' + style} >
+                    {style}
+                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
+                </Link>
+                
             </div>
         )
     })
