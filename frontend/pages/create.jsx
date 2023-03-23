@@ -42,13 +42,13 @@ export default function create(params) {
 
                 <div className="flex w-[65%] gap-10 justify-center my-10">
                     <div className="relative flex items-center justify-center w-1/2 h-[450px] bg-lightGrey rounded-lg border-dashed border-2 border-pink  hover:bg-[#515151]">
-                        <label htmlFor="drop" className="w-full h-full flex flex-col justify-center" >
+                        <label htmlFor="dropzone-file" className="w-full h-full flex flex-col justify-center items-center" >
                             <div className="flex flex-col items-center justify-center">
                                 <Image alt="" src = {addButton}/>
                                 <p className="text-sm">Click to upload OR drag and drop</p>
                             </div>
-                            <input id="drop" type="file" className="hidden" onChange={handleChange} />
-                            <Image alt="" className="object-contain" src={file} fill />
+                            <input id="dropzone-file" type="file" className="hidden" onChange={handleChange} accept="image/*" />
+                            <img alt="" className="object-contain absolute max-w-full max-h-full" src={file}  />
                             
                         </label>
                     </div>
