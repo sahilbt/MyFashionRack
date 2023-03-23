@@ -31,7 +31,7 @@ export default function Modal({data, handleClick}){
                 </div>
                 <div className="flex flex-col w-full pt-4 pb-3 px-8 gap-3">
                     <div className="border-b border-[#4F4F4F] pt-2 pb-4 text-lg">
-                        {data.Username}
+                        <Link href={"/users/" + data.Username}>{data.Username}</Link>
                     </div>
                     <div className="text-lg">
                         Description

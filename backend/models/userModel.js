@@ -62,7 +62,7 @@ const userSchema = mongoose.Schema({
 })
 
 userSchema.plugin(passportLocalMongoose,{
-    selectFields : 'firstName lastName displayName address age phoneNumber following followers followingStyles pictureRef'
+    selectFields : 'firstName lastName displayName address birthday phoneNumber following followers followingStyles pictureRef username'
 })
 userSchema.plugin(findOrCreate);
 

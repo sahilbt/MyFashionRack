@@ -1,7 +1,8 @@
 import { ReactElement, useState,useEffect} from "react";
 import Axios from "axios";
 import { useRouter } from 'next/router';
-
+Axios.defaults.withCredentials = true;
+import { useAppContext } from "../context/userContext";
 
 
 
@@ -9,6 +10,7 @@ export default function RegisterInformation({handler1,setPage,setForm,form,steps
 
     const[disable,setDisable] = useState(true);
     const router = useRouter();
+    const { setUser } = useAppContext();
 
     useEffect(()=>{
         if(currentStepIndex === 0){
@@ -66,7 +68,8 @@ export default function RegisterInformation({handler1,setPage,setForm,form,steps
         Axios.post(url, registerInformation)
           .then(function (response) {
             if(response.status === 200){
-                router.push('/me');
+                setUser(response.data.userDetails);
+                router.push('/users/me');
             }
           })
           .catch(function (error) {

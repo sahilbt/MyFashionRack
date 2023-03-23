@@ -1,6 +1,7 @@
-import Navbar from "../components/Navbar"
-import ProfilePost from "../components/ProfilePost"
-import posts from "../posts"
+import Navbar from "../../components/Navbar"
+import ProfilePost from "../../components/ProfilePost"
+import posts from "../../posts"
+
 
 export default function UserProfile(){
     const renderPosts = posts.map(post => {
@@ -21,7 +22,7 @@ export default function UserProfile(){
 
                         </div>
                     </div>
-                    <div className="w-3/4 h-20 pb-4 ">
+                    <div className="w-2/3 h-20 pb-4 ">
                         <h1 className="w-full text-center text-white text-4xl">
                            Your Wardrobe
                         </h1>

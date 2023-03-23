@@ -5,6 +5,7 @@ import { ReactElement, useState } from "react"
 import { motion } from "framer-motion"
 
 
+
 export default function Register() {
     const[page,setPage] = useState(0)
     const [form,setForm] = useState({email:"",password:"",verify:"",first:"",last:"",country:"",city:"",address:"",birthday:"",phone:"",display:""})
