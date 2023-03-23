@@ -75,7 +75,7 @@ export default function Feed() {
                         <div className="relative flex items-center justify-center mt-2  border-t border-[#808080] w-[85%]"></div>
 
                         <div className="mt-2">
-                            <p className="text-pink inline mr-2">{myMap.size}  </p> Followers
+                            <p className="text-pink inline mr-2">{myMap.size}</p> Followers
                         </div>
 
                         <div className="">
@@ -84,7 +84,7 @@ export default function Feed() {
                     
                         <div className="relative flex items-center justify-center mt-2  border-t border-[#808080] w-[85%]"></div>
 
-                        
+
                     </div>
 
                     <div className="flex flex-col gap-9 w-[30%]">
