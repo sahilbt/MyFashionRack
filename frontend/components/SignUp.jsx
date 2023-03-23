@@ -12,7 +12,7 @@ export default function SignUp({handler1,setPage,form}) {
 
 
     return (
-        <div className="flex flex-col items-center justify-center w-full h-screen text-center bg-darkGrey">
+        <div className="flex flex-col items-center justify-center text-center">
             <div className="flex w-full items-center content-center">
                 <div className="w-full grid place-items-center">
                     <div className="w-28 mb-6">

@@ -23,7 +23,9 @@ export function useMultistepForm(steps) {
       setCurrentStepIndex(index)
     }
 
-
+    function getWidth(){
+      return ((currentStepIndex/steps.length-1) * 100) + '%';
+    }
 
     return {
       currentStepIndex,
@@ -34,5 +36,7 @@ export function useMultistepForm(steps) {
       goTo,
       next,
       back,
+      getWidth,
+      width: ((currentStepIndex+1)/steps.length) * 100,
     }
   }
