@@ -14,12 +14,6 @@ export default function create(params) {
                     <div className="absolute px-5 bg-darkGrey text-white"></div>
                 </div>
 
-                <div className='w-[65%] mt-16'>
-                    <div className=' border-2 border-dashed w-1/2 h-1/2 border-pink '>
-                            
-                    </div>
-
-                </div>
             </div>
         </div>
     )
