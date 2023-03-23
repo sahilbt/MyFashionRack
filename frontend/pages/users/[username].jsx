@@ -5,8 +5,6 @@ export default function Details(params) {
     const router = useRouter()
     const username = router.query.username
 
-    
-
     return (
         <div className="w-full">
             <Navbar />
