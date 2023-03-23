@@ -9,17 +9,16 @@ export default function Modal({data, handleClick}){
             <Link href={clothing.Link} className="bg-pink rounded-full px-3 py-[2px] text-sm group" target="_blank">
                 {clothing.Name}
                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
-                </Link>
+            </Link>
         )
     })
     const renderStyles = data.Styles.map(style => {
         return(
             <div className="bg-pink rounded-full px-3 py-[2px] text-sm group">
-                <Link href={'/feed/explore/' + style} >
+                <Link onClick={handleClick} href={'/feed/explore/' + style} >
                     {style}
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                 </Link>
-                
             </div>
         )
     })

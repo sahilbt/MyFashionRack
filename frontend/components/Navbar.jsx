@@ -41,7 +41,7 @@ export default function Navbar() {
                         </div>    
                         <div className="flex space-x-14">
                             <div className="grid place-items-center gap-y-1">
-                                <Link href="#">
+                                <Link href="/create">
                                     <Image
                                         className="w-auto h-10"
                                         src={AddButton}
@@ -66,7 +66,7 @@ export default function Navbar() {
                             </div>
 
                             <div className="grid place-items-center gap-y-1">
-                                <Link href="/me">
+                                <Link href="/users/me">
                                     <Image
                                         className="w-auto h-10"
                                         src={AccountButton}
