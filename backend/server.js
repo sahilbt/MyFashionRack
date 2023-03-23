@@ -36,6 +36,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use("/authentication", require("./routes/userRoutes"));
 app.use("/users", require("./routes/postRoutes"));
+app.use("/styles", require("./routes/styleRoutes"));
 
 connect();
 app.listen(port, () => console.log(`Server started on port ${port}`));

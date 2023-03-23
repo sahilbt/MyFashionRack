@@ -31,34 +31,40 @@ const userSchema = mongoose.Schema({
     },
     following: {
         type: Map,
-        of: Boolean
+        of: Boolean,
+        default: {}
     },
     followers: {
         type: Map,
-        of: Boolean
+        of: Boolean,
+        default: {}
     },
     followingStyles: {
         type: Map,
-        of: Boolean
+        of: Boolean,
+        default: {}
     },
     pictureRef: {
         public_id:{
-            type:String
+            type:String,
+            default: ""
         },
         url:{
-            type:String
+            type:String,
+            default: ""
         },
         height: {
-            type:Number
+            type:Number,
+            default: ""
         },
         width: {
-            type:Number
+            type:Number,
+            default: ""
         }
     },
     googleId:{
         type:String
     }
-
 })
 
 userSchema.plugin(passportLocalMongoose,{

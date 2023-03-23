@@ -7,7 +7,7 @@ const { response } = require("express");
 const createPost = async (req,res) => {
 
     //have to save userID in frontend
-    const { image, userID, username, description, outfitPieces, styleTags } = req.body;
+    const { image, userID, description, outfitPieces, styleTags } = req.body;
     let result;
     
     try {
@@ -20,7 +20,6 @@ const createPost = async (req,res) => {
         const findUser = await User.findById(userID);
         const post = new Post({
             userID,
-            username,
             description,
             pictureRef:{public_id:result.public_id,
                 url:result.url, width: result.width,
@@ -68,7 +67,7 @@ const getFollowingStyles = async (req,res) => {
     try{
         const user = await User.findById(userID, "followingStyles").lean();
         const userStyles = user.followingStyles;
-        const posts = await Post.find({userID: {$in: userStyles}}).populate("user", "pictureRef", "displayName").lean();
+        const posts = await Post.find({styleTags: {$in: userStyles}}).populate("user", "pictureRef", "displayName").lean();
         res.status(200).json(posts);
     } 
     catch(error){
@@ -163,31 +162,34 @@ const getRecommendedStyles = async(req,res) => {
 
 const followUser = async(req,res) => {
     try {
-        const { userID, displayName } = req.body;
-        const followedUser = await User.find({displayName});
+        const { userID, userDisplayName } = req.body;
+        const followedUser = await User.findOne({displayName: userDisplayName});
         const user = await User.findById(userID);
         const followed = user.following.get(followedUser);
 
         if(followed){
-            user.following.delete(followUser._id);
-            followedUser.followers.set(user._id, true);
+            user.following.delete(followedUser._id);
+            followedUser.followers.delete(user._id);
         }else{
-            user.following.set(followUser._id, true);
-            followedUser.follers.delete(user._id);
+            user.following.set(followedUser._id, true);
+            followedUser.followers.set(user._id, true); 
         }
 
         const updatedUser = await User.findByIdAndUpdate(
             userID,
-            { following: user.following }
+            { following: user.following },
+            {new: true}
         );
 
         const updatedFollowedUser = await User.findByIdAndUpdate(
             followedUser._id,
-            { followers: followedUser.followers }
+            { followers: followedUser.followers },
+            {new: true}
         );
-        res.status(200);
+        res.status(200).json({currentUser: updatedUser, followUser: updatedFollowedUser });
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({error: "Could not follow user"});
     }
 }
@@ -205,23 +207,25 @@ const editProfile = async(req,res) => {
 
 const followStyle = async(req,res) => {
     try {
-        const { userID, name } = req.body;
+        const { userID, styleName } = req.body;
         const user = await User.findById(userID);
-        const style = await Style.find({name});
-        const following = user.followingStyles.get(style._id);
+        const style = await Style.findOne({name: styleName});
+        const following = user.followingStyles.get(style.name);
 
         if(following){
-            user.followingStyles.delete(style._id)
+            user.followingStyles.delete(style.name);
         }else{
-            user.following.set(style._id, true)
+            user.followingStyles.set(style.name, true);
         }
 
         const updatedUser = await User.findByIdAndUpdate(
             userID,
-            { followingStyles: user.followingStyles }
+            { followingStyles: user.followingStyles },
+            {new: true}
         );
-        res.status(200);
+        res.status(200).send({user:updatedUser});
     } catch (error) {
+        console.log(error);
         res.status(500).json({error: "Could not follow user"});
     }
 }
