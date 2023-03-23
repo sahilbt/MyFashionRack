@@ -5,7 +5,6 @@ import AddButton from "../public/add-button.svg"
 import LogOutButton from "../public/logout-button.svg"
 import AccountButton from "../public/account-button.svg"
 import Axios from "axios";
-import { useContext } from "react"
 import { useRouter } from 'next/router';
 import { useAppContext } from "../context/userContext";
 

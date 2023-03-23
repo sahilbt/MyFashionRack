@@ -1,7 +1,6 @@
 import SignUp from "../components/SignUp.jsx";
 import RegisterInformation from "../components/RegisterInformation.jsx"
-import { useMultistepForm } from "./RegisterHook.jsx";
-import { ReactElement, useState } from "react"
+import { useState } from "react"
 
 
 export default function Register() {
