@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import { useAppContext } from "../context/userContext";
 import addButton from "../public/addPhoto.svg"
-import Image from "next/image"
+import Image from "next/Image"
 
 export default function create(params) {
     const {user} = useAppContext()
