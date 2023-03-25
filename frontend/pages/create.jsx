@@ -2,11 +2,13 @@ import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import { useAppContext } from "../context/userContext";
 import addButton from "../public/addPhoto.svg"
-import Image from "next/image"
+import Image from "next/Image"
+import Link from "next/Link"
 import addButton2 from "../public/add-button.svg"
 import { AnimatePresence } from "framer-motion"
 import AddPieceModal from '../components/AddPieceModal';
 import AddStyleModal from '../components/AddStyleModal';
+import X from '../public/xmark-solid.svg'
 
 export default function create(params) {
     const [modal, setModal] = useState(false)
@@ -40,11 +42,36 @@ export default function create(params) {
         })
     }
 
+    function deleteHandler(param){
+        console.log(param)
+        var index = post.outfitPieces.indexOf(param)
+        console.log(index)
+        setPost(prev => {
+            return(
+                {
+                    ...prev,
+                    outfitPieces: prev.outfitPieces.filter(e => e != param)
+                }
+            )
+        })
+    }
+
     const [file, setFile] = useState();
     function handleChange(e) {
         setFile(URL.createObjectURL(e.target.files[0]));
     }
 
+    const renderLinks = post.outfitPieces.map(clothing => {
+        return(
+            <div className="flex items-center">
+                <Link href={clothing.link} className="bg-pink rounded-full px-3 py-[2px] text-sm group" target="_blank">
+                    {clothing.name}
+                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
+                </Link>
+                <Image onClick={() => deleteHandler(clothing)} src={X} className="h-5 w-auto ml-1"/>
+            </div>
+        )     
+    })
     return(
         <div className="w-full h-screen">
             <Navbar/>
@@ -71,20 +98,20 @@ export default function create(params) {
                             <h1 className="text-2xl">
                                 Add a description.
                             </h1>
-                            <textarea onChange={descHandler} maxLength={300} placeholder="Add your description here!" className="resize-none bg-lightGrey border-solid border-2 border-pink rounded-md p-2 w-full h-4/5 text-sm">
-
-                            </textarea>
+                            <textarea onChange={descHandler} maxLength={300} placeholder="Add your description here!" className="resize-none bg-lightGrey border-solid border-2 border-pink rounded-md p-2 w-full h-4/5 text-sm"></textarea>
                         </div>
                         <div className="h-1/3">
                             <div className="text-2xl flex items-center ">
                                 Can you link some of your pieces?
                                 <Image className="pl-2 w-8 h-8 cursor-pointer" src={addButton2} onClick={handleClick}/>
                                 <AnimatePresence>
-                                    {modal && <AddPieceModal modal={modal} handleClick={handleClick}/>}
+                                    {modal && <AddPieceModal modal={modal} setPost={setPost} handleClick={handleClick}/>}
                                 </AnimatePresence>
                             </div>
                             <div className="bg-lightGrey border-solid border-2 border-pink rounded-md p-2 w-full h-4/5">
-
+                                <div className="flex flex-wrap gap-3">
+                                    {post.outfitPieces.length != 0 && renderLinks}
+                                </div>
                             </div>
                         </div>
                         <div className="h-1/3">
