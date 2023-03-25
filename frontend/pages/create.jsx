@@ -3,8 +3,22 @@ import Navbar from '../components/Navbar'
 import { useAppContext } from "../context/userContext";
 import addButton from "../public/addPhoto.svg"
 import Image from "next/image"
+import addButton2 from "../public/add-button.svg"
+import { AnimatePresence } from "framer-motion"
+import AddPieceModal from '../components/AddPieceModal';
+import AddStyleModal from '../components/AddStyleModal';
 
 export default function create(params) {
+    const [modal, setModal] = useState(false)
+    function handleClick(){
+        setModal(() => !modal)
+    }
+
+    const [modal2, setModal2] = useState(false)
+    function handleClick2(){
+        setModal2(() => !modal2)
+    }
+
     const {user} = useAppContext()
     const [post, setPost] = useState(
         {
@@ -45,7 +59,7 @@ export default function create(params) {
                         <label htmlFor="dropzone-file" className="w-full h-full flex flex-col justify-center items-center" >
                             <div className="flex flex-col items-center justify-center">
                                 <Image alt="" src = {addButton}/>
-                                <p className="text-sm">Click to upload OR drag and drop</p>
+                                <p className="text-sm">Click to upload an image!</p>
                             </div>
                             <input id="dropzone-file" type="file" className="hidden" onChange={handleChange} accept="image/*" />
                             <img alt="" className="object-contain absolute max-w-full max-h-full" src={file}  />
@@ -62,17 +76,25 @@ export default function create(params) {
                             </textarea>
                         </div>
                         <div className="h-1/3">
-                            <h1 className="text-2xl">
+                            <div className="text-2xl flex items-center ">
                                 Can you link some of your pieces?
-                            </h1>
+                                <Image className="pl-2 w-8 h-8 cursor-pointer" src={addButton2} onClick={handleClick}/>
+                                <AnimatePresence>
+                                    {modal && <AddPieceModal modal={modal} handleClick={handleClick}/>}
+                                </AnimatePresence>
+                            </div>
                             <div className="bg-lightGrey border-solid border-2 border-pink rounded-md p-2 w-full h-4/5">
 
                             </div>
                         </div>
                         <div className="h-1/3">
-                            <h1 className="text-2xl">
+                        <div className="text-2xl flex items-center ">
                                 What style(s) are you going for?
-                            </h1>
+                                <Image className="pl-2 w-8 h-8 cursor-pointer" src={addButton2} onClick={handleClick2}/>
+                                <AnimatePresence>
+                                    {modal2 && <AddStyleModal modal={modal2} handleClick={handleClick2}/>}
+                                </AnimatePresence>
+                            </div>
                             <div className="bg-lightGrey border-solid border-2 border-pink rounded-md p-2 w-full h-4/5">
 
                             </div>

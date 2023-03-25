@@ -51,7 +51,7 @@ export default function index(){
                         whileInView={{x:0}}
                         transition={{duration:0.7}}
                     >
-                        See a fit Only like specific pieces of the outfit? Don't worry, there are links to each individual article of clothing!
+                        Only like specific pieces of the outfit? Don't worry, there are links to each individual article of clothing!
                     </motion.div>
                     <motion.div className="w-1/3 h-auto"
                         initial={{x:100}}

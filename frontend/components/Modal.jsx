@@ -24,7 +24,7 @@ export default function Modal({data, handleClick}){
     })
     return(
         <Backdrop handleClick={handleClick}>
-            <motion.div onClick={(event) => event.stopPropagation()} className="bg-lightGrey w-3/5 h-2/3 grid grid-cols-2 rounded-lg text-white">
+            <motion.div onClick={(event) => event.stopPropagation()} className="bg-lightGrey w-3/5 h-2/3 grid grid-cols-2 rounded-xl text-white">
                 <div className="relative bg-black rounded-l-lg">
                     <Image alt="Outfit" className="object-contain" src={data.Image} fill />
                 </div>
