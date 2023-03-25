@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import { useAppContext } from "../context/userContext";
 import addButton from "../public/addPhoto.svg"
-import Image from "next/image"
+import Image from "next/Image"
 import addButton2 from "../public/add-button.svg"
 import { AnimatePresence } from "framer-motion"
 import AddPieceModal from '../components/AddPieceModal';
