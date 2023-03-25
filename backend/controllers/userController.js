@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const passport = require("../configuration/passport-config");
+const { OAuth2Client } = require('google-auth-library');
 
 const registerUser = async(req,res) => {
 
@@ -77,12 +78,32 @@ const logOutUser = (req,res) => {
 //     } 
 // }
 
-const googleAuth = passport.authenticate('google', { scope: ['profile'] });
+const googleAuth = passport.authenticate('google', { scope: ['profile', 'email'] });
+  
+const googleAuthCallback = passport.authenticate('google', { failureRedirect: 'http://localhost:3000', successRedirect: 'http://localhost:3000/Register' });
 
-const googleAuthCallback = passport.authenticate('google', { failureRedirect: '/login' }, function(req, res) {
-  // Successful authentication, redirect home.
-  res.status(200).json({ message: 'Authentication successful'});
-});
+
+// const CLIENT_ID = process.env.CLIENT_ID;
+// const CLIENT_SECRET = process.env.CLIENT_SECRET;
+// const REDIRECT_URI = 'http://localhost:8000/authentication/google/callback';
+
+// const client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+
+// const googleAuth = (req, res) => {
+//     const authorizeUrl = client.generateAuthUrl({
+//       access_type: 'offline',
+//       scope: ['profile'],
+//     });
+//     res.redirect(authorizeUrl);
+//   };
+  
+//   const googleAuthCallback = async (req, res) => {
+//     const code = req.query.code;
+//     const { tokens } = await client.getToken(code);
+//     // Use the tokens to make requests to the Google API
+//     // You can also save the tokens to a database for later use
+//     res.redirect('/');
+//   };
 
 module.exports = {
     registerUser,
