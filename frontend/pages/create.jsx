@@ -31,6 +31,7 @@ export default function create(params) {
             styleTags:[] 
         }
     )
+    
     function descHandler(event){
         setPost(prev => {
             return(
@@ -43,9 +44,7 @@ export default function create(params) {
     }
 
     function deleteHandler(param){
-        console.log(param)
         var index = post.outfitPieces.indexOf(param)
-        console.log(index)
         setPost(prev => {
             return(
                 {
@@ -57,8 +56,10 @@ export default function create(params) {
     }
 
     const [file, setFile] = useState();
+    const [filePath, setFilePath] = useState();
     function handleChange(e) {
-        setFile(URL.createObjectURL(e.target.files[0]));
+        setFilePath(URL.createObjectURL(e.target.files[0]))
+        setFile(e.target.files[0])
     }
 
     const renderLinks = post.outfitPieces.map(clothing => {
@@ -71,6 +72,14 @@ export default function create(params) {
                 <Image onClick={() => deleteHandler(clothing)} src={X} className="h-5 w-auto ml-1"/>
             </div>
         )     
+    })
+
+    const renderStyles = post.styleTags.map(style => {
+        return(
+            <div className="bg-pink rounded-full px-3 py-[2px] text-sm group">
+                {style}
+            </div>
+        )
     })
     return(
         <div className="w-full h-screen">
@@ -89,7 +98,7 @@ export default function create(params) {
                                 <p className="text-sm">Click to upload an image!</p>
                             </div>
                             <input id="dropzone-file" type="file" className="hidden" onChange={handleChange} accept="image/*" />
-                            <img alt="" className="object-contain absolute max-w-full max-h-full" src={file}  />
+                            <img alt="" className="object-contain absolute max-w-full max-h-full" src={filePath}  />
                             
                         </label>
                     </div>
@@ -119,11 +128,13 @@ export default function create(params) {
                                 What style(s) are you going for?
                                 <Image className="pl-2 w-8 h-8 cursor-pointer" src={addButton2} onClick={handleClick2}/>
                                 <AnimatePresence>
-                                    {modal2 && <AddStyleModal modal={modal2} handleClick={handleClick2}/>}
+                                    {modal2 && <AddStyleModal setPost={setPost} modal={modal2} handleClick={handleClick2}/>}
                                 </AnimatePresence>
                             </div>
                             <div className="bg-lightGrey border-solid border-2 border-pink rounded-md p-2 w-full h-4/5">
-
+                                <div className="flex flex-wrap gap-3">
+                                    {post.styleTags.length != 0 && renderStyles}
+                                </div>
                             </div>
                         </div>
                     </div>
