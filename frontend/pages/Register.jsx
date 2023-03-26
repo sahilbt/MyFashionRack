@@ -1,25 +1,23 @@
+import { useState } from "react";
 import SignUp from "../components/SignUp.jsx";
-import RegisterInformation from "../components/RegisterInformation.jsx"
-import { useState } from "react"
-
 
 export default function Register() {
-    const[page,setPage] = useState(0)
-    const [form,setForm] = useState({email:"",password:"",verify:"",first:"",last:"",country:"",city:"",address:"",birthday:"",phone:"",display:""})
+    const [form1,setForm1] = useState({email:"",password:"",verify:""})
 
     function handler1(event){
-        setForm(prevForm =>{
+        
+        setForm1(prevForm1 =>{
             return{
-            ...prevForm,
+            ...prevForm1,
             [event.target.name]:event.target.value
         }
     })}
-
     return (
-        <form className="bg-darkGrey grid h-screen w-screen">
-            {page==0 && <SignUp handler1 = {handler1} setPage = {setPage} form = {form}/>}
-            {page==1 && <RegisterInformation handler1 = {handler1} setPage = {setPage} setForm = {setForm} form = {form}/>}
-        </form>
-
-    )
-}
+        <div className="w-full h-screen bg-grey">
+            <form className=" h-full flex flex-col justify-center items-center text-center">
+                <SignUp handler1 = {handler1} form1 = {form1}/>
+            </form>
+        </div>
+    
+        )
+    }

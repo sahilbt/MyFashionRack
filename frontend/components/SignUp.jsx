@@ -4,15 +4,29 @@ import Google from "../public/google.svg"
 import Link from "next/Link"
 
 
-export default function SignUp({handler1,setPage,form}) {
-    
-    function nextPage(){
-        setPage(1);
+export default function SignUp({handler1,form1}) {
+
+
+    function signUpHandler(){
+
+        if((form1.email==='')||(form1.password==='')||(form1.verify===''))
+            return true;
+        
+        if(form1.email.match("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")===null){
+            return true;
+        }
+
+        if(form1.password!=form1.verify){
+            return true;
+        }
+
+        return false;
+        
     }
 
 
     return (
-        <div className="flex flex-col items-center justify-center w-full h-screen text-center bg-darkGrey">
+        <div className="flex flex-col items-center justify-center text-center">
             <div className="flex w-full items-center content-center">
                 <div className="w-full grid place-items-center">
                     <div className="w-28 mb-6">
@@ -28,9 +42,11 @@ export default function SignUp({handler1,setPage,form}) {
                         <input type="email" name="email" placeholder="email" className="px-4 h-12 w-96 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]" onChange={handler1}/>
                         <input type="password" name="password" placeholder="password" className="px-4 h-12 w-96 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"onChange={handler1}/>
                         <input type="password" name="verify" placeholder="verify password" className="px-4 h-12 w-96 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"onChange={handler1}/>
-                            <button  disabled={!form.email||!form.password||!form.verify} type = "button" onClick = {nextPage} className="bg-pink text-white rounded-3xl w-48 h-12 hover:bg-[#AA4E65]">
+                        <Link href='/RegisterDetails'>
+                            <button  disabled={signUpHandler()} type = "button" className="bg-pink text-white rounded-3xl w-48 h-12 hover:bg-[#AA4E65]">
                                 Sign Up
                             </button>
+                        </Link>
                         <div className="relative flex items-center justify-center mt-4 border w-96">
                             <div className="absolute px-5 bg-darkGrey text-white">OR</div>
                         </div>
