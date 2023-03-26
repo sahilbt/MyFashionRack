@@ -6,7 +6,7 @@ import { useAppContext } from "../context/userContext";
 
 
 
-export default function RegisterInformation({handler1,setPage,setForm,form,steps,currentStepIndex,step,back,next,goto,isFirstStep,isLastStep,width}) {
+export default function RegisterInformation({handler2,setPage,setform2,form2,steps,currentStepIndex,step,back,next,goto,isFirstStep,isLastStep,width}) {
 
     const[disable,setDisable] = useState(true);
     const router = useRouter();
@@ -15,7 +15,7 @@ export default function RegisterInformation({handler1,setPage,setForm,form,steps
     useEffect(()=>{
         if(currentStepIndex === 0){
             
-            if(!form.first||!form.last){
+            if(!form2.first||!form2.last){
                 setDisable(true);
             }
             else{
@@ -23,7 +23,7 @@ export default function RegisterInformation({handler1,setPage,setForm,form,steps
             }
         }
         else if(currentStepIndex === 1){
-            if(!form.country||!form.city||!form.address){
+            if(!form2.country||!form2.city||!form2.address){
                 setDisable(true);
             }
             else{
@@ -31,7 +31,7 @@ export default function RegisterInformation({handler1,setPage,setForm,form,steps
             }
         }
         else if(currentStepIndex === 2){
-            if(!form.birthday||!form.phone){
+            if(!form2.birthday||!form2.phone||form2.phone.match("^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$") == null){
                 setDisable(true);
             }
             else{
@@ -39,33 +39,33 @@ export default function RegisterInformation({handler1,setPage,setForm,form,steps
             }
         }
         else if(currentStepIndex === 3){
-            if(!form.display){
+            if(!form2.display){
                 setDisable(true);
             }
             else{
                 setDisable(false);
             }
         }
-    },[form]);
+    },[form2]);
 
     const registerButton = async(event) => {
         event.preventDefault();
         const url = "http://localhost:8000/authentication/register";
-        const registerInformation = {
-            username: form.email,
-            password: form.password,
-            firstName: form.first,
-            lastName: form.last,
-            displayName: form.display,
+        const registerInform2ation = {
+            username: form2.email,
+            password: form2.password,
+            firstName: form2.first,
+            lastName: form2.last,
+            displayName: form2.display,
             address:{
-                country:form.country,
-                city: form.city ,
-                street: form.address
+                country:form2.country,
+                city: form2.city ,
+                street: form2.address
             },
-            birthday: form.birthday,
-            phoneNumber: form.phone
+            birthday: form2.birthday,
+            phoneNumber: form2.phone
         };
-        Axios.post(url, registerInformation)
+        Axios.post(url, registerInform2ation)
           .then(function (response) {
             if(response.status === 200){
                 setUser(response.data.userDetails);
@@ -82,19 +82,19 @@ export default function RegisterInformation({handler1,setPage,setForm,form,steps
     }
 
     const SignUp = () => {
-        setForm({...form,email:"",password:"",verify:""})
+        setform2({...form2,email:"",password:"",verify:""})
         setPage(0);
     }
 
     const backPage = () => {
         if(currentStepIndex === 1){
-            setForm({...form,first:"",last:"",city:"",address:""})
+            setform2({...form2,first:"",last:"",city:"",address:""})
         }
         else if(currentStepIndex === 2){
-            setForm({...form,country:"",city:"",address:"",birthday:"",phone:""})
+            setform2({...form2,country:"",city:"",address:"",birthday:"",phone:""})
         }
         else if(currentStepIndex === 3){
-            setForm({...form,birthday:"",phone:"",display:""})
+            setform2({...form2,birthday:"",phone:"",display:""})
         }
         setDisable(true);
         back()
@@ -103,7 +103,6 @@ export default function RegisterInformation({handler1,setPage,setForm,form,steps
     const nextPage = () => {
         setDisable(true);
         next();
-        console.log('harshal: ' + width+'%')
     }
 
 
@@ -112,7 +111,6 @@ export default function RegisterInformation({handler1,setPage,setForm,form,steps
             <div className="w-3/4 m-auto flex flex-col justify-center">
                 {step}
                 <div className="py-20 m-auto flex flex-end gap-x-12">
-                    {isFirstStep && <button  type = "button" onClick = {SignUp} className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]">back</button>}
                     {!isFirstStep && <button type = "button" onClick = {backPage} className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]">back</button>}
                     {!isLastStep && <button  disabled = {disable} type = "button" onClick = {nextPage} className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]">next</button>}
                     {isLastStep && <button  className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]" onClick = {registerButton}>Submit</button>}

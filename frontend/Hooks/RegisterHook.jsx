@@ -37,6 +37,6 @@ export function useMultistepForm(steps) {
       next,
       back,
       getWidth,
-      width: ((currentStepIndex+1)/steps.length) * 100,
+      width: ((currentStepIndex)/steps.length) * 100,
     }
   }
