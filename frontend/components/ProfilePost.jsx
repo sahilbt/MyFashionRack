@@ -10,8 +10,8 @@ export default function ProfilePost(props){
         setModal(() => !modal)
     }
     return(
-        <div onClick={handleClick} className="w-full aspect-square">
-            <div className="bg-black relative -z-10 w-full h-full rounded-lg">
+        <div onClick={handleClick} className="w-full aspect-square cursor-pointer ">
+            <div className="bg-black relative -z-10 w-full h-full rounded-lg ">
                 <Image alt="Outfit" className="object-cover rounded-lg" src={props.Image} fill/>
             </div>
             <AnimatePresence>
