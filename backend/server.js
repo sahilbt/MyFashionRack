@@ -8,11 +8,13 @@ const session = require("express-session");
 const passport = require("./configuration/passport-config");
 const passportLocalMongoose = require("passport-local-mongoose");
 const app = express();
-app.use(express.json());
 const MongoDBStore = require("connect-mongodb-session")(session);
-app.use(express.urlencoded({extended: false}));
-const bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({extended:false}));
+//app.use(express.urlencoded({extended: false}));
+// const bodyParser = require("body-parser");
+// app.use(bodyParser.urlencoded({extended:false}));
+
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb',extended: false}));
 
 app.use(cors({
   origin: 'http://localhost:3000',

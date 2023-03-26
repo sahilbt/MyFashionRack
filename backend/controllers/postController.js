@@ -7,19 +7,12 @@ const { response } = require("express");
 const createPost = async (req,res) => {
 
     //have to save userID in frontend
-    const { image, userID, description, outfitPieces, styleTags } = req.body;
-    let result;
+    const { image, user, description, outfitPieces, styleTags } = req.body;
     
-    try {
-        const result = await cloudinary.uploader.upload(image);
-    } catch (error) {
-        console.log(error);
-    }
-
     try{
-        const findUser = await User.findById(userID);
+        const result = await cloudinary.uploader.upload(req.body.image);
         const post = new Post({
-            userID,
+            user,
             description,
             pictureRef:{public_id:result.public_id,
                 url:result.url, width: result.width,
