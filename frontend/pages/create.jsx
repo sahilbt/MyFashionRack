@@ -31,7 +31,7 @@ export default function create(params) {
             styleTags:[] 
         }
     )
-    
+
     function descHandler(event){
         setPost(prev => {
             return(
@@ -69,7 +69,7 @@ export default function create(params) {
                     {clothing.name}
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                 </Link>
-                <Image onClick={() => deleteHandler(clothing)} src={X} className="h-5 w-auto ml-1"/>
+                <Image alt="" onClick={() => deleteHandler(clothing)} src={X} className="h-5 w-auto ml-1"/>
             </div>
         )     
     })
@@ -81,6 +81,7 @@ export default function create(params) {
             </div>
         )
     })
+    
     return(
         <div className="w-full h-screen">
             <Navbar/>
@@ -112,7 +113,7 @@ export default function create(params) {
                         <div className="h-1/3">
                             <div className="text-2xl flex items-center ">
                                 Can you link some of your pieces?
-                                <Image className="pl-2 w-8 h-8 cursor-pointer" src={addButton2} onClick={handleClick}/>
+                                <Image alt="" className="pl-2 w-8 h-8 cursor-pointer" src={addButton2} onClick={handleClick}/>
                                 <AnimatePresence>
                                     {modal && <AddPieceModal modal={modal} setPost={setPost} handleClick={handleClick}/>}
                                 </AnimatePresence>
@@ -126,7 +127,7 @@ export default function create(params) {
                         <div className="h-1/3">
                         <div className="text-2xl flex items-center ">
                                 What style(s) are you going for?
-                                <Image className="pl-2 w-8 h-8 cursor-pointer" src={addButton2} onClick={handleClick2}/>
+                                <Image alt="" className="pl-2 w-8 h-8 cursor-pointer" src={addButton2} onClick={handleClick2}/>
                                 <AnimatePresence>
                                     {modal2 && <AddStyleModal setPost={setPost} modal={modal2} handleClick={handleClick2}/>}
                                 </AnimatePresence>
