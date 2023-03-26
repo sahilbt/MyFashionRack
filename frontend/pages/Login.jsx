@@ -2,7 +2,7 @@ import Image from "next/Image"
 import Logo from "../public/LogoPink.png"
 import Google from "../public/google.svg"
 import Link from "next/Link"
-import { useState, useContext } from "react"
+import { useState } from "react"
 import { useRouter } from 'next/router';
 import { useAppContext } from "../context/userContext";
 
@@ -24,7 +24,6 @@ export default function Login() {
                 setUser(response.data.userDetails)
                 router.push('/users/me');
             }
-
           })
           .catch(function (error) {
             console.log(error);
