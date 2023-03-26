@@ -36,10 +36,17 @@ export default function AddPieceModal({setPost, handleClick}) {
         const styles = []
         for (const x in selected){
             if(selected[x] == true){
-                styles.push(`${x}`)
+                if(`${x}` == "BusinessCasual"){
+                    styles.push("Business-Casual")
+                }
+                else if(`${x}` == "SecondHand"){
+                    styles.push("Second-Hand")
+                }
+                else{
+                    styles.push(`${x}`)
+                }
             }   
         }
-
         setPost(prev => {
             return(
                 {
@@ -119,7 +126,7 @@ export default function AddPieceModal({setPost, handleClick}) {
                     <label htmlFor="Casual" className="relative cursor-pointer">
                         <input type="checkbox" name="BusinessCasual" checked={selected.BusinessCasual} onChange={handleChange} id="Casual" className="peer sr-only" />
                         <span className="absolute w-full text-center rounded-full bg-[#464646] text-[#7E7E7E] hover:bg-[#515151] peer-checked:bg-pink peer-checked:text-white">
-                            Business Casual
+                            Business-Casual
                         </span>
                     </label>
 
