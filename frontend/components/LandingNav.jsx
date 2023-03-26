@@ -5,10 +5,11 @@ import Twit from "../public/twitter.svg"
 import Facebook from "../public/square-facebook.svg"
 import Mail from "../public/envelope-solid.svg"
 import Link from "next/Link"
-import { useAppContext } from "../context/userContext";
+import { useAppContext } from "../context/userContext"
 
 export default function LandingNav(){
     const { user } = useAppContext();
+    
     const logInPath = user._id ? "/users/me" : "/Login"
     const registerPath = user._id ? "/users/me" : "/Register"
     return(

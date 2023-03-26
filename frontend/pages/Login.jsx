@@ -21,7 +21,7 @@ export default function Login() {
         Axios.post(url, fields )
           .then(function (response) {
             if(response.status === 200){
-                setUser(response.data.userDetails)
+                setUser(response.data.userDetails);
                 router.push('/users/me');
             }
           })
