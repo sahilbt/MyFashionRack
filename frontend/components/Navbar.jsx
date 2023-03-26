@@ -5,7 +5,6 @@ import AddButton from "../public/add-button.svg"
 import LogOutButton from "../public/logout-button.svg"
 import AccountButton from "../public/account-button.svg"
 import Axios from "axios";
-import { useContext } from "react"
 import { useRouter } from 'next/router';
 import { useAppContext } from "../context/userContext";
 
@@ -42,7 +41,7 @@ export default function Navbar() {
                         </div>    
                         <div className="flex space-x-14">
                             <div className="grid place-items-center gap-y-1">
-                                <Link href="#">
+                                <Link href="/create">
                                     <Image
                                         className="w-auto h-10"
                                         src={AddButton}
@@ -67,7 +66,7 @@ export default function Navbar() {
                             </div>
 
                             <div className="grid place-items-center gap-y-1">
-                                <Link href="/me">
+                                <Link href="/users/me">
                                     <Image
                                         className="w-auto h-10"
                                         src={AccountButton}

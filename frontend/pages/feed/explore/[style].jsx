@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import Image from 'next/image'
+import Image from 'next/Image'
 import Navbar from '../../../components/Navbar'
 import ProfilePost from "../../../components/ProfilePost"
 import Compass from '../../../public/compass.svg'
