@@ -4,6 +4,9 @@ import Google from "../public/google.svg"
 import Link from "next/Link"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios"
+axios.defaults.withCredentials = true;
+axios.defaults.headers["content-type"] = "application/json";
 
 
 export default function SignUp({handler1,form1}) {
@@ -60,6 +63,29 @@ export default function SignUp({handler1,form1}) {
         
     }
 
+    const checkRedirect = (successUrl, failureUrl) => {
+        return new Promise((resolve, reject) => {
+          const interval = setInterval(() => {
+            if (window.location.href === successUrl) {
+              clearInterval(interval);
+              resolve();
+            } else if (window.location.href === failureUrl) {
+              clearInterval(interval);
+              reject(new Error('Authentication failed.'));
+            }
+          }, 5000);
+        });
+      };
+      
+    const googleButton = async (event) => {
+        event.preventDefault();
+        window.location.href = "http://localhost:8000/authentication/google";
+        try {
+            await checkRedirect("http://localhost:3000/Register", "http://localhost:3000/"); 
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <div className="flex flex-col items-center justify-center text-center">
@@ -91,7 +117,8 @@ export default function SignUp({handler1,form1}) {
                         <div className="relative flex items-center justify-center mt-4 border w-96">
                             <div className="absolute px-5 bg-darkGrey text-white">OR</div>
                         </div>
-                        <button className="bg-darkGrey text-white rounded-3xl mt-4 w-64 h-12 outline outline-2 outline-white hover:outline-pink">
+                        <button className="bg-darkGrey text-white rounded-3xl mt-4 w-64 h-12 outline outline-2 outline-white hover:outline-pink"
+                            >
                             <Image src = {Google} className="h-1/2 w-auto inline-block mr-3"/>
                             Continue with Google
                         </button>
