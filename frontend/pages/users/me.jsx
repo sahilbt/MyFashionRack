@@ -1,9 +1,11 @@
 import Navbar from "../../components/Navbar"
 import ProfilePost from "../../components/ProfilePost"
 import posts from "../../posts"
+import { useAppContext } from "../../context/userContext";
 
 export default function UserProfile(){
-   
+    const {user} = useAppContext();
+
     const renderPosts = posts.map(post => {
         return(
             <ProfilePost {...post}/>

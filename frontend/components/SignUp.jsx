@@ -87,28 +87,10 @@ export default function SignUp({handler1,form1}) {
         
     }
 
-    const checkRedirect = (successUrl, failureUrl) => {
-        return new Promise((resolve, reject) => {
-          const interval = setInterval(() => {
-            if (window.location.href === successUrl) {
-              clearInterval(interval);
-              resolve();
-            } else if (window.location.href === failureUrl) {
-              clearInterval(interval);
-              reject(new Error('Authentication failed.'));
-            }
-          }, 5000);
-        });
-      };
-      
-    const googleButton = async (event) => {
+    const googleButton = (event) => {
+        console.log("triggered");
         event.preventDefault();
         window.location.href = "http://localhost:8000/authentication/google";
-        try {
-            await checkRedirect("http://localhost:3000/Register", "http://localhost:3000/"); 
-        } catch (error) {
-            console.error(error);
-        }
     };
 
     return (

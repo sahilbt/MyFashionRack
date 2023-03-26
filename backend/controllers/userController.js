@@ -101,10 +101,28 @@ const logOutUser = (req,res) => {
 //     } 
 // }
 
-const googleAuth = passport.authenticate('google', { scope: ['profile', 'email'] });
-  
-const googleAuthCallback = passport.authenticate('google', { failureRedirect: 'http://localhost:3000', successRedirect: 'http://localhost:3000/Register' });
+const googleAuth = passport.authenticate('google', { scope: ['profile', 'email'] }, (err, user, info) => {
+    console.log('googleAuth function called!');
+  });  
+const googleAuthCallback = passport.authenticate('google', { failureRedirect: 'http://localhost:3000/Login', successRedirect: 'http://localhost:3000/googleLoading' });
 
+const googleCheck =  (req,res) => {
+    passport.authenticate('google', { scope: ['profile', 'email'] }, async (err, user, info) => {
+        if (err) {
+          return res.status(500).send(err);
+        }
+        if (!user) {
+          return res.status(401).send(info);
+        }
+        const googleId = user.googleId;
+        const foundUser = await User.findOne({googleId});
+        if (foundUser.displayName){
+            res.send({foundUser, message:"REGISTERED"});
+        }else{
+            res.send({foundUser, message:"NOT"});
+        }
+      })(req, res);
+}
 
 // const CLIENT_ID = process.env.CLIENT_ID;
 // const CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -134,5 +152,6 @@ module.exports = {
     logOutUser,
     patchUser,
     googleAuth,
-    googleAuthCallback
+    googleAuthCallback,
+    googleCheck
 }
