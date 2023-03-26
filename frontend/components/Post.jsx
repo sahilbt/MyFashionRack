@@ -6,7 +6,6 @@ import Link from 'next/Link'
 
 export default function Post(props){
     const [modal, setModal] = useState(false)
-    console.log(modal)
     function handleClick(){
         setModal(() => !modal)
     }
@@ -16,7 +15,7 @@ export default function Post(props){
                 <Link href={"/users/" + props.Username}>{props.Username}</Link>
                 
             </div>
-            <div onClick={handleClick}>
+            <div onClick={handleClick} className="cursor-pointer">
                 <div className="bg-black h-[500px] relative -z-10">
                     <Image alt="Outfit" className="object-contain" src={props.Image} fill/>
                 </div>
