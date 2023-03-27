@@ -1,10 +1,30 @@
 import Navbar from "../../components/Navbar"
 import ProfilePost from "../../components/ProfilePost"
-import posts from "../../posts"
-
+//import posts from "../../posts"
+import { useAppContext } from "../../context/userContext";
+import { useEffect, useState } from "react";
+import Axios from "axios";
 
 export default function UserProfile(){
-    const renderPosts = posts.map(post => {
+    const {user} = useAppContext();
+    const [posts, setPosts ]  = useState([]);
+    useEffect(() => {
+        Axios.get("http://localhost:8000/users/userPosts", {params:{
+            userID: user._id
+            }
+        })
+        .then(function (response) {
+            if(response.status == 200){
+                setPosts(response.data);
+            }  
+        })
+        .catch(function(error){
+            console.log(error)
+        })
+    },[]);
+
+    const renderPosts =  posts && posts.map(post => {
+        
         return(
             <ProfilePost {...post}/>
         )
@@ -12,7 +32,7 @@ export default function UserProfile(){
     return(
         <div className="w-full">
             <Navbar />
-            <div className="w-full flex justify-center items-center mt-10">
+            <div className="w-full flex justify-center items-center mt-10 ">
                 <div className="w-4/5 flex justify-between">
                     <div className="flex flex-col gap-9">
                         <div className="bg-lightGrey h-60 w-60 rounded-xl outline outline-1 outline-pink">
@@ -30,7 +50,7 @@ export default function UserProfile(){
                             40 Outfits
                         </h1>
                         <div className=" mt-4 border w-full"></div>
-                        <div className="grid grid-cols-3 grid-flow-row gap-9 mt-10">
+                        <div className="grid grid-cols-3 grid-flow-row gap-9 mt-10 pb-5">
                             {renderPosts}
                         </div>
                     </div>

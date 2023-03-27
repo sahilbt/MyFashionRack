@@ -12,7 +12,7 @@ export default function ProfilePost(props){
     return(
         <div onClick={handleClick} className="w-full aspect-square cursor-pointer ">
             <div className="bg-black relative -z-10 w-full h-full rounded-lg ">
-                <Image alt="Outfit" className="object-cover rounded-lg" src={props.Image} fill/>
+                <Image alt="Outfit" className="object-cover rounded-lg" src={props.pictureRef.url} fill/>
             </div>
             <AnimatePresence>
                 {modal && <Modal data={props} modal={modal} handleClick={handleClick}/>}

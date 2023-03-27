@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Navbar from '../components/Navbar'
-import { useAppContext } from "../context/userContext";
 import addButton from "../public/addPhoto.svg"
 import Image from "next/Image"
 import Link from "next/Link"
@@ -9,8 +8,13 @@ import { AnimatePresence } from "framer-motion"
 import AddPieceModal from '../components/AddPieceModal';
 import AddStyleModal from '../components/AddStyleModal';
 import X from '../public/xmark-solid.svg'
-
+import Axios from "axios";
+import { useAppContext } from '../context/userContext'
+import { useRouter } from "next/router";
 export default function create(params) {
+    const router = useRouter();
+    const { user } = useAppContext();
+    
     const [modal, setModal] = useState(false)
     function handleClick(){
         setModal(() => !modal)
@@ -21,10 +25,9 @@ export default function create(params) {
         setModal2(() => !modal2)
     }
 
-    const {user} = useAppContext()
     const [post, setPost] = useState(
         {
-            userID: user._id,
+            user: user._id,
             description: "",
             image: 0,
             outfitPieces: [],
@@ -57,10 +60,29 @@ export default function create(params) {
 
     const [file, setFile] = useState();
     const [filePath, setFilePath] = useState();
-    function handleChange(e) {
-        setFilePath(URL.createObjectURL(e.target.files[0]))
-        setFile(e.target.files[0])
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+          const fileReader = new FileReader();
+          fileReader.readAsDataURL(file);
+          fileReader.onload = () => {
+            resolve(fileReader.result);
+          };
+          fileReader.onerror = (error) => {
+            reject(error);
+          };
+        });
+      };
+
+    async function handleChange(e) {
+        console.log(user._id);
+        setFilePath(URL.createObjectURL(e.target.files[0]));
+        const fileIn = e.target.files[0];
+        const base64 = await convertToBase64(fileIn);
+        setPost({ ...post, image: base64 });
+        console.log(base64);
     }
+
+    
 
     const renderLinks = post.outfitPieces.map(clothing => {
         return(
@@ -81,13 +103,24 @@ export default function create(params) {
             </div>
         )
     })
+
+    const addPostButton = (req,res) => {
+        Axios.post("http://localhost:8000/users/create", post)
+        .then(function (response) {
+            console.log(response);
+            router.push('/users/me');
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
     
     return(
         <div className="w-full h-screen">
             <Navbar/>
             <div className="w-full flex flex-col justify-center items-center mt-10 text-white">
                 <div className='text-4xl tracking-widest flex gap-x-8'>
-                    Create Post
+                    Create Post {user._id}
                 </div>
                 <div className="relative flex items-center justify-center mt-6 border border-t w-[65%]"></div>
 
@@ -141,7 +174,9 @@ export default function create(params) {
                     </div>
                 </div>
                 <div className="w-[65%] flex">
-                    <button className="bg-pink rounded-full px-2 py-1 ml-auto hover:bg-[#AA4E65]">
+                    <button className="bg-pink rounded-full px-2 py-1 ml-auto hover:bg-[#AA4E65]"
+                    onClick={addPostButton}
+                    >
                         Create Post
                     </button>
                 </div>

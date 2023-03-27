@@ -3,14 +3,26 @@ import Axios from "axios";
 import { useRouter } from 'next/router';
 Axios.defaults.withCredentials = true;
 import { useAppContext } from "../context/userContext";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function RegisterInformation({handler2,setPage,setform2,form2,steps,currentStepIndex,step,back,next,goto,isFirstStep,isLastStep,width}) {
 
     const[disable,setDisable] = useState(true);
     const router = useRouter();
-    const { setUser } = useAppContext();
+    const { user, setUser } = useAppContext();
+
+    const invalidNameToast = () => {
+        toast.error('Name already exists', {
+            position: toast.POSITION.TOP_RIGHT,
+            toastId: "InvalidName",
+            style: {
+                backgroundColor: '#353535',
+                color: '#DF6684'
+              },
+        });
+    };
 
     useEffect(()=>{
         if(currentStepIndex === 0){
@@ -49,11 +61,15 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
     },[form2]);
 
     const registerButton = async(event) => {
+
+        if(user.displayName){
+            router.push('/users/me');
+        }
+
         event.preventDefault();
-        const url = "http://localhost:8000/authentication/register";
-        const registerInform2ation = {
-            username: form2.email,
-            password: form2.password,
+        const url = "http://localhost:8000/authentication/addUserDetail";
+        const registerInformation = {
+            userID: user._id,
             firstName: form2.first,
             lastName: form2.last,
             displayName: form2.display,
@@ -65,7 +81,7 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
             birthday: form2.birthday,
             phoneNumber: form2.phone
         };
-        Axios.post(url, registerInform2ation)
+        Axios.patch(url, registerInformation)
           .then(function (response) {
             if(response.status === 200){
                 setUser(response.data.userDetails);
@@ -73,17 +89,9 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
             }
           })
           .catch(function (error) {
-            console.log(error);
-            if(error.response.status === 401){
-                alert(error.response.message);
-                router.push('/');
-            }
+            //invalidNameToast();
+            alert("hi");
           });
-    }
-
-    const SignUp = () => {
-        setform2({...form2,email:"",password:"",verify:""})
-        setPage(0);
     }
 
     const backPage = () => {

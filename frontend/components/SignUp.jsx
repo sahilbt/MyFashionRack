@@ -7,9 +7,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
 axios.defaults.withCredentials = true;
 axios.defaults.headers["content-type"] = "application/json";
+import { useRouter } from 'next/router';
+import { useAppContext } from "../context/userContext";
+
 
 
 export default function SignUp({handler1,form1}) {
+
+    const router = useRouter();
+    const { setUser } = useAppContext();
 
     const invalidEmailToast = () => {
         toast.error('Invalid Email', {
@@ -44,7 +50,8 @@ export default function SignUp({handler1,form1}) {
         });
     };
 
-    function signUpHandler(){
+    function signUpHandler(event){
+        event.preventDefault();
 
         if((form1.email==='')||(form1.password==='')||(form1.verify===''))
             return emptyFieldToast()
@@ -58,33 +65,32 @@ export default function SignUp({handler1,form1}) {
         }
 
         else{
-            console.log("move to register");
+            const url = "http://localhost:8000/authentication/register";
+            const registerInformation = {
+                username: form1.email,
+                password: form1.password
+            };
+            axios.post(url, registerInformation)
+                .then(function (response) {
+                    if(response.status === 200){
+                        setUser(response.data.userDetails);
+                        router.push('/RegisterDetails');
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    if(error.response.status === 401){
+                        invalidEmailToast();
+                    }
+                });
         }
         
     }
 
-    const checkRedirect = (successUrl, failureUrl) => {
-        return new Promise((resolve, reject) => {
-          const interval = setInterval(() => {
-            if (window.location.href === successUrl) {
-              clearInterval(interval);
-              resolve();
-            } else if (window.location.href === failureUrl) {
-              clearInterval(interval);
-              reject(new Error('Authentication failed.'));
-            }
-          }, 5000);
-        });
-      };
-      
-    const googleButton = async (event) => {
+    const googleButton = (event) => {
+        console.log("triggered");
         event.preventDefault();
         window.location.href = "http://localhost:8000/authentication/google";
-        try {
-            await checkRedirect("http://localhost:3000/Register", "http://localhost:3000/"); 
-        } catch (error) {
-            console.error(error);
-        }
     };
 
     return (
@@ -107,7 +113,7 @@ export default function SignUp({handler1,form1}) {
                             <button  type = "button" onClick = {signUpHandler} className="bg-pink text-white rounded-3xl w-48 h-12 hover:bg-[#AA4E65]">
                                 Sign Up
                             </button>
-                            <ToastContainer hideProgressBar={true} Limit={2}/>7
+                            <ToastContainer hideProgressBar={true} Limit={2}/>
                                     <style>
                                     {
                                     `.Toastify__toast--error .Toastify__toast-icon svg path {

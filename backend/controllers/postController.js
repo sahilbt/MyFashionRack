@@ -7,19 +7,12 @@ const { response } = require("express");
 const createPost = async (req,res) => {
 
     //have to save userID in frontend
-    const { image, userID, description, outfitPieces, styleTags } = req.body;
-    let result;
+    const { image, user, description, outfitPieces, styleTags } = req.body;
     
-    try {
-        const result = await cloudinary.uploader.upload(image);
-    } catch (error) {
-        console.log(error);
-    }
-
     try{
-        const findUser = await User.findById(userID);
+        const result = await cloudinary.uploader.upload(req.body.image);
         const post = new Post({
-            userID,
+            user,
             description,
             pictureRef:{public_id:result.public_id,
                 url:result.url, width: result.width,
@@ -40,9 +33,9 @@ const createPost = async (req,res) => {
 //.populate() must have the pictureRef and display name or else request just loads
 const getPostsFromUser = async(req,res) => {
     
-    const { userID } = req.body;
+    const { userID } = req.params;
     try {
-        const post  = await Post.find({userID}).populate("user", "pictureRef", "displayName");
+        const post  = await Post.find({userID}).populate("user");
         res.status(200).json(post);
     } catch (error) {
         res.status(404);
@@ -76,12 +69,14 @@ const getFollowingStyles = async (req,res) => {
 }
 
 const getPostsFromAStyle = async (req,res) => {
-    const style = req.params.id
+    //const { styleName } = req.params;
+    const { stylename} = req.query;
     try{
-        const posts = await Post.find({styleTags: style}).populate("user", "pictureRef", "displayName").lean();
+        const posts = await Post.find({styleTags: stylename}).populate("user").lean();
         res.status(200).json(posts);
     } 
     catch(error){
+        console.log(error)
         res.status(404).json({error: "Could not retrieve the posts with that style"})
     }
 }

@@ -3,7 +3,7 @@ const passport = require("../configuration/passport-config");
 const cloudinary = require("../configuration/cloudinary");
 
 const registerUser = async(req,res) => {
-    let usernameExists = await User.exists({displayName: req.body.displayName});
+    let usernameExists = await User.exists({username: req.body.username});
     if (usernameExists){
         res.status(401).json({message: 'Display Name already exists'});
     }
@@ -27,26 +27,33 @@ const registerUser = async(req,res) => {
 
 const patchUser = async (req,res) => {
         try{
-            const result = await cloudinary.uploader.upload(req.body.image);
-            const newUser = await User.findByIdAndUpdate(req.body.userID, {
-                firstName: req.body.firstName,
-                lastName: req.body.lastName, 
-                displayName: req.body.displayName, 
-                address: {
-                    country:req.body.address.country,
-                    city: req.body.address.city ,
-                    street: req.body.address.street
-                },
-                birthday: req.body.birthday,
-                phoneNumber: req.body.phoneNumber,
-                pictureRef: {
-                    public_id:result.public_id,
-                    url:result.url, 
-                    width: result.width,
-                    height: result.width
-                }
-            })
-            res.status(200).json(newUser);
+            //const result = await cloudinary.uploader.upload(req.body.image);
+            const findUser = await User.exists({displayName: req.body.displayName});
+
+            if (findUser){
+                res.status(401).json({message: "Username already exists"});
+            }
+            else{
+                const newUser = await User.findByIdAndUpdate(req.body.userID, {
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName, 
+                    displayName: req.body.displayName, 
+                    address: {
+                        country:req.body.address.country,
+                        city: req.body.address.city ,
+                        street: req.body.address.street
+                    },
+                    birthday: req.body.birthday,
+                    phoneNumber: req.body.phoneNumber,
+                    // pictureRef: {
+                    //     public_id:result.public_id,
+                    //     url:result.url, 
+                    //     width: result.width,
+                    //     height: result.width
+                    // }
+                })
+                res.status(200).json(newUser);
+            }            
         } 
         catch(error){
             res.status(500).json({error: "Could not edit user details"});
@@ -94,10 +101,28 @@ const logOutUser = (req,res) => {
 //     } 
 // }
 
-const googleAuth = passport.authenticate('google', { scope: ['profile', 'email'] });
-  
-const googleAuthCallback = passport.authenticate('google', { failureRedirect: 'http://localhost:3000', successRedirect: 'http://localhost:3000/Register' });
+const googleAuth = passport.authenticate('google', { scope: ['profile', 'email'] }, (err, user, info) => {
+    console.log('googleAuth function called!');
+  });  
+const googleAuthCallback = passport.authenticate('google', { failureRedirect: 'http://localhost:3000/Login', successRedirect: 'http://localhost:3000/googleLoading' });
 
+const googleCheck =  (req,res) => {
+    passport.authenticate('google', { scope: ['profile', 'email'] }, async (err, user, info) => {
+        if (err) {
+          return res.status(500).send(err);
+        }
+        if (!user) {
+          return res.status(401).send(info);
+        }
+        const googleId = user.googleId;
+        const foundUser = await User.findOne({googleId});
+        if (foundUser.displayName){
+            res.send({foundUser, message:"REGISTERED"});
+        }else{
+            res.send({foundUser, message:"NOT"});
+        }
+      })(req, res);
+}
 
 // const CLIENT_ID = process.env.CLIENT_ID;
 // const CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -127,5 +152,6 @@ module.exports = {
     logOutUser,
     patchUser,
     googleAuth,
-    googleAuthCallback
+    googleAuthCallback,
+    googleCheck
 }

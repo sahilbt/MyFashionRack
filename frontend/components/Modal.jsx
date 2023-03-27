@@ -4,15 +4,15 @@ import Image from "next/Image"
 import Link from "next/Link"
 
 export default function Modal({data, handleClick}){
-    const renderLinks = data.Clothing.map(clothing => {
+    const renderLinks = data && data.outfitPieces.map(clothing => {
         return(
-            <Link href={clothing.Link} className="bg-pink rounded-full px-3 py-[2px] text-sm group" target="_blank">
-                {clothing.Name}
+            <Link href={clothing.link} className="bg-pink rounded-full px-3 py-[2px] text-sm group" target="_blank">
+                {clothing.name}
                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
             </Link>
         )
     })
-    const renderStyles = data.Styles.map(style => {
+    const renderStyles = data && data.styleTags.map(style => {
         return(
             <div className="bg-pink rounded-full px-3 py-[2px] text-sm group">
                 <Link onClick={handleClick} href={'/feed/explore/' + style} >
@@ -26,17 +26,17 @@ export default function Modal({data, handleClick}){
         <Backdrop handleClick={handleClick}>
             <motion.div onClick={(event) => event.stopPropagation()} className="bg-lightGrey w-3/5 h-2/3 grid grid-cols-2 rounded-xl text-white">
                 <div className="relative bg-black rounded-l-lg">
-                    <Image alt="Outfit" className="object-contain" src={data.Image} fill />
+                    <Image alt="Outfit" className="object-contain" src={data.pictureRef.url} fill />
                 </div>
                 <div className="flex flex-col w-full pt-4 pb-3 px-8 gap-3">
                     <div className="border-b border-[#4F4F4F] pt-2 pb-4 text-lg">
-                        <Link href={"/users/" + data.Username}>{data.Username}</Link>
+                        <Link href={"/users/" + data.user.displayName}>{data.user.displayName}</Link>
                     </div>
                     <div className="text-lg">
                         Description
                     </div>
                     <div className="border-b border-[#4F4F4F] pb-2 text-xs max-w-full h-[20%]">
-                        {data.Description}
+                        {data.description}
                     </div>
                     <div className="text-lg">
                         Pieces and Links
@@ -56,10 +56,10 @@ export default function Modal({data, handleClick}){
                     </div>
                     <div className="flex mt-auto justify-between max-w-full">
                         <div>
-                            {data.Date}
+                            {data.createdAt.substring(0,10)}
                         </div>
                         <div>
-                            {data.Likes}
+                            {data.likes ? data.likes.size : 0}
                         </div>
                     </div>
                 </div>
