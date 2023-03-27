@@ -119,7 +119,7 @@ export default function create(params) {
             <Navbar/>
             <div className="w-full flex flex-col justify-center items-center mt-10 text-white">
                 <div className='text-4xl tracking-widest flex gap-x-8'>
-                    Create Post
+                    Create Post {user._id}
                 </div>
                 <div className="relative flex items-center justify-center mt-6 border border-t w-[65%]"></div>
 
