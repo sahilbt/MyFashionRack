@@ -2,6 +2,7 @@ import { motion } from "framer-motion"
 import Backdrop from "./Backdrop"
 import Image from "next/Image"
 import Link from "next/Link"
+import { useState } from "react"
 
 export default function Modal({data, handleClick}){
     const renderLinks = data && data.outfitPieces.map(clothing => {
@@ -22,6 +23,11 @@ export default function Modal({data, handleClick}){
             </div>
         )
     })
+    const [follow, setFollow] = useState(false)
+    console.log(follow)
+    function handleFollow(){
+        setFollow(follow => !follow)
+    }
     return(
         <Backdrop handleClick={handleClick}>
             <motion.div onClick={(event) => event.stopPropagation()} className="bg-lightGrey w-3/5 h-2/3 grid grid-cols-2 rounded-xl text-white">
@@ -29,8 +35,14 @@ export default function Modal({data, handleClick}){
                     <Image alt="Outfit" className="object-contain" src={data.pictureRef.url} fill />
                 </div>
                 <div className="flex flex-col w-full pt-4 pb-3 px-8 gap-3">
-                    <div className="border-b border-[#4F4F4F] pt-2 pb-4 text-lg">
+                    <div className="border-b border-[#4F4F4F] pt-2 pb-4 text-lg flex gap-5">
                         <Link href={"/users/" + data.user.displayName}>{data.user.displayName}</Link>
+                        <label htmlFor="Streetwear" className="relative cursor-pointer">
+                            <input type="checkbox" name="Streetwear" checked={follow} onChange={handleFollow} id="Streetwear" className="peer sr-only"/>
+                            <div className="absolute w-32 bg-pink text-center rounded-full text-white peer-checked:bg-[#515151] peer-checked:text-[#7E7E7E]">
+                                {follow ? "Unfollow" : "Follow"}
+                            </div>
+                        </label>
                     </div>
                     <div className="text-lg">
                         Description
