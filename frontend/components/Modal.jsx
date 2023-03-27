@@ -29,7 +29,7 @@ export default function Modal({data, handleClick}){
         setFollow(follow => !follow)
     }
     return(
-        <Backdrop handleClick={handleClick}>
+        <Backdrop handleClick={handleClick} >
             <motion.div onClick={(event) => event.stopPropagation()} className="bg-lightGrey w-3/5 h-2/3 grid grid-cols-2 rounded-xl text-white">
                 <div className="relative bg-black rounded-l-lg">
                     <Image alt="Outfit" className="object-contain" src={data.pictureRef.url} fill />
@@ -37,9 +37,9 @@ export default function Modal({data, handleClick}){
                 <div className="flex flex-col w-full pt-4 pb-3 px-8 gap-3">
                     <div className="border-b border-[#4F4F4F] pt-2 pb-4 text-lg flex gap-5">
                         <Link href={"/users/" + data.user.displayName}>{data.user.displayName}</Link>
-                        <label htmlFor="Streetwear" className="relative cursor-pointer">
-                            <input type="checkbox" name="Streetwear" checked={follow} onChange={handleFollow} id="Streetwear" className="peer sr-only"/>
-                            <div className="absolute w-32 bg-pink text-center rounded-full text-white peer-checked:bg-[#515151] peer-checked:text-[#7E7E7E]">
+                        <label htmlFor="follow" className="relative cursor-pointer">
+                            <input type="checkbox" name="follow" checked={follow} onChange={handleFollow} id="follow" className="peer sr-only"/>
+                            <div className="absolute w-24 mt-1 bg-pink text-base text-center rounded-full text-white peer-checked:bg-[#515151] peer-checked:text-[#7E7E7E]">
                                 {follow ? "Unfollow" : "Follow"}
                             </div>
                         </label>
@@ -53,7 +53,7 @@ export default function Modal({data, handleClick}){
                     <div className="text-lg">
                         Pieces and Links
                     </div>
-                    <div className="border-b border-[#4F4F4F] pb-2 max-w-full h-[25%]">
+                    <div className="border-b border-[#4F4F4F] pb-2 max-w-full h-[18%]">
                         <div className="flex flex-wrap gap-3">
                             {renderLinks}
                         </div>
@@ -61,7 +61,7 @@ export default function Modal({data, handleClick}){
                     <div className="text-lg">
                         Style Tags
                     </div>
-                    <div className="border-b border-[#4F4F4F] pb-2 max-w-full h-[15%]">
+                    <div className="border-b border-[#4F4F4F] pb-2 max-w-full h-[22%]">
                         <div className="flex flex-wrap gap-3">
                             {renderStyles}
                         </div>

@@ -23,8 +23,8 @@ export default function UserProfile(){
         })
     },[]);
 
+
     const renderPosts =  posts && posts.map(post => {
-        
         return(
             <ProfilePost {...post}/>
         )
@@ -47,7 +47,7 @@ export default function UserProfile(){
                            Your Wardrobe
                         </h1>
                         <h1 className="w-full text-center text-[#808080] text-3xl">
-                            40 Outfits
+                            {posts.length} Outfits
                         </h1>
                         <div className=" mt-4 border w-full"></div>
                         <div className="grid grid-cols-3 grid-flow-row gap-9 mt-10 pb-5">
