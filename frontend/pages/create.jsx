@@ -10,9 +10,9 @@ import AddStyleModal from '../components/AddStyleModal';
 import X from '../public/xmark-solid.svg'
 import Axios from "axios";
 import { useAppContext } from '../context/userContext'
-
+import { useRouter } from "next/router";
 export default function create(params) {
-    
+    const router = useRouter();
     const { user } = useAppContext();
     
     const [modal, setModal] = useState(false)
@@ -108,6 +108,7 @@ export default function create(params) {
         Axios.post("http://localhost:8000/users/create", post)
         .then(function (response) {
             console.log(response);
+            router.push('/users/me');
         })
         .catch(function (error) {
             console.log(error);
