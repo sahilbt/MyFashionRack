@@ -235,6 +235,20 @@ const deleteAccount = async(req,res) => {
     }
 }
 
+const findID = async (req,res) => {
+    const { username } = req.query
+    console.log(req)
+    try{
+        const foundUser = await User.findOne({
+            displayName: username
+        })
+        res.status(200).json(foundUser)
+    }
+    catch(error){
+        res.status(400)   
+    }
+}
+
 module.exports = {
     createPost,
     getPostsFromUser,
@@ -248,5 +262,6 @@ module.exports = {
     getRecommendedStyles,
     deleteAccount,
     followUser,
-    followStyle
+    followStyle,
+    findID
 }

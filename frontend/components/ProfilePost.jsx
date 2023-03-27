@@ -5,7 +5,6 @@ import { AnimatePresence } from "framer-motion"
 
 export default function ProfilePost(props){
     const [modal, setModal] = useState(false)
-    console.log(modal)
     function handleClick(){
         setModal(() => !modal)
     }

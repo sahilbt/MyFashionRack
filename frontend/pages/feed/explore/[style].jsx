@@ -3,7 +3,6 @@ import Image from 'next/Image'
 import Navbar from '../../../components/Navbar'
 import ProfilePost from "../../../components/ProfilePost"
 import Compass from '../../../public/compass.svg'
-//import posts from "../../../posts"
 import { useAppContext } from '../../../context/userContext'
 import { useEffect, useState } from "react";
 import Axios from "axios";
@@ -63,4 +62,9 @@ export default function Style(params) {
             </div>
         </div>
     )
-};
+}
+
+Style.getInitialProps = async ({ query }) => {
+    const { id } = query.style
+    return { id }
+}
