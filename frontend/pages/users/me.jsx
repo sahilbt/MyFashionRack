@@ -21,7 +21,7 @@ export default function UserProfile(){
         .catch(function(error){
             console.log(error)
         })
-    },[]);
+    },[posts]);
 
 
     const renderPosts =  posts && posts.map(post => {

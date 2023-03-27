@@ -77,21 +77,28 @@ const logInUser = (req,res) => {
     })
 }
 
-const logOutUser = (req,res) => {
-    req.logout((err)=>{
-        if(err){
-            res.status(500).json({message: "Error logging out"})
-        }else{
-            res.status(200).clearCookie('connect.sid', {
-                path: '/'
-              });
-            req.session.destroy(function (err) {
-                res.status(200).json({message: "bye"});
-            });
+const logOutUser = (req, res) => {
+    req.logout((err) => {
+      if (err) {
+        res.status(500).json({ message: "Error logging out" });
+        return;
+      }
+  
+      req.session.destroy((err) => {
+        if (err) {
+          console.log(err);
+          res.status(500).json({ message: "Error logging out" });
+          return;
         }
+  
+        res.clearCookie("connect.sid");
+        res.status(200).json({ message: "bye" });
+      });
     });
-}
+  };
  
+
+
 // const protected = (req,res) => {
 //     if(req.isAuthenticated()){
 //         res.send("Protected Route Accessed")
