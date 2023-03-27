@@ -33,9 +33,9 @@ const createPost = async (req,res) => {
 //.populate() must have the pictureRef and display name or else request just loads
 const getPostsFromUser = async(req,res) => {
     
-    const { userID } = req.params;
+    const { userID } = req.query;
     try {
-        const post  = await Post.find({userID}).populate("user");
+        const post  = await Post.find({user: userID}).populate("user");
         res.status(200).json(post);
     } catch (error) {
         res.status(404);

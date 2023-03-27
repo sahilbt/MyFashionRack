@@ -1,7 +1,6 @@
 import '../styles/globals.css'
 import {Bree_Serif} from '@next/font/google'
 import { AppWrapper } from '../context/userContext'
-import { useState } from 'react'
 
 const font = Bree_Serif({
     weight : '400',
