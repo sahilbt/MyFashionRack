@@ -16,7 +16,9 @@ export function AppWrapper({ children }) {
   }, []);
 
   useEffect(() => {
-    cookies.set('user', JSON.stringify(user));
+    if (Object.keys(user).length > 0) {
+      cookies.set('user', JSON.stringify(user), { path: '/' });
+    }
   }, [user]);
 
   return (
