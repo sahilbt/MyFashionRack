@@ -5,10 +5,8 @@ import { motion } from "framer-motion"
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import TextField from '@mui/material/TextField';
 import moment from 'moment';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import addButton from "../public/addPhoto.svg"
 import { Avatar } from '@mui/material'
 import { Country, State, City }  from 'country-state-city';
 import Select from "react-select";
@@ -21,6 +19,7 @@ export default function RegisterDetails() {
     const [filePath, setFilePath] = useState()
     const[file,setFile] = useState()
     const [selectedLocation, setSelectedLocation] = useState({country:null,state:null})
+    console.log(form2)
       const countryOptions=[
       {
         name: "USA",
@@ -120,17 +119,24 @@ export default function RegisterDetails() {
               }
             }
           },
-          MuiOutlinedInput: {
+          MuiSvgIcon:{
+            styleOverrides:{
+              root:{
+                fill:'#DF6684'
+              }
+            }
+          },
+          MuiOutlinedInput:{
             styleOverrides: {
               root: {
-                color : '#DF6684'
+                color : '#FFFFFF'
               }
             }
           },
           MuiInputLabel: {
             styleOverrides: {
               root: {
-                color : '#DF6684'
+                color : '#FFFFFF'
               }
             }
           },
@@ -138,7 +144,7 @@ export default function RegisterDetails() {
             styleOverrides:{
               root:{
                 backgroundColor: '#353535',
-                color:'#DF6684',
+                color:'#FFFFFF',
                 borderRadius: '10px',
                 overflow: 'hidden',
               },
@@ -149,30 +155,50 @@ export default function RegisterDetails() {
               root:{
                 backgroundColor: '#353535',
                 borderRadius: '10px',
-                color:"#DF6684"
+                color:"#FFFFFF"
               }
             }
           },
           MuiPickersDay:{
             styleOverrides:{
               root:{
-                color:'#DF6684'
-              },
-              today:{
-                backgroundColor:'transparent'
-              }
-            }
+                color:'#FFFFFF',
+                '&.Mui-selected':{
+                  backgroundColor:'#DF6684',
+                },
+                '&:hover': {
+                  backgroundColor: '#DF6684'
+                },
+                '&:focus': {
+                  backgroundColor: '#DF6684',
+                  '&.Mui-selected':{
+                    backgroundColor:'#DF6684',
+                  },
+              },           
+            },
           },
+        },
           MuiDayCalendar:{
             styleOverrides:{
               weekDayLabel:{
-                color:'#DF6684'
+                color:'#FFFFFF'
               }
             }
           },
-         
+          MuiYearCalendar:{
+            styleOverrides:{
+              root:{
+                '&::-webkit-scrollbar': {
+                  width: 0,
+                  height: 0
+                }
+              }
+            }
+          },
+          
+   
         }
-      });
+      })
 
       
 
@@ -236,7 +262,7 @@ export default function RegisterDetails() {
                     }))
                     setform2(prevform2 =>({
                       ...prevform2,
-                      state : newValue.name
+                      state : newValue.isoCode
                     }))}}
                 />   
                 </div>
@@ -255,6 +281,8 @@ export default function RegisterDetails() {
                         },
                         
                       }}
+                    disableHighlightToday = 'true'
+                    selected = 'true'
                     format="YYYY/MM/DD"
                     onChange={(newValue)=>{
                         setform2(prevform2 =>({
