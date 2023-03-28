@@ -22,6 +22,8 @@ passport.use(
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL: 'http://localhost:8000/authentication/google/callback',
       userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
+      session: true // add this line
+
     },
     function (accessToken, refreshToken, profile, done) {
       User.findOrCreate({ googleId: profile.id }, function (err, user) {

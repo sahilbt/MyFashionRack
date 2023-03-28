@@ -4,10 +4,18 @@ import Google from "../public/google.svg"
 import Link from "next/Link"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Router from "next/router";
+import axios from "axios"
+axios.defaults.withCredentials = true;
+axios.defaults.headers["content-type"] = "application/json";
+import { useRouter } from 'next/router';
+import { useAppContext } from "../context/userContext";
+
 
 
 export default function SignUp({handler1,form1}) {
+
+    const router = useRouter();
+    const { setUser } = useAppContext();
 
     const invalidEmailToast = () => {
         toast.error('Invalid Email', {
@@ -42,7 +50,8 @@ export default function SignUp({handler1,form1}) {
         });
     };
 
-    function signUpHandler(){
+    function signUpHandler(event){
+        event.preventDefault();
 
         if((form1.email==='')||(form1.password==='')||(form1.verify===''))
             return emptyFieldToast()
@@ -56,11 +65,33 @@ export default function SignUp({handler1,form1}) {
         }
 
         else{
-            Router.push('/RegisterDetails')
+            const url = "http://localhost:8000/authentication/register";
+            const registerInformation = {
+                username: form1.email,
+                password: form1.password
+            };
+            axios.post(url, registerInformation)
+                .then(function (response) {
+                    if(response.status === 200){
+                        setUser(response.data.userDetails);
+                        router.push('/RegisterDetails');
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    if(error.response.status === 401){
+                        invalidEmailToast();
+                    }
+                });
         }
         
     }
 
+    const googleButton = (event) => {
+        console.log("triggered");
+        event.preventDefault();
+        window.location.href = "http://localhost:8000/authentication/google";
+    };
 
     return (
         <div className="flex flex-col items-center justify-center text-center">
@@ -92,7 +123,8 @@ export default function SignUp({handler1,form1}) {
                         <div className="relative flex items-center justify-center mt-4 border w-96">
                             <div className="absolute px-5 bg-darkGrey text-white">OR</div>
                         </div>
-                        <button className="bg-darkGrey text-white rounded-3xl mt-4 w-64 h-12 outline outline-2 outline-white hover:outline-pink">
+                        <button className="bg-darkGrey text-white rounded-3xl mt-4 w-64 h-12 outline outline-2 outline-white hover:outline-pink"
+                            >
                             <Image src = {Google} className="h-1/2 w-auto inline-block mr-3"/>
                             Continue with Google
                         </button>

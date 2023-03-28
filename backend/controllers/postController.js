@@ -7,20 +7,12 @@ const { response } = require("express");
 const createPost = async (req,res) => {
 
     //have to save userID in frontend
-    const { image, userID, username, description, outfitPieces, styleTags } = req.body;
-    let result;
+    const { image, user, description, outfitPieces, styleTags } = req.body;
     
-    try {
-        const result = await cloudinary.uploader.upload(image);
-    } catch (error) {
-        console.log(error);
-    }
-
     try{
-        const findUser = await User.findById(userID);
+        const result = await cloudinary.uploader.upload(req.body.image);
         const post = new Post({
-            userID,
-            username,
+            user,
             description,
             pictureRef:{public_id:result.public_id,
                 url:result.url, width: result.width,
@@ -41,9 +33,9 @@ const createPost = async (req,res) => {
 //.populate() must have the pictureRef and display name or else request just loads
 const getPostsFromUser = async(req,res) => {
     
-    const { userID } = req.body;
+    const { userID } = req.query;
     try {
-        const post  = await Post.find({userID}).populate("user", "pictureRef", "displayName");
+        const post  = await Post.find({user: userID}).populate("user");
         res.status(200).json(post);
     } catch (error) {
         res.status(404);
@@ -68,7 +60,7 @@ const getFollowingStyles = async (req,res) => {
     try{
         const user = await User.findById(userID, "followingStyles").lean();
         const userStyles = user.followingStyles;
-        const posts = await Post.find({userID: {$in: userStyles}}).populate("user", "pictureRef", "displayName").lean();
+        const posts = await Post.find({styleTags: {$in: userStyles}}).populate("user", "pictureRef", "displayName").lean();
         res.status(200).json(posts);
     } 
     catch(error){
@@ -77,12 +69,14 @@ const getFollowingStyles = async (req,res) => {
 }
 
 const getPostsFromAStyle = async (req,res) => {
-    const style = req.params.id
+    //const { styleName } = req.params;
+    const { stylename} = req.query;
     try{
-        const posts = await Post.find({styleTags: style}).populate("user", "pictureRef", "displayName").lean();
+        const posts = await Post.find({styleTags: stylename}).populate("user").lean();
         res.status(200).json(posts);
     } 
     catch(error){
+        console.log(error)
         res.status(404).json({error: "Could not retrieve the posts with that style"})
     }
 }
@@ -163,31 +157,34 @@ const getRecommendedStyles = async(req,res) => {
 
 const followUser = async(req,res) => {
     try {
-        const { userID, displayName } = req.body;
-        const followedUser = await User.find({displayName});
+        const { userID, userDisplayName } = req.body;
+        const followedUser = await User.findOne({displayName: userDisplayName});
         const user = await User.findById(userID);
         const followed = user.following.get(followedUser);
 
         if(followed){
-            user.following.delete(followUser._id);
-            followedUser.followers.set(user._id, true);
+            user.following.delete(followedUser._id);
+            followedUser.followers.delete(user._id);
         }else{
-            user.following.set(followUser._id, true);
-            followedUser.follers.delete(user._id);
+            user.following.set(followedUser._id, true);
+            followedUser.followers.set(user._id, true); 
         }
 
         const updatedUser = await User.findByIdAndUpdate(
             userID,
-            { following: user.following }
+            { following: user.following },
+            {new: true}
         );
 
         const updatedFollowedUser = await User.findByIdAndUpdate(
             followedUser._id,
-            { followers: followedUser.followers }
+            { followers: followedUser.followers },
+            {new: true}
         );
-        res.status(200);
+        res.status(200).json({currentUser: updatedUser, followUser: updatedFollowedUser });
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({error: "Could not follow user"});
     }
 }
@@ -205,23 +202,25 @@ const editProfile = async(req,res) => {
 
 const followStyle = async(req,res) => {
     try {
-        const { userID, name } = req.body;
+        const { userID, styleName } = req.body;
         const user = await User.findById(userID);
-        const style = await Style.find({name});
-        const following = user.followingStyles.get(style._id);
+        const style = await Style.findOne({name: styleName});
+        const following = user.followingStyles.get(style.name);
 
         if(following){
-            user.followingStyles.delete(style._id)
+            user.followingStyles.delete(style.name);
         }else{
-            user.following.set(style._id, true)
+            user.followingStyles.set(style.name, true);
         }
 
         const updatedUser = await User.findByIdAndUpdate(
             userID,
-            { followingStyles: user.followingStyles }
+            { followingStyles: user.followingStyles },
+            {new: true}
         );
-        res.status(200);
+        res.status(200).send({user:updatedUser});
     } catch (error) {
+        console.log(error);
         res.status(500).json({error: "Could not follow user"});
     }
 }
@@ -233,6 +232,20 @@ const deleteAccount = async(req,res) => {
         res.status(200).json({result: "account deleted"});
     } catch (error) {
         res.status(500).json({error: "Could not delete user"});
+    }
+}
+
+const findID = async (req,res) => {
+    const { username } = req.query
+    console.log(req)
+    try{
+        const foundUser = await User.findOne({
+            displayName: username
+        })
+        res.status(200).json(foundUser)
+    }
+    catch(error){
+        res.status(400)   
     }
 }
 
@@ -249,5 +262,6 @@ module.exports = {
     getRecommendedStyles,
     deleteAccount,
     followUser,
-    followStyle
+    followStyle,
+    findID
 }

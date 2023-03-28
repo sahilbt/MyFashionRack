@@ -1,6 +1,6 @@
 export default[
     {
-        "Username" : "Ivari",
+        "Username" : "new",
         "Likes" : 200,
         "Date" : "10-12-2023",
         "Description" : "My chain so nice!",

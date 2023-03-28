@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Navbar from '../components/Navbar'
-import { useAppContext } from "../context/userContext";
 import addButton from "../public/addPhoto.svg"
 import Image from "next/Image"
 import Link from "next/Link"
@@ -9,8 +8,13 @@ import { AnimatePresence } from "framer-motion"
 import AddPieceModal from '../components/AddPieceModal';
 import AddStyleModal from '../components/AddStyleModal';
 import X from '../public/xmark-solid.svg'
-
+import Axios from "axios";
+import { useAppContext } from '../context/userContext'
+import { useRouter } from "next/router";
 export default function create(params) {
+    const router = useRouter();
+    const { user } = useAppContext();
+    
     const [modal, setModal] = useState(false)
     function handleClick(){
         setModal(() => !modal)
@@ -21,16 +25,16 @@ export default function create(params) {
         setModal2(() => !modal2)
     }
 
-    const {user} = useAppContext()
     const [post, setPost] = useState(
         {
-            userID: user._id,
+            user: user._id,
             description: "",
             image: 0,
             outfitPieces: [],
             styleTags:[] 
         }
     )
+
     function descHandler(event){
         setPost(prev => {
             return(
@@ -43,9 +47,7 @@ export default function create(params) {
     }
 
     function deleteHandler(param){
-        console.log(param)
         var index = post.outfitPieces.indexOf(param)
-        console.log(index)
         setPost(prev => {
             return(
                 {
@@ -57,9 +59,30 @@ export default function create(params) {
     }
 
     const [file, setFile] = useState();
-    function handleChange(e) {
-        setFile(URL.createObjectURL(e.target.files[0]));
+    const [filePath, setFilePath] = useState();
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+          const fileReader = new FileReader();
+          fileReader.readAsDataURL(file);
+          fileReader.onload = () => {
+            resolve(fileReader.result);
+          };
+          fileReader.onerror = (error) => {
+            reject(error);
+          };
+        });
+      };
+
+    async function handleChange(e) {
+        console.log(user._id);
+        setFilePath(URL.createObjectURL(e.target.files[0]));
+        const fileIn = e.target.files[0];
+        const base64 = await convertToBase64(fileIn);
+        setPost({ ...post, image: base64 });
+        console.log(base64);
     }
+
+    
 
     const renderLinks = post.outfitPieces.map(clothing => {
         return(
@@ -68,10 +91,30 @@ export default function create(params) {
                     {clothing.name}
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                 </Link>
-                <Image onClick={() => deleteHandler(clothing)} src={X} className="h-5 w-auto ml-1"/>
+                <Image alt="" onClick={() => deleteHandler(clothing)} src={X} className="h-5 w-auto ml-1"/>
             </div>
         )     
     })
+
+    const renderStyles = post.styleTags.map(style => {
+        return(
+            <div className="bg-pink rounded-full px-3 py-[2px] text-sm group">
+                {style}
+            </div>
+        )
+    })
+
+    const addPostButton = (req,res) => {
+        Axios.post("http://localhost:8000/users/create", post)
+        .then(function (response) {
+            console.log(response);
+            router.push('/users/me');
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+    
     return(
         <div className="w-full h-screen">
             <Navbar/>
@@ -89,7 +132,7 @@ export default function create(params) {
                                 <p className="text-sm">Click to upload an image!</p>
                             </div>
                             <input id="dropzone-file" type="file" className="hidden" onChange={handleChange} accept="image/*" />
-                            <img alt="" className="object-contain absolute max-w-full max-h-full" src={file}  />
+                            <img alt="" className="object-contain absolute max-w-full max-h-full" src={filePath}  />
                             
                         </label>
                     </div>
@@ -103,7 +146,7 @@ export default function create(params) {
                         <div className="h-1/3">
                             <div className="text-2xl flex items-center ">
                                 Can you link some of your pieces?
-                                <Image className="pl-2 w-8 h-8 cursor-pointer" src={addButton2} onClick={handleClick}/>
+                                <Image alt="" className="pl-2 w-8 h-8 cursor-pointer" src={addButton2} onClick={handleClick}/>
                                 <AnimatePresence>
                                     {modal && <AddPieceModal modal={modal} setPost={setPost} handleClick={handleClick}/>}
                                 </AnimatePresence>
@@ -117,19 +160,22 @@ export default function create(params) {
                         <div className="h-1/3">
                         <div className="text-2xl flex items-center ">
                                 What style(s) are you going for?
-                                <Image className="pl-2 w-8 h-8 cursor-pointer" src={addButton2} onClick={handleClick2}/>
+                                <Image alt="" className="pl-2 w-8 h-8 cursor-pointer" src={addButton2} onClick={handleClick2}/>
                                 <AnimatePresence>
-                                    {modal2 && <AddStyleModal modal={modal2} handleClick={handleClick2}/>}
+                                    {modal2 && <AddStyleModal setPost={setPost} modal={modal2} handleClick={handleClick2}/>}
                                 </AnimatePresence>
                             </div>
                             <div className="bg-lightGrey border-solid border-2 border-pink rounded-md p-2 w-full h-4/5">
-
+                                <div className="flex flex-wrap gap-3">
+                                    {post.styleTags.length != 0 && renderStyles}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="w-[65%] flex">
-                    <button className="bg-pink rounded-full px-2 py-1 ml-auto hover:bg-[#AA4E65]">
+                    <button className="bg-pink rounded-full px-2 py-1 ml-auto -mt-5 hover:bg-[#AA4E65]"
+                    onClick={addPostButton}>
                         Create Post
                     </button>
                 </div>

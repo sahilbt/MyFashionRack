@@ -14,7 +14,8 @@ const {
     getRecommendedStyles,
     deleteAccount,
     followUser,
-    followStyle
+    followStyle, 
+    findID
 } = require("../controllers/postController");
 
 router.post('/create', createPost);
@@ -30,5 +31,6 @@ router.patch ('/like', likePicture);
 router.patch('/followUser', followUser);
 router.patch('/followStyle', followStyle);
 router.delete('/delAccount', deleteAccount);
+router.get('/find', findID);
 
 module.exports = router;

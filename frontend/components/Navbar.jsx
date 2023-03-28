@@ -7,10 +7,13 @@ import AccountButton from "../public/account-button.svg"
 import Axios from "axios";
 import { useRouter } from 'next/router';
 import { useAppContext } from "../context/userContext";
+import Cookies from 'universal-cookie';
+
 
 export default function Navbar() {
     const router = useRouter();
     const { setUser } = useAppContext();
+    const cookies = new Cookies();
 
     const logOutButtonFunction = (event) => {
         event.preventDefault();
@@ -18,6 +21,8 @@ export default function Navbar() {
         Axios.get(url)
         .then((response)=>{
             setUser({});
+            cookies.remove('user', { path: '/' });
+            cookies.remove('connect.sid', { path: '/' });
             router.push('/');
         })
         .catch((error)=>{

@@ -24,6 +24,7 @@
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
     "framer-motion": "^10.2.4",
+    "js-cookie": "^3.0.1",
     "moment": "^2.29.4",
     "next": "13.1.6",
     "random": "^4.1.0",
@@ -35,7 +36,9 @@
     "react-phone-number-input": "^3.2.19",
     "react-select": "^5.7.2",
     "react-toastify": "^9.1.2",
-    "styled-components": "^5.3.9"
+    "styled-components": "^5.3.9",
+    "sharp": "^0.32.0",
+    "universal-cookie": "^4.0.4"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
