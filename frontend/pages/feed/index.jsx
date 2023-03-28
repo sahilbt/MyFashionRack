@@ -5,7 +5,7 @@ import Post from "../../components/Post.jsx"
 // import posts from "../../posts"
 import user2 from "../../user"
 import { Avatar } from '@mui/material'
-import Like from "../../public/like.svg"
+import Like from "../../public/heart-solid.svg"
 import { useAppContext } from "../../context/userContext"
 import { useEffect, useState } from "react"
 import Axios from "axios"
