@@ -9,9 +9,15 @@ import { useAppContext } from "../context/userContext"
 
 export default function LandingNav(){
     const { user } = useAppContext();
-    
     const logInPath = user._id ? "/users/me" : "/Login"
     const registerPath = user._id ? "/users/me" : "/Register"
+    const ScrollTo = (id) => {
+        const element = document.getElementById(id);
+        if (element) {
+            const y = element.getBoundingClientRect().top + window.pageYOffset;
+            window.scrollTo({top: y, behavior: "smooth"});
+        }
+    }
     return(
         <div className = "fixed flex flex-col items-center w-64 bg-pink inset-y-0 right-0 text-white">
             <Image
@@ -33,7 +39,7 @@ export default function LandingNav(){
             </div>
 
             <div className="flex flex-col items-center absolute bottom-0">
-                <a href="#" className="text-xl group mb-3">
+                <a href="#" onClick={() => {ScrollTo("about")}} className="text-xl group mb-3">
                     About
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                 </a>

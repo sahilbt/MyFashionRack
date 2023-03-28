@@ -9,6 +9,7 @@ import Illustration4 from "../public/undraw_login_re_4vu2.svg"
 import { motion } from "framer-motion"
 
 export default function index(){
+    
     return(
         <div>
             <Head>
@@ -28,7 +29,7 @@ export default function index(){
                     </p>
                 </div>
             </div>
-            <div className="py-40 bg-darkGrey mr-64">
+            <div id="about" className="py-40 bg-darkGrey mr-64">
                 <div className="flex flex-row justify-center items-center gap-y-3 gap-x-20 mb-24 min-h-72">
                     <motion.div className="w-1/3 h-auto"
                         initial={{x:-100}}
