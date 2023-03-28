@@ -9,19 +9,19 @@ export default function UserProfile(){
     const {user} = useAppContext();
     const [posts, setPosts ]  = useState([]);
     useEffect(() => {
-        Axios.get("http://localhost:8000/users/userPosts", {params:{
-            userID: user._id
-            }
-        })
-        .then(function (response) {
-            if(response.status == 200){
-                setPosts(response.data);
-            }  
-        })
-        .catch(function(error){
-            console.log(error)
-        })
-    },[posts]);
+            Axios.get("http://localhost:8000/users/userPosts", {params:{
+                userID: user._id
+                }
+            })
+            .then(function (response) {
+                if(response.status == 200){
+                    setPosts(response.data);
+                }  
+            })
+            .catch(function(error){
+                console.log(error)
+            })
+    },[user._id]);
 
 
     const renderPosts =  posts && posts.map(post => {

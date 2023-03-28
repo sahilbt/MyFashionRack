@@ -45,13 +45,14 @@ const getPostsFromUser = async(req,res) => {
 const getUserFeed = async(req,res) => {
     const { userID } = req.body;
     try{
-        const foundUser = await User.findById(userID).lean();
-        const followingUserID = foundUser.following;
-        const posts = await Post.find({user: {$in: followingUserID}}).populate("user").lean();
-        res.status(200).json({allPosts: posts, userInfo: foundUser});
+        const currentUser = await User.findById(userID).lean();
+        const followingUsers = await User.find({ _id: { $in: currentUser.following } }).lean();
+        const followingUserIds = followingUsers.map(user => user._id);
+        const posts = await Post.find({ user: { $in: followingUserIds } }).populate("user").lean();
+        res.status(200).json({ allPosts: posts, userInfo: currentUser });
     } 
     catch(error){
-        res.status(404).json({error: "Could not retrieve the user feed"})
+        res.status(404).json({ error: "Could not retrieve the user feed" });
     }
 }
 

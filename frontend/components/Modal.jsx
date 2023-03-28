@@ -27,11 +27,7 @@ export default function Modal({data, handleClick, like, setLike}){
             </div>
         )
     })
-    const [follow, setFollow] = useState(false)
-    console.log(follow)
-    function handleFollow(){
-        setFollow(follow => !follow)
-    }
+
     return(
         <Backdrop handleClick={handleClick} >
             <motion.div onClick={(event) => event.stopPropagation()} className="bg-lightGrey w-3/5 h-2/3 grid grid-cols-2 rounded-xl text-white">
@@ -71,7 +67,7 @@ export default function Modal({data, handleClick, like, setLike}){
                         <div>
                         <div className="flex items-center gap-1">
                             <Image src={like ? Liked: Like} onClick={()=>{setLike(prev => !prev)}} className="h-5 w-auto"/>
-                            <h1>{props.Likes}</h1>
+                            <h1>{data.likes ? data.likes.size : 0}</h1>
                         </div>
                         </div>
                     </div>
