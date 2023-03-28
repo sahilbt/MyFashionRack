@@ -21,8 +21,6 @@ export default function RegisterDetails() {
     const [filePath, setFilePath] = useState()
     const[file,setFile] = useState()
     const [selectedLocation, setSelectedLocation] = useState({country:null,state:null})
-    console.log(form2);
-    
       const countryOptions=[
       {
         name: "USA",
@@ -76,13 +74,27 @@ export default function RegisterDetails() {
       })
     };
 
-    function handleChangeFile(e) {
+    async function handleChangeFile(e) {
       if(e.target.files.length !== 0){
         setFilePath(URL.createObjectURL(e.target.files[0]));
-        setFile(e.target.files[0])
+        const fileIn = e.target.files[0];
+        const base64 = await convertToBase64(fileIn);
+        setFile(base64)
       }
     }
-
+    
+    const convertToBase64 = (file) => {
+      return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = () => {
+          resolve(fileReader.result);
+        };
+        fileReader.onerror = (error) => {
+          reject(error);
+        };
+      });
+    };
     
     const theme = createTheme({
         components: {
@@ -122,17 +134,45 @@ export default function RegisterDetails() {
               }
             }
           },
-          MuiPaper: {
-            styleOverrides: {
-              root: {
-                backgroundColor: '#353535', 
+          MuiDateCalendar:{
+            styleOverrides:{
+              root:{
+                backgroundColor: '#353535',
+                color:'#DF6684',
+                borderRadius: '10px',
+                overflow: 'hidden',
               },
-            },
+            }
           },
-          
-          
-          
-          }});
+          MuiPaper:{
+            styleOverrides:{
+              root:{
+                backgroundColor: '#353535',
+                borderRadius: '10px',
+                color:"#DF6684"
+              }
+            }
+          },
+          MuiPickersDay:{
+            styleOverrides:{
+              root:{
+                color:'#DF6684'
+              },
+              today:{
+                backgroundColor:'transparent'
+              }
+            }
+          },
+          MuiDayCalendar:{
+            styleOverrides:{
+              weekDayLabel:{
+                color:'#DF6684'
+              }
+            }
+          },
+         
+        }
+      });
 
       
 
@@ -213,11 +253,13 @@ export default function RegisterDetails() {
                         textField: {
                           placeholder: 'birthdate',
                         },
+                        
                       }}
+                    format="YYYY/MM/DD"
                     onChange={(newValue)=>{
                         setform2(prevform2 =>({
                         ...prevform2,
-                        birthday : moment(new Date(newValue)).format('L')
+                        birthday : moment(new Date(newValue)).format('YYYY/MM/DD')
 
                 }))}}/>
                 </LocalizationProvider>
@@ -247,7 +289,7 @@ export default function RegisterDetails() {
           <div className="relative flex items-center justify-center w-[450px] h-[450px] bg-lightGrey rounded-full border-dashed border-2 border-pink  hover:bg-[#515151]">
               <label htmlFor="dropzone-file" className="w-full h-full flex flex-col justify-center items-center " >
                   <div className="flex flex-col items-center justify-center">
-                      <Avatar alt="" src = {addButton}
+                      <Avatar alt=""
                       sx={{ width: 450, height: 450 }}/>
                   </div>
                   <input id="dropzone-file" type="file" className="hidden" onChange={handleChangeFile} accept="image/*" />

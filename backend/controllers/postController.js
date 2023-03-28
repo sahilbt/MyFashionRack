@@ -43,11 +43,10 @@ const getPostsFromUser = async(req,res) => {
 }
 
 const getUserFeed = async(req,res) => {
-    const { userID } = req.body;
+    const { userID } = req.query;
     try{
         const currentUser = await User.findById(userID).lean();
-        const followingUsers = await User.find({ _id: { $in: currentUser.following } }).lean();
-        const followingUserIds = followingUsers.map(user => user._id);
+        const followingUserIds = Object.keys(currentUser.following);
         const posts = await Post.find({ user: { $in: followingUserIds } }).populate("user").lean();
         res.status(200).json({ allPosts: posts, userInfo: currentUser });
     } 
