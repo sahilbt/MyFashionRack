@@ -10,7 +10,7 @@ export default function Details(params) {
     const {user} = useAppContext();
     const[name,setName] = useState();
     const [posts, setPosts ]  = useState([]);
-    const [id, setID] = useState()
+    const [person, setPerson] = useState()
 
     useEffect( () => {
         setName(router.query.username);
@@ -24,7 +24,7 @@ export default function Details(params) {
                 })
                 .then(function (response) {
                     if(response.status == 200){
-                        setID(response.data._id)
+                        setPerson(response.data)
                     }  
                 })
                 .catch(function(error){
@@ -35,7 +35,7 @@ export default function Details(params) {
             fetchID()
 
             Axios.get("http://localhost:8000/users/userPosts", {params:{
-                userID: id
+                userID: person._id
                 }
             })
             .then(function (response) {
@@ -47,7 +47,7 @@ export default function Details(params) {
                 console.log(error)
             })
         }
-    }, [name, id]);
+    }, [name]);
 
     const renderPosts =  posts && posts.map(post => {
         return(

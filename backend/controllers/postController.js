@@ -249,6 +249,19 @@ const findID = async (req,res) => {
     }
 }
 
+const isFollowing = async (req,res) => {
+    
+    const { userID, userDisplayName } = req.query;
+    try {
+        const foundUser = await User.findById(userID);
+        const checkIfFollowingUser = await User.findOne({displayName: userDisplayName});
+        const isFollowing = foundUser.following.has(checkIfFollowingUser._id.toString());
+        return res.status(200).json(isFollowing);
+    } catch (error) {
+        res.status(400);
+    }
+}
+
 module.exports = {
     createPost,
     getPostsFromUser,
@@ -263,5 +276,6 @@ module.exports = {
     deleteAccount,
     followUser,
     followStyle,
-    findID
+    findID,
+    isFollowing
 }
