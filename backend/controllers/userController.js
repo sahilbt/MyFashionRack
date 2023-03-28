@@ -27,7 +27,7 @@ const registerUser = async(req,res) => {
 
 const patchUser = async (req,res) => {
         try{
-            //const result = await cloudinary.uploader.upload(req.body.image);
+            const result = await cloudinary.uploader.upload(req.body.image);
             const findUser = await User.exists({displayName: req.body.displayName});
 
             if (findUser){
@@ -40,17 +40,16 @@ const patchUser = async (req,res) => {
                     displayName: req.body.displayName, 
                     address: {
                         country:req.body.address.country,
-                        city: req.body.address.city ,
-                        street: req.body.address.street
+                        state: req.body.address.state
                     },
                     birthday: req.body.birthday,
                     phoneNumber: req.body.phoneNumber,
-                    // pictureRef: {
-                    //     public_id:result.public_id,
-                    //     url:result.url, 
-                    //     width: result.width,
-                    //     height: result.width
-                    // }
+                    pictureRef: {
+                        public_id:result.public_id,
+                        url:result.url, 
+                        width: result.width,
+                        height: result.width
+                    }
                 })
                 res.status(200).json(newUser);
             }            

@@ -92,7 +92,7 @@ export default function Feed() {
                         <Link href="/users/me">
                             <Avatar 
                                 className="mt-4"
-                                src = {user2.pictureRef.url}
+                                src = {me.pictureRef.url}
                                 sx={{ width: 90, height: 90 }}
                                 />
                         </Link>
