@@ -21,7 +21,7 @@ export default function LandingNav(){
     return(
         <div className = "fixed flex flex-col items-center w-64 bg-pink inset-y-0 right-0 text-white">
             <Image
-            className="h-52 w-auto mt-9"
+                className="h-52 w-auto mt-9"
                 src = {Logo}
             />
 
@@ -39,10 +39,10 @@ export default function LandingNav(){
             </div>
 
             <div className="flex flex-col items-center absolute bottom-0">
-                <a href="#" onClick={() => {ScrollTo("about")}} className="text-xl group mb-3">
+                <div onClick={() => {ScrollTo("about")}} className="text-xl group mb-3 cursor-pointer">
                     About
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
-                </a>
+                </div>
                 <div className="flex ml-6 mr-6 gap-6 mb-3">
                     <a href="#" className="group">
                         <Image
