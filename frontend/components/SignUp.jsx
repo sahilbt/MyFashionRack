@@ -113,7 +113,7 @@ export default function SignUp({handler1,form1}) {
                             <button  type = "button" onClick = {signUpHandler} className="bg-pink text-white rounded-3xl w-48 h-12 hover:bg-[#AA4E65]">
                                 Sign Up
                             </button>
-                            <ToastContainer hideProgressBar={true} Limit={2}/>
+                            <ToastContainer hideProgressBar={true}/>
                                     <style>
                                     {
                                     `.Toastify__toast--error .Toastify__toast-icon svg path {

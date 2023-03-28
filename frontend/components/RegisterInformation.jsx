@@ -7,11 +7,46 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-export default function RegisterInformation({handler2,setPage,setform2,form2,steps,currentStepIndex,step,back,next,goto,isFirstStep,isLastStep,width}) {
+
+export default function RegisterInformation({handler2,setPage,setform2,form2,steps,currentStepIndex,step,back,next,goto,isFirstStep,isLastStep,width,file,setFile,setSelectedLocation,filePath,setFilePath}) {
 
     const[disable,setDisable] = useState(true);
+    const[validPhone,setValidPhone] = useState(true);
     const router = useRouter();
     const { user, setUser } = useAppContext();
+
+    const emptyFieldToast = () => {
+        toast.error('Please fill out all required fields', {
+            position: toast.POSITION.TOP_RIGHT,
+            toastId: "EmptyFieldRegister",
+            style: {
+                backgroundColor: '#353535',
+                color: '#DF6684'
+              },
+        });
+    };
+
+    const emptyPhotoToast = () => {
+        toast.error('Please choose a Profile Picture', {
+            position: toast.POSITION.TOP_RIGHT,
+            toastId: "EmptyPicture",
+            style: {
+                backgroundColor: '#353535',
+                color: '#DF6684'
+              },
+        });
+    };
+
+    const validPhoneToast = () => {
+        toast.error('Invalid Phone Number', {
+            position: toast.POSITION.TOP_RIGHT,
+            toastId: "InvalidPhone",
+            style: {
+                backgroundColor: '#353535',
+                color: '#DF6684'
+              },
+        });
+    };
 
     const invalidNameToast = () => {
         toast.error('Name already exists', {
@@ -35,7 +70,7 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
             }
         }
         else if(currentStepIndex === 1){
-            if(!form2.country||!form2.city||!form2.address){
+            if(!form2.country||!form2.state){
                 setDisable(true);
             }
             else{
@@ -43,14 +78,21 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
             }
         }
         else if(currentStepIndex === 2){
-            if(!form2.birthday||!form2.phone||form2.phone.match("^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$") == null){
+            if(!form2.birthday||!form2.phone){
                 setDisable(true);
             }
             else{
                 setDisable(false);
             }
+            if(form2.phone.match(/^\+1 \(\d{3}\) \d{3}-\d{4}$/)===null){
+                setValidPhone(true);
+            }
+            else{
+                setValidPhone(false);
+            }
         }
-        else if(currentStepIndex === 3){
+
+        else if(currentStepIndex === 4){
             if(!form2.display){
                 setDisable(true);
             }
@@ -60,6 +102,16 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
         }
     },[form2]);
 
+    useEffect(()=>{
+       if(currentStepIndex === 3){
+            if(file==undefined){
+                setDisable(true);
+            }
+            else{
+                setDisable(false);
+            }
+        }
+    },file);
     const registerButton = async(event) => {
 
         if(user.displayName){
@@ -94,24 +146,63 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
           });
     }
 
+
     const backPage = () => {
         if(currentStepIndex === 1){
-            setform2({...form2,first:"",last:"",city:"",address:""})
+            setform2({...form2,first:"",last:"",country:"",state:""})
+            setSelectedLocation({...setSelectedLocation,country:null,state:null})
         }
         else if(currentStepIndex === 2){
-            setform2({...form2,country:"",city:"",address:"",birthday:"",phone:""})
+            setform2({...form2,country:"",state:"",birthday:"",phone:""})
+            setSelectedLocation({...setSelectedLocation,country:null,state:null})
+            setValidPhone(true)
         }
         else if(currentStepIndex === 3){
-            setform2({...form2,birthday:"",phone:"",display:""})
+            setform2({...form2,birthday:"",phone:""})
+            setFile(undefined)
+            setFilePath(undefined)
+            setValidPhone(true)
+        }
+        else if(currentStepIndex === 4){
+            setform2({...form2,display:""})
+            setFile(undefined)
+            setFilePath(undefined)
+
         }
         setDisable(true);
+        setValidPhone(true);
         back()
     }
 
     const nextPage = () => {
-        setDisable(true);
-        next();
+
+        if(currentStepIndex==0 && disable){
+            emptyFieldToast();
+        }
+        else if(currentStepIndex==1 && disable){
+            emptyFieldToast();
+        }
+        else if((currentStepIndex==2&&disable)||(currentStepIndex==2&&validPhone)){
+            if(disable)
+            emptyFieldToast()
+            else if(validPhone){
+            validPhoneToast()
+            }
+        }
+        else if(currentStepIndex==3 && disable){
+            emptyPhotoToast()
+        }
+        else if(currentStepIndex==4 && disable){
+            emptyPhotoToast()
+        }
+        else{
+            setDisable(true);
+            next(); 
+        }
+        
     }
+
+    
 
 
     return(
@@ -120,7 +211,14 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
                 {step}
                 <div className="py-20 m-auto flex flex-end gap-x-12">
                     {!isFirstStep && <button type = "button" onClick = {backPage} className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]">back</button>}
-                    {!isLastStep && <button  disabled = {disable} type = "button" onClick = {nextPage} className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]">next</button>}
+                    {!isLastStep && <button  type = "button" onClick = {nextPage} className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]">next</button>}
+                    <ToastContainer hideProgressBar={true}/>
+                                    <style>
+                                    {
+                                    `.Toastify__toast--error .Toastify__toast-icon svg path {
+                                        fill: #DF6684;
+                                    }`}
+                                    </style>
                     {isLastStep && <button  className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]" onClick = {registerButton}>Submit</button>}
                 </div>
             </div>

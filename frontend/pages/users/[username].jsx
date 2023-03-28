@@ -12,11 +12,11 @@ export default function Details(params) {
     const [posts, setPosts ]  = useState([]);
     const [person, setPerson] = useState()
 
-    useEffect( () => {
+useEffect( () => {
         setName(router.query.username);
         if(!name){
             console.log("Not ready");
-        }else{
+        } else {
             const fetchID = async () => {
                 await Axios.get("http://localhost:8000/users/find", {params:{
                     username: name
@@ -24,28 +24,29 @@ export default function Details(params) {
                 })
                 .then(function (response) {
                     if(response.status == 200){
-                        setPerson(response.data)
+                        setPerson(response.data);
+    
+                        // Move the second Axios request inside this block
+                        Axios.get("http://localhost:8000/users/userPosts", {params:{
+                            userID: response.data._id // Use response.data._id instead of person._id
+                            }
+                        })
+                        .then(function (response) {
+                            if(response.status == 200){
+                                setPosts(response.data);
+                            }  
+                        })
+                        .catch(function(error){
+                            console.log(error)
+                        })
                     }  
                 })
                 .catch(function(error){
                     console.log(error)
                 }) 
             }
-
+    
             fetchID()
-
-            Axios.get("http://localhost:8000/users/userPosts", {params:{
-                userID: person._id
-                }
-            })
-            .then(function (response) {
-                if(response.status == 200){
-                    setPosts(response.data);
-                }  
-            })
-            .catch(function(error){
-                console.log(error)
-            })
         }
     }, [name]);
 
@@ -68,15 +69,15 @@ export default function Details(params) {
 
                         </div>
                     </div>
-                    <div className="w-3/4 h-20 pb-4 ">
+                    <div className="w-2/3 h-20 pb-4 ">
                         <h1 className="w-full text-center text-white text-4xl">
                            Their Wardrobe
                         </h1>
                         <h1 className="w-full text-center text-[#808080] text-3xl">
-                            40 Outfits
+                            {posts.length} Outfits
                         </h1>
                         <div className=" mt-4 border w-full"></div>
-                        <div className="grid grid-cols-3 grid-flow-row gap-9 mt-10">
+                        <div className="grid grid-cols-3 grid-flow-row gap-9 mt-10 pb-5">
                             {renderPosts}
                         </div>
                     </div>

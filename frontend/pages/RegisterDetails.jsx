@@ -8,16 +8,85 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 import moment from 'moment';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import addButton from "../public/addPhoto.svg"
+import { Avatar } from '@mui/material'
+import { Country, State, City }  from 'country-state-city';
+import Select from "react-select";
+import { PatternFormat } from 'react-number-format';
 
 
 
 export default function RegisterDetails() {
-    const [form2,setform2] = useState({first:"",last:"",country:"",city:"",address:"",birthday:"",phone:"",display:""})
+    const [form2,setform2] = useState({first:"",last:"",country:"",state:"",birthday:"",phone:"",display:""})
+    const [filePath, setFilePath] = useState()
+    const[file,setFile] = useState()
+    const [selectedLocation, setSelectedLocation] = useState({country:null,state:null})
+    console.log(form2);
+    
+      const countryOptions=[
+      {
+        name: "USA",
+        isoCode: 'US',
+      },
+      {
+        name: "Canada",
+        isoCode: 'CA',
+      },
+    ]
 
-   
+    const customStyles = {
+      control: (provided, state) => ({
+        ...provided,
+        backgroundColor: '#353535',
+        border: state.isFocused ? '1px solid darkGrey' : '1px solid grey',
+        borderRadius: '1.5rem',
+        boxShadow: state.isFocused ? '0 0 5px grey' : 'none',
+        '&:hover': {
+          borderColor: state.isFocused ? 'darkGrey' : 'grey'
+        }
+      }),
+      menuList: (provided, state) => ({
+        ...provided,
+        backgroundColor: '#353535',
+        border: '1px solid #ccc',
+        boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+        padding: 0,
+        listStyle: 'none',
+        maxHeight: '200px',
+        overflowY: 'auto',
+        '&::-webkit-scrollbar': {
+          width: 0,
+          height: 0
+        }
+      }),
+      option: (provided, state) => ({
+        ...provided,
+        padding: '10px',
+        cursor: 'pointer',
+        backgroundColor:state.isFocused ? 'grey' : '#353535',
+        color: state.isSelected ? '#FFFFFF' : '#FFFFFF'
+      }),
+      singleValue: (provided, state) => ({
+        ...provided,
+        color: '#FFFFFF'
+      }),
+      placeholder: (provided, state) => ({
+        ...provided,
+        color: '#FFFFFF'
+      })
+    };
+
+    function handleChangeFile(e) {
+      if(e.target.files.length !== 0){
+        setFilePath(URL.createObjectURL(e.target.files[0]));
+        setFile(e.target.files[0])
+      }
+    }
+
+    
     const theme = createTheme({
         components: {
+          
           MuiTextField: {
             styleOverrides: {
               root: {
@@ -52,10 +121,19 @@ export default function RegisterDetails() {
                 color : '#DF6684'
               }
             }
-          }
-        }
-      });
-    
+          },
+          MuiPaper: {
+            styleOverrides: {
+              root: {
+                backgroundColor: '#353535', 
+              },
+            },
+          },
+          
+          
+          
+          }});
+
       
 
     const {steps,currentStepIndex,step, back,next,goto,isFirstStep,isLastStep,getWidth,width} = useMultistepForm([
@@ -74,9 +152,53 @@ export default function RegisterDetails() {
             <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Where do you Live</h1>
             <div className="flex flex-col item justify-center items-center">
                 <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2">
-                            <input type="text" name="country" placeholder="country" value = {form2.country} className="px-4 h-14 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"onChange={handler2}/> 
-                            <input type="text" name="city" placeholder="city" value = {form2.city} className="px-4 h-14 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"onChange={handler2}/> 
-                            <input type="text" name="address" placeholder="address" value = {form2.address}className="px-4 h-14 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"onChange={handler2}/> 
+                <Select
+                styles = {customStyles}
+                  placeholder="Country"
+                  options={countryOptions}
+                  getOptionLabel={(options) => {
+                    return options["name"];
+                  }}
+                  getOptionValue={(options) => {
+                    return options["name"];
+                  }}
+                  value={selectedLocation.country}
+                  onChange={(newValue) => {
+                    console.log(newValue)
+                    setSelectedLocation(prevLocation=>({
+                      ...prevLocation,
+                      country:newValue,
+                      state:null
+                    }))
+                    setform2(prevform2 =>({
+                      ...prevform2,
+                      country : newValue.name,
+                      state : ""
+
+                  }))}
+                }
+                />
+                <Select
+                  styles = {customStyles}
+                  placeholder="State/Province"
+                  options={State?.getStatesOfCountry(selectedLocation.country?.isoCode)}
+                  getOptionLabel={(options) => {
+                    return options["name"];
+                  }}
+                  getOptionValue={(options) => {
+                    return options["name"];
+                  }}
+                  value={selectedLocation.state}
+                  onChange={(newValue) => {
+                    setSelectedLocation(prevLocation=>({
+                      ...prevLocation,
+                      state:newValue
+                    }))
+                    setform2(prevform2 =>({
+                      ...prevform2,
+                      state : newValue.name
+                    }))}}
+                />   
                 </div>
             </div>
         </div>,
@@ -87,12 +209,11 @@ export default function RegisterDetails() {
               <ThemeProvider theme={theme}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker className="px-4 h-14 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]" 
-                       renderInput={(params) => (
-                        <TextField
-            {...params}
-          />
-                      )}
-                    inputformat="dd.MM.yyyy"
+                       slotProps={{
+                        textField: {
+                          placeholder: 'birthdate',
+                        },
+                      }}
                     onChange={(newValue)=>{
                         setform2(prevform2 =>({
                         ...prevform2,
@@ -103,16 +224,43 @@ export default function RegisterDetails() {
                 </ThemeProvider>
               </div>
               <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2">
-              <input type="text" name="phone" placeholder="phone number" value = {form2.phone} className="px-4 h-14 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"onChange={handler2}/> 
+                
+              <PatternFormat
+                    className="px-4 h-14 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"
+                    type="tel"
+                    format="+1 (###) ###-####" 
+                    mask="_" 
+                    placeholder="phone number"
+                    onValueChange={(newValue)=>{
+                      setform2(prevform2 =>({
+                      ...prevform2,
+                      phone : newValue.formattedValue
+
+              }))}}
+                    required
+                  />
               </div>
           </div>
       </div>,
+        <div className="flex-col flex gap-10 justify-center items-center ">
+          <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Please add a Profile Picture</h1>
+          <div className="relative flex items-center justify-center w-[450px] h-[450px] bg-lightGrey rounded-full border-dashed border-2 border-pink  hover:bg-[#515151]">
+              <label htmlFor="dropzone-file" className="w-full h-full flex flex-col justify-center items-center " >
+                  <div className="flex flex-col items-center justify-center">
+                      <Avatar alt="" src = {addButton}
+                      sx={{ width: 450, height: 450 }}/>
+                  </div>
+                  <input id="dropzone-file" type="file" className="hidden" onChange={handleChangeFile} accept="image/*" />
+                  <img alt="" className="object-contain absolute max-w-full max-h-full rounded-full" src={filePath}  />
+              </label>
+          </div>
+        </div>,
          <div>
          <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >What do you want Others to Call you</h1>
              <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2 m-auto">
              <input type="text" name="display" placeholder="display name" value = {form2.display} className="px-4 h-14 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"onChange={handler2}/> 
              </div>
-     </div>,
+      </div>,
     ])
 
     function handler2(event){
@@ -140,7 +288,8 @@ export default function RegisterDetails() {
         </div>
         <form className=" h-full flex flex-col justify-center items-center text-center">
              <RegisterInformation handler2 = {handler2} setform2 = {setform2} form2 = {form2} steps = {steps} 
-            currentStepIndex = {currentStepIndex} step = {step} back = {back} next = {next} goto = {goto} isFirstStep = {isFirstStep} isLastStep = {isLastStep} width={width}/>
+            currentStepIndex = {currentStepIndex} step = {step} back = {back} next = {next} goto = {goto} isFirstStep = {isFirstStep} isLastStep = {isLastStep} width={width} file = {file}
+            setFile = {setFile} setSelectedLocation = {setSelectedLocation} filePath = {filePath} setFilePath = {setFilePath}/>
         </form>
     </div>
 
