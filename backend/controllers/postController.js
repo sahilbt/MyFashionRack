@@ -85,7 +85,7 @@ const updateProfilePicture = async (req,res) => {
     const { image, userId } = req.body;
     let result;
     try{
-        const user = await User.findById(userID);
+        const user = await User.findById(userId);
         if (user.pictureRef.public_id === ''){
             const result = await cloudinary.uploader.upload(image);
             const newUser = await User.findByIdAndUpdate(userId, {pictureRef: {
@@ -263,6 +263,17 @@ const isFollowing = async (req,res) => {
     }
 }
 
+const likedPosts = async(req,res) => {
+    const { userID } = req.query;
+    try{
+        const posts = await Post.find({ like: { $has: userID } }).populate("user").lean();
+        res.status(200).json({ posts });
+    } 
+    catch(error){
+        res.status(404).json({ error: "Could not retrieve the user feed" });
+    }
+}
+
 module.exports = {
     createPost,
     getPostsFromUser,
@@ -278,5 +289,6 @@ module.exports = {
     followUser,
     followStyle,
     findID,
-    isFollowing
+    isFollowing,
+    likedPosts
 }

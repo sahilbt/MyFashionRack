@@ -16,7 +16,8 @@ const {
     followUser,
     followStyle, 
     findID,
-    isFollowing
+    isFollowing,
+    likedPosts
 } = require("../controllers/postController");
 
 router.post('/create', createPost);
@@ -34,5 +35,6 @@ router.patch('/followStyle', followStyle);
 router.delete('/delAccount', deleteAccount);
 router.get('/find', findID);
 router.get('/checkFollowing', isFollowing);
+router.get('/getLikedPosts', likedPosts);
 
 module.exports = router;
