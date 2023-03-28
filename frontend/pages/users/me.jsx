@@ -1,5 +1,5 @@
 import Navbar from "../../components/Navbar"
-import ProfilePost from "../../components/ProfilePost"
+import Post from "../../components/Post"
 //import posts from "../../posts"
 import { useAppContext } from "../../context/userContext";
 import { useEffect, useState } from "react";
@@ -26,7 +26,7 @@ export default function UserProfile(){
 
     const renderPosts =  posts && posts.map(post => {
         return(
-            <ProfilePost {...post}/>
+            <Post props={post} page="me"/>
         )
     })
     return(

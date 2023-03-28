@@ -13,15 +13,16 @@ import Axios from "axios"
 export default function Feed() {
     const {user} = useAppContext();
     const [posts, setPosts ]  = useState([]);
+    const [me, setMe] = useState([]);
     useEffect(() => {
-        Axios.get("http://localhost:8000/users/userPosts", {params:{
+        Axios.get("http://localhost:8000/users/postsFromFeed", {params:{
             userID: user._id
             }
         })
         .then(function (response) {
             if(response.status == 200){
-                console.log(response)
-                setPosts(response.data);
+                setPosts(response.data.allPosts);
+                setMe(response.data.userInfo);
             }  
         })
         .catch(function(error){
@@ -96,21 +97,21 @@ export default function Feed() {
                                 />
                         </Link>
                         <div className="text-2xl -mb-1">
-                            {user.firstName} {user.lastName} 
+                            {me.firstName} {me.lastName} 
                         </div>
 
                         <div className="text-[#808080]">
-                            @{user.displayName}
+                            @{me.displayName}
                         </div>
 
                         <div className="relative flex items-center justify-center mt-2  border-t border-[#4F4F4F] w-[85%]"></div>
 
                         <div className="mt-2">
-                            <p className="text-pink inline mr-2"></p> Followers
+                            <p className="text-pink inline mr-2"></p> {me.followers ? Object.keys(me.followers).length : 0} Followers
                         </div>
 
                         <div className="">
-                            <p className="text-pink inline mr-2"></p> Following
+                            <p className="text-pink inline mr-2"></p> {me.following ? Object.keys(me.following).length : 0} Following
                         </div>
 
                         <div className="">
@@ -143,6 +144,5 @@ export default function Feed() {
         </div>
     )
 }
-
 
 
