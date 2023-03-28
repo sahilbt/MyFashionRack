@@ -160,8 +160,7 @@ const followUser = async(req,res) => {
         const { userID, userDisplayName } = req.body;
         const followedUser = await User.findOne({displayName: userDisplayName});
         const user = await User.findById(userID);
-        const followed = user.following.get(followedUser);
-
+        const followed = user.following.get(followedUser._id.toString());
         if(followed){
             user.following.delete(followedUser._id);
             followedUser.followers.delete(user._id);
@@ -237,7 +236,6 @@ const deleteAccount = async(req,res) => {
 
 const findID = async (req,res) => {
     const { username } = req.query
-    console.log(req)
     try{
         const foundUser = await User.findOne({
             displayName: username
@@ -250,7 +248,6 @@ const findID = async (req,res) => {
 }
 
 const isFollowing = async (req,res) => {
-    
     const { userID, userDisplayName } = req.query;
     try {
         const foundUser = await User.findById(userID);

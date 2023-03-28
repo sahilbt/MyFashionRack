@@ -82,10 +82,12 @@ export default function Details(params) {
 
     async function handleFollow(){
         try {
-            const response = await Axios.patch("http://localhost:8000/users/followUser", {params:{
+
+            
+            const response = await Axios.patch("http://localhost:8000/users/followUser", {
                 userID: user._id, 
                 userDisplayName: name
-            }});
+            });
 
             if (response.status == 200) {
                 setFollowing(following => !following)
