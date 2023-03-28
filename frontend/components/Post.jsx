@@ -1,17 +1,50 @@
 import Image from "next/Image"
 import Modal from "./Modal.jsx"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { AnimatePresence } from "framer-motion"
 import Link from 'next/Link'
 import Like from "../public/heart-regular.svg"
 import Liked from "../public/heart-solid.svg"
+import { useAppContext } from "../context/userContext";
+import Axios from "axios"
 
 export default function Post({props, page}){
+    const { user } = useAppContext()
     const [modal, setModal] = useState(false)
+    const [num, setNum] = useState()
+
     function handleClick(){
         setModal(() => !modal)
     }
     const [like, setLike] = useState()
+
+    useEffect(() => {
+        if(user._id){
+            setLike(Object.keys(props.like).length != 0 && props.like.hasOwnProperty(user._id))
+            setNum(props.like ? Object.keys(props.like).length : 0)
+        }
+    },[user._id]);
+
+    async function handleLike(){
+        try {
+            const response = await Axios.patch("http://localhost:8000/users/like", {
+                postID: props._id, 
+                userID: user._id
+            });
+
+            if (response.status == 200) {
+                if(like){
+                    setNum(prev => prev-=1)
+                }else{
+                    setNum(prev => prev+=1)
+                }
+                setLike(prev => !prev)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return(
         <div>
             {page=="feed"?<div className="flex flex-col">
@@ -26,12 +59,12 @@ export default function Post({props, page}){
                 <div className="bg-lightGrey p-2 rounded-b-xl flex justify-between">
                     <h1>{props.createdAt.substring(0,10)}</h1>
                     <div className="flex items-center gap-1">
-                        <Image src={like ? Liked: Like} onClick={()=>{setLike(prev => !prev)}} className="h-4 w-auto"/>
-                        <h1>{props.likes ? props.likes.size : 0}</h1>
+                        <Image src={like ? Liked: Like} onClick={handleLike} className="h-4 w-auto cursor-pointer"/>
+                        <h1>{num}</h1>
                     </div>
                 </div>
                 <AnimatePresence>
-                    {modal && <Modal data={props} modal={modal} like={like} setLike={setLike} handleClick={handleClick}/>}
+                    {modal && <Modal data={props} modal={modal} like={like} num={num} handleLike={handleLike} handleClick={handleClick}/>}
                 </AnimatePresence>
             </div>:
 
@@ -41,7 +74,7 @@ export default function Post({props, page}){
                         <Image alt="Outfit" className="object-cover rounded-lg" src={props.pictureRef.url} fill/>
                     </div>
                     <AnimatePresence>
-                        {modal && <Modal data={props} modal={modal} like={like} setLike={setLike} handleClick={handleClick}/>}
+                        {modal && <Modal data={props} modal={modal} like={like} setLike={setLike} num={num} setNum={setNum} handleClick={handleClick}/>}
                     </AnimatePresence>
                 </div>
             </div>}

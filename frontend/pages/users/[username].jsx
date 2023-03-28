@@ -82,8 +82,6 @@ export default function Details(params) {
 
     async function handleFollow(){
         try {
-
-            
             const response = await Axios.patch("http://localhost:8000/users/followUser", {
                 userID: user._id, 
                 userDisplayName: name
