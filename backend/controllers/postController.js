@@ -43,7 +43,7 @@ const getPostsFromUser = async(req,res) => {
 }
 
 const getUserFeed = async(req,res) => {
-    const { userID } = req.body;
+    const { userID } = req.query;
     try{
         const currentUser = await User.findById(userID).lean();
         const followingUserIds = Object.keys(currentUser.following);
