@@ -94,7 +94,7 @@ export default function Feed() {
                                 className="mt-4"
                                 src = {me.pictureRef && me.pictureRef.url}
                                 sx={{ width: 90, height: 90 }}
-                                />
+                            />
                         </Link>
                         <div className="text-2xl -mb-1">
                             {me.firstName} {me.lastName} 
