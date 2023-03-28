@@ -4,6 +4,7 @@ import Google from "../public/google.svg"
 import Link from "next/Link"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Router from "next/router";
 
 
 export default function SignUp({handler1,form1}) {
@@ -55,7 +56,7 @@ export default function SignUp({handler1,form1}) {
         }
 
         else{
-            console.log("move to register");
+            Router.push('/RegisterDetails')
         }
         
     }
@@ -81,7 +82,7 @@ export default function SignUp({handler1,form1}) {
                             <button  type = "button" onClick = {signUpHandler} className="bg-pink text-white rounded-3xl w-48 h-12 hover:bg-[#AA4E65]">
                                 Sign Up
                             </button>
-                            <ToastContainer hideProgressBar={true} Limit={2}/>7
+                            <ToastContainer hideProgressBar={true}/>
                                     <style>
                                     {
                                     `.Toastify__toast--error .Toastify__toast-icon svg path {
