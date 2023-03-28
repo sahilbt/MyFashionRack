@@ -1,18 +1,25 @@
-import { useRouter } from 'next/router'
 import Image from 'next/Image'
 import Navbar from '../../components/Navbar'
-import ProfilePost from "../../components/ProfilePost"
+import Post from "../../components/Post"
 import posts from "../../posts"
+import { useAppContext } from "../../context/userContext"
+import { useEffect, useState } from "react"
 
 export default function Style(params) {
-    const router = useRouter()
-    const style = router.query.style
+    const { user } = useAppContext()
+    const[posts, setPosts] = useState()
 
-    const renderPosts = posts.map(post => {
-        return(
-            <ProfilePost {...post}/>
-        )
-    })
+    useEffect(() => {
+
+    }, [])
+
+
+
+    // const renderPosts = posts.map(post => {
+    //     return(
+    //         <Post props={post} page="me"/>
+    //     )
+    // })
 
     return(
         <div className='w-full'>
@@ -28,7 +35,7 @@ export default function Style(params) {
 
                 <div className='w-3/5 mt-11'>
                     <div className='grid grid-cols-3 grid-flow-row gap-11'>
-                        {renderPosts}
+                        {/* {renderPosts} */}
                     </div>
                 </div>    
             </div>
