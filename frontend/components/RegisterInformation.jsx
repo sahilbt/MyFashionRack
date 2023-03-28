@@ -111,7 +111,7 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
                 setDisable(false);
             }
         }
-    },file);
+    },[file]);
     const registerButton = async(event) => {
 
         if(user.displayName){
@@ -127,11 +127,11 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
             displayName: form2.display,
             address:{
                 country:form2.country,
-                city: form2.city ,
-                street: form2.address
+                state: form2.state ,
             },
             birthday: form2.birthday,
-            phoneNumber: form2.phone
+            phoneNumber: form2.phone,
+            image: file
         };
         Axios.patch(url, registerInformation)
           .then(function (response) {
