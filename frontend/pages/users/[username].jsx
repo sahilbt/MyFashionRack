@@ -12,7 +12,7 @@ export default function Details(params) {
     const [posts, setPosts ]  = useState([]);
     const [person, setPerson] = useState()
 
-    useEffect( () => {
+useEffect( () => {
         setName(router.query.username);
         if(!name){
             console.log("Not ready");
