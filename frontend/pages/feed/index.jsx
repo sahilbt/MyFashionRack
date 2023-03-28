@@ -2,16 +2,32 @@ import Link from "next/Link"
 import Image from "next/Image"
 import Navbar from "../../components/Navbar.jsx"
 import Post from "../../components/Post.jsx"
-import posts from "../../posts"
-import user from "../../user"
+// import posts from "../../posts"
+import user2 from "../../user"
 import { Avatar } from '@mui/material'
 import Like from "../../public/like.svg"
+import { useAppContext } from "../../context/userContext"
+import { useEffect, useState } from "react"
+import Axios from "axios"
 
 export default function Feed() {
-    const myMap = new Map();
-    myMap.set('0', true);
-    myMap.set('1', true);
-    myMap.set('2', true);
+    const {user} = useAppContext();
+    const [posts, setPosts ]  = useState([]);
+    useEffect(() => {
+        Axios.get("http://localhost:8000/users/userPosts", {params:{
+            userID: user._id
+            }
+        })
+        .then(function (response) {
+            if(response.status == 200){
+                console.log(response)
+                setPosts(response.data);
+            }  
+        })
+        .catch(function(error){
+            console.log(error)
+        })
+    },[user._id]);
 
     const renderPosts = posts.map(post => {
         return(
@@ -75,7 +91,7 @@ export default function Feed() {
                         <Link href="/users/me">
                             <Avatar 
                                 className="mt-4"
-                                src = {user.pictureRef.url}
+                                src = {user2.pictureRef.url}
                                 sx={{ width: 90, height: 90 }}
                                 />
                         </Link>
@@ -90,11 +106,11 @@ export default function Feed() {
                         <div className="relative flex items-center justify-center mt-2  border-t border-[#4F4F4F] w-[85%]"></div>
 
                         <div className="mt-2">
-                            <p className="text-pink inline mr-2">{myMap.size}</p> Followers
+                            <p className="text-pink inline mr-2"></p> Followers
                         </div>
 
                         <div className="">
-                            <p className="text-pink inline mr-2">{myMap.size}</p> Following
+                            <p className="text-pink inline mr-2"></p> Following
                         </div>
 
                         <div className="">

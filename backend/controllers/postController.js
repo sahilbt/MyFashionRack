@@ -45,13 +45,13 @@ const getPostsFromUser = async(req,res) => {
 const getUserFeed = async(req,res) => {
     const { userID } = req.body;
     try{
-        const user = await User.findById(userID, "following").populate("user", "pictureRef", "displayName").lean();
-        const followingUserID = user.following;
-        const posts = Post.find({userID: {$in: followingUserID}}).lean();
-        res.status(200).json({allPosts: posts}, {userInfo: user});
+        const currentUser = await User.findById(userID).lean();
+        const followingUserIds = Object.keys(currentUser.following);
+        const posts = await Post.find({ user: { $in: followingUserIds } }).populate("user").lean();
+        res.status(200).json({ allPosts: posts, userInfo: currentUser });
     } 
     catch(error){
-        res.status(404).json({error: "Could not retrieve the user feed"})
+        res.status(404).json({ error: "Could not retrieve the user feed" });
     }
 }
 
@@ -160,8 +160,7 @@ const followUser = async(req,res) => {
         const { userID, userDisplayName } = req.body;
         const followedUser = await User.findOne({displayName: userDisplayName});
         const user = await User.findById(userID);
-        const followed = user.following.get(followedUser);
-
+        const followed = user.following.get(followedUser._id.toString());
         if(followed){
             user.following.delete(followedUser._id);
             followedUser.followers.delete(user._id);
@@ -237,7 +236,6 @@ const deleteAccount = async(req,res) => {
 
 const findID = async (req,res) => {
     const { username } = req.query
-    console.log(req)
     try{
         const foundUser = await User.findOne({
             displayName: username
@@ -246,6 +244,18 @@ const findID = async (req,res) => {
     }
     catch(error){
         res.status(400)   
+    }
+}
+
+const isFollowing = async (req,res) => {
+    const { userID, userDisplayName } = req.query;
+    try {
+        const foundUser = await User.findById(userID);
+        const checkIfFollowingUser = await User.findOne({displayName: userDisplayName});
+        const isFollowing = foundUser.following.has(checkIfFollowingUser._id.toString());
+        return res.status(200).json(isFollowing);
+    } catch (error) {
+        res.status(400);
     }
 }
 
@@ -263,5 +273,6 @@ module.exports = {
     deleteAccount,
     followUser,
     followStyle,
-    findID
+    findID,
+    isFollowing
 }

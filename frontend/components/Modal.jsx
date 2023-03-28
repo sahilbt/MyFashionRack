@@ -4,8 +4,10 @@ import Image from "next/Image"
 import Link from "next/Link"
 import { useState } from "react"
 import { useAppContext } from "../context/userContext"
+import Like from "../public/heart-regular.svg"
+import Liked from "../public/heart-solid.svg"
 
-export default function Modal({data, handleClick}){
+export default function Modal({data, handleClick, like, setLike}){
     const {user} = useAppContext();
     const renderLinks = data && data.outfitPieces.map(clothing => {
         return(
@@ -25,11 +27,7 @@ export default function Modal({data, handleClick}){
             </div>
         )
     })
-    const [follow, setFollow] = useState(false)
-    console.log(follow)
-    function handleFollow(){
-        setFollow(follow => !follow)
-    }
+
     return(
         <Backdrop handleClick={handleClick} >
             <motion.div onClick={(event) => event.stopPropagation()} className="bg-lightGrey w-3/5 h-2/3 grid grid-cols-2 rounded-xl text-white">
@@ -39,14 +37,6 @@ export default function Modal({data, handleClick}){
                 <div className="flex flex-col w-full pt-4 pb-3 px-8 gap-3">
                     <div className="border-b border-[#4F4F4F] pt-2 pb-4 text-lg flex gap-5">
                         <Link href={"/users/" + data.user.displayName}>{data.user.displayName}</Link>
-                        {/* only display follow button if post is NOT logged in users post */}
-                        {user.displayName != data.user.displayName && <label htmlFor="follow" className="relative cursor-pointer">
-                            <input type="checkbox" name="follow" checked={follow} onChange={handleFollow} id="follow" className="peer sr-only"/>
-                            <div className="absolute w-24 mt-1 bg-pink text-base text-center rounded-full text-white peer-checked:bg-[#515151] peer-checked:text-[#7E7E7E]">
-                                {follow ? "Unfollow" : "Follow"}
-                            </div>
-                        </label>}
-
                     </div>
                     <div className="text-lg">
                         Description
@@ -75,7 +65,10 @@ export default function Modal({data, handleClick}){
                             {data.createdAt.substring(0,10)}
                         </div>
                         <div>
-                            {data.likes ? data.likes.size : 0}
+                        <div className="flex items-center gap-1">
+                            <Image src={like ? Liked: Like} onClick={()=>{setLike(prev => !prev)}} className="h-5 w-auto"/>
+                            <h1>{data.likes ? data.likes.size : 0}</h1>
+                        </div>
                         </div>
                     </div>
                 </div>
