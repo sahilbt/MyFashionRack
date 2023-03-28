@@ -4,8 +4,10 @@ import Image from "next/Image"
 import Link from "next/Link"
 import { useState } from "react"
 import { useAppContext } from "../context/userContext"
+import Like from "../public/heart-regular.svg"
+import Liked from "../public/heart-solid.svg"
 
-export default function Modal({data, handleClick}){
+export default function Modal({data, handleClick, like, setLike}){
     const {user} = useAppContext();
     const renderLinks = data && data.outfitPieces.map(clothing => {
         return(
@@ -75,7 +77,10 @@ export default function Modal({data, handleClick}){
                             {data.createdAt.substring(0,10)}
                         </div>
                         <div>
-                            {data.likes ? data.likes.size : 0}
+                        <div className="flex items-center gap-1">
+                            <Image src={like ? Liked: Like} onClick={()=>{setLike(prev => !prev)}} className="h-5 w-auto"/>
+                            <h1>{props.Likes}</h1>
+                        </div>
                         </div>
                     </div>
                 </div>
