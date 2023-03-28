@@ -3,8 +3,10 @@ import Backdrop from "./Backdrop"
 import Image from "next/Image"
 import Link from "next/Link"
 import { useState } from "react"
+import { useAppContext } from "../context/userContext"
 
 export default function Modal({data, handleClick}){
+    const {user} = useAppContext();
     const renderLinks = data && data.outfitPieces.map(clothing => {
         return(
             <Link href={clothing.link} className="bg-pink rounded-full px-3 py-[2px] text-sm group" target="_blank">
@@ -37,12 +39,14 @@ export default function Modal({data, handleClick}){
                 <div className="flex flex-col w-full pt-4 pb-3 px-8 gap-3">
                     <div className="border-b border-[#4F4F4F] pt-2 pb-4 text-lg flex gap-5">
                         <Link href={"/users/" + data.user.displayName}>{data.user.displayName}</Link>
-                        <label htmlFor="follow" className="relative cursor-pointer">
+                        {/* only display follow button if post is NOT logged in users post */}
+                        {user.displayName != data.user.displayName && <label htmlFor="follow" className="relative cursor-pointer">
                             <input type="checkbox" name="follow" checked={follow} onChange={handleFollow} id="follow" className="peer sr-only"/>
                             <div className="absolute w-24 mt-1 bg-pink text-base text-center rounded-full text-white peer-checked:bg-[#515151] peer-checked:text-[#7E7E7E]">
                                 {follow ? "Unfollow" : "Follow"}
                             </div>
-                        </label>
+                        </label>}
+
                     </div>
                     <div className="text-lg">
                         Description
