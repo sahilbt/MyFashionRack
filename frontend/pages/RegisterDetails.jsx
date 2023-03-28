@@ -82,7 +82,7 @@ export default function RegisterDetails() {
         const base64 = await convertToBase64(fileIn);
         setFile(base64)
       }
-    }
+    }async
     
     const convertToBase64 = (file) => {
       return new Promise((resolve, reject) => {
