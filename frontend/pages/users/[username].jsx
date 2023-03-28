@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar'
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../context/userContext";
 import Axios from "axios";
-import ProfilePost from "../../components/ProfilePost"
+import Post from "../../components/Post"
 
 export default function Details(params) {
     const router = useRouter()
@@ -75,15 +75,13 @@ export default function Details(params) {
 
     const renderPosts =  posts && posts.map(post => {
         return(
-            <ProfilePost {...post}/>
+            <Post props={post} page="me"/>
         )
     })
 
 
     async function handleFollow(){
         try {
-
-            
             const response = await Axios.patch("http://localhost:8000/users/followUser", {
                 userID: user._id, 
                 userDisplayName: name

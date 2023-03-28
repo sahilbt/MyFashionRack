@@ -32,7 +32,7 @@ export default function Feed() {
 
     const renderPosts = posts.map(post => {
         return(
-            <Post {...post}/>
+            <Post props={post} page="feed"/>
         )
     })
     return(
@@ -144,6 +144,5 @@ export default function Feed() {
         </div>
     )
 }
-
 
 
