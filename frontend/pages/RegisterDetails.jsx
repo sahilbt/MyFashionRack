@@ -21,7 +21,6 @@ export default function RegisterDetails() {
     const [filePath, setFilePath] = useState()
     const[file,setFile] = useState()
     const [selectedLocation, setSelectedLocation] = useState({country:null,state:null})
-    console.log(form2)
       const countryOptions=[
       {
         name: "USA",
@@ -82,7 +81,7 @@ export default function RegisterDetails() {
         const base64 = await convertToBase64(fileIn);
         setFile(base64)
       }
-    }async
+    }
     
     const convertToBase64 = (file) => {
       return new Promise((resolve, reject) => {
