@@ -120,7 +120,7 @@ export default function create(params) {
             <Navbar/>
             <div className="w-full flex flex-col justify-center items-center mt-10 text-white">
                 <div className='text-4xl tracking-widest flex gap-x-8'>
-                    Create Post {user._id}
+                    Create Post
                 </div>
                 <div className="relative flex items-center justify-center mt-6 border border-t w-[65%]"></div>
 
@@ -174,9 +174,8 @@ export default function create(params) {
                     </div>
                 </div>
                 <div className="w-[65%] flex">
-                    <button className="bg-pink rounded-full px-2 py-1 ml-auto hover:bg-[#AA4E65]"
-                    onClick={addPostButton}
-                    >
+                    <button className="bg-pink rounded-full px-2 py-1 ml-auto -mt-5 hover:bg-[#AA4E65]"
+                    onClick={addPostButton}>
                         Create Post
                     </button>
                 </div>
