@@ -13,15 +13,16 @@ import Axios from "axios"
 export default function Feed() {
     const {user} = useAppContext();
     const [posts, setPosts ]  = useState([]);
+    const [me, setMe] = useState([]);
     useEffect(() => {
-        Axios.get("http://localhost:8000/users/userPosts", {params:{
+        Axios.get("http://localhost:8000/users/postsFromFeed", {params:{
             userID: user._id
             }
         })
         .then(function (response) {
             if(response.status == 200){
-                console.log(response)
-                setPosts(response.data);
+                setPosts(response.data.allPosts);
+                setMe(response.data.userInfo);
             }  
         })
         .catch(function(error){
@@ -31,7 +32,7 @@ export default function Feed() {
 
     const renderPosts = posts.map(post => {
         return(
-            <Post {...post}/>
+            <Post props={post} page="feed"/>
         )
     })
     return(
@@ -91,33 +92,34 @@ export default function Feed() {
                         <Link href="/users/me">
                             <Avatar 
                                 className="mt-4"
-                                src = {user2.pictureRef.url}
+                                src = {me.pictureRef && me.pictureRef.url}
                                 sx={{ width: 90, height: 90 }}
                             />
                         </Link>
                         <div className="text-2xl -mb-1">
-                            {user.firstName} {user.lastName} 
+                            {me.firstName} {me.lastName} 
                         </div>
 
                         <div className="text-[#808080]">
-                            @{user.displayName}
+                            @{me.displayName}
                         </div>
 
                         <div className="relative flex items-center justify-center mt-2  border-t border-[#4F4F4F] w-[85%]"></div>
 
                         <div className="mt-2">
-                            <p className="text-pink inline mr-2"></p> Followers
+                            <p className="text-pink inline mr-2">{me.followers ? Object.keys(me.followers).length : 0}</p>  Followers
                         </div>
 
                         <div className="">
-                            <p className="text-pink inline mr-2"></p> Following
+                            <p className="text-pink inline mr-2">{me.following ? Object.keys(me.following).length : 0}</p>  Following
                         </div>
 
-                        <div className="">
+                        <div className="group">
                             <Link href="/feed/liked-posts" className="flex">
                                 <Image className="w-4" src={Like} />
                                 <p className="ml-2">Liked Posts</p>
                             </Link>
+                            <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                         </div>
                     </div>
 
@@ -143,6 +145,5 @@ export default function Feed() {
         </div>
     )
 }
-
 
 

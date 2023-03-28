@@ -7,7 +7,7 @@ import { useAppContext } from "../context/userContext"
 import Like from "../public/heart-regular.svg"
 import Liked from "../public/heart-solid.svg"
 
-export default function Modal({data, handleClick, like, setLike}){
+export default function Modal({data, handleClick, like, num, handleLike}){
     const {user} = useAppContext();
     const renderLinks = data && data.outfitPieces.map(clothing => {
         return(
@@ -65,10 +65,10 @@ export default function Modal({data, handleClick, like, setLike}){
                             {data.createdAt.substring(0,10)}
                         </div>
                         <div>
-                            <div className="flex items-center gap-1">
-                                <Image src={like ? Liked: Like} onClick={()=>{setLike(prev => !prev)}} className="h-5 w-auto"/>
-                                <h1>{data.likes ? data.likes.size : 0}</h1>
-                            </div>
+                        <div className="flex items-center gap-1">
+                            <Image src={like ? Liked: Like} onClick={handleLike} className="h-5 w-auto cursor-pointer"/>
+                            <h1>{num}</h1>
+                        </div>
                         </div>
                     </div>
                 </div>

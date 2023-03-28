@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import Image from 'next/Image'
 import Navbar from '../../../components/Navbar'
-import ProfilePost from "../../../components/ProfilePost"
+import Post from "../../../components/Post"
 import Compass from '../../../public/compass.svg'
 import { useAppContext } from '../../../context/userContext'
 import { useEffect, useState } from "react";
@@ -37,7 +37,7 @@ export default function Style(params) {
     const renderPosts = posts.map(post => {
         
         return(
-            <ProfilePost {...post}/>
+            <Post props={post} page="me"/>
         )
     })
 
