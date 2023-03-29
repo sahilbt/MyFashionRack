@@ -45,10 +45,10 @@ export default function SearchBar({ setSearchBar }) {
                     <Image src={X} className="w-auto h-11 cursor-pointer hover:scale-[1.2] duration-75" onClick={() => { setSearchBar(prev => !prev) }} />
                 </div>
                 <input value={search} onChange={(event) => { setSearch(event.target.value) }} placeholder="Search for a user"
-                    className="px-4 h-10 w-full bg-lightGrey border-2 border-white text-white rounded-3xl"
+                    className="px-4 h-12 w-full bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"
                 />
             </form>
-            <div className="relative flex items-center justify-center mt-10 mb-5 border-2 border-[#4F4F4F] w-full rounded-full" />
+            <div className="relative flex items-center justify-center mt-10 mb-5 border border-[#4F4F4F] w-full rounded-full" />
             <div>
                 {renderResults}
             </div>

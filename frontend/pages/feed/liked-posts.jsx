@@ -1,25 +1,37 @@
 import Image from 'next/Image'
 import Navbar from '../../components/Navbar'
 import Post from "../../components/Post"
-import posts from "../../posts"
 import { useAppContext } from "../../context/userContext"
 import { useEffect, useState } from "react"
+import Axios from 'axios'
+
 
 export default function Style(params) {
     const { user } = useAppContext()
     const[posts, setPosts] = useState()
 
     useEffect(() => {
+        console.log(user._id)
+        Axios.get("http://localhost:8000/users/getLikedPosts", {params:{
+            userID: user._id
+            }
+        })
+        .then(function (response) {
+            if(response.status == 200){
+                setPosts(response.data);
+            }  
+        })
+        .catch(function(error){
+            console.log(error)
+        })
 
-    }, [])
+    }, [user._id])
 
-
-
-    // const renderPosts = posts.map(post => {
-    //     return(
-    //         <Post props={post} page="me"/>
-    //     )
-    // })
+    const renderPosts = posts && posts.map(post => {
+        return(
+            <Post props={post} page="me"/>
+        )
+    })
 
     return(
         <div className='w-full'>
@@ -35,7 +47,7 @@ export default function Style(params) {
 
                 <div className='w-3/5 mt-11'>
                     <div className='grid grid-cols-3 grid-flow-row gap-11'>
-                        {/* {renderPosts} */}
+                        {renderPosts}
                     </div>
                 </div>    
             </div>

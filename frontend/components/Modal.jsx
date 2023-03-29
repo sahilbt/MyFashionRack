@@ -6,6 +6,7 @@ import { useState } from "react"
 import { useAppContext } from "../context/userContext"
 import Like from "../public/heart-regular.svg"
 import Liked from "../public/heart-solid.svg"
+import { Avatar } from "@mui/material"
 
 export default function Modal({data, handleClick, like, num, handleLike}){
     const {user} = useAppContext();
@@ -36,7 +37,14 @@ export default function Modal({data, handleClick, like, num, handleLike}){
                 </div>
                 <div className="flex flex-col w-full pt-4 pb-3 px-8 gap-3">
                     <div className="border-b border-[#4F4F4F] pt-2 pb-4 text-lg flex gap-5">
-                        <Link href={"/users/" + data.user.displayName}>{data.user.displayName}</Link>
+                        <Link href={"/users/" + data.user.displayName}>                       
+                            <Avatar 
+                                className="absolute"
+                                src = {data && data.user.pictureRef.url}
+                                sx={{ width: 28, height: 28 }}
+                            />
+                            <div className="ml-9">{data.user.displayName}</div>
+                        </Link>
                     </div>
                     <div className="text-lg">
                         Description
