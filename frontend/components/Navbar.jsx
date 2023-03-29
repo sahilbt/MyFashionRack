@@ -76,7 +76,7 @@ export default function Navbar() {
 
                             <div className="grid place-items-center gap-y-1">
                                 <Image
-                                    className="w-auto h-10 hover:scale-[1.2] duration-75"
+                                    className="w-auto h-10 hover:scale-[1.2] duration-75 cursor-pointer"
                                     src={LogOutButton}
                                     onClick={logOutButtonFunction}
                                 />

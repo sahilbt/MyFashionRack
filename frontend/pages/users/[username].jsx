@@ -19,6 +19,9 @@ export default function Details(params) {
 
     useEffect(() => {
         if (name) {
+            if(name == user.displayName){
+                router.push("/users/me")
+            }
             const fetchID = async () => {
                 try {
                     const response = await Axios.get("http://localhost:8000/users/find", {params:{

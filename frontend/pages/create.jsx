@@ -74,12 +74,10 @@ export default function create(params) {
       };
 
     async function handleChange(e) {
-        console.log(user._id);
         setFilePath(URL.createObjectURL(e.target.files[0]));
         const fileIn = e.target.files[0];
         const base64 = await convertToBase64(fileIn);
         setPost({ ...post, image: base64 });
-        console.log(base64);
     }
 
     
@@ -107,7 +105,6 @@ export default function create(params) {
     const addPostButton = (req,res) => {
         Axios.post("http://localhost:8000/users/create", post)
         .then(function (response) {
-            console.log(response);
             router.push('/users/me');
         })
         .catch(function (error) {
