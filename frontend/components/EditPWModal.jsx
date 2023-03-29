@@ -3,8 +3,10 @@ import { motion } from "framer-motion"
 import Axios from "axios"
 import { Avatar } from "@mui/material"
 import { useState } from "react" 
+import { useAppContext } from "../context/userContext"
 
 export default function EditPWModal({handleClick}) {
+    const { user } = useAppContext()
     const [pw, setPW] = useState({pass: "", verify: ""})
 
     function changeHandler(e){
@@ -15,9 +17,19 @@ export default function EditPWModal({handleClick}) {
         })
     }
 
-    function submitHandler(){
+    async function submitHandler(){
         if(pw.pass == pw.verify){
-            console.log("fgrhefgherb")
+            try {
+                const response = await Axios.post("http://localhost:8000/authentication/editPassword", {
+                    userName: user.username, 
+                    newPassword: pw.pass
+                })
+                if (response.status == 200) {
+                    window.location.reload()
+                }
+            } catch (error) {
+                console.log(error);
+            }
         }
         else{
             return
