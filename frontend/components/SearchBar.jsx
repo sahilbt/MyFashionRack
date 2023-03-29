@@ -13,7 +13,7 @@ export default function SearchBar({ setSearchBar }) {
     const [results, setResults] = useState([""])
     const { user } = useAppContext()
     async function submitHandler(e) {
-        // if(search.length > 0){
+        if(search.length > 0){
             e.preventDefault()
             const url = "http://localhost:8000/users/search";
             
@@ -29,10 +29,10 @@ export default function SearchBar({ setSearchBar }) {
             .catch(function(error){
                 console.log(error)
             })
-        // } else{
-        //     e.preventDefault()
-        //     setResults([])
-        // }
+        } else{
+            e.preventDefault()
+            setResults([])
+        }
     }
     const renderResults = (results.length > 0) ? results.map(result => {
             if(result == ""){
