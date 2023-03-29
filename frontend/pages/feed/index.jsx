@@ -123,7 +123,7 @@ export default function Feed() {
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-9 w-[30%]">
+                    <div className="flex flex-col gap-9 w-[30%] pb-8">
                         {renderPosts}
                     </div>
                     
