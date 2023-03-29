@@ -65,22 +65,22 @@ export default function Modal({data, handleClick, like, num, handleLike, page}){
                     <div className="text-lg">
                         Description
                     </div>
-                    <div className="border-b border-[#4F4F4F] pb-2 text-xs max-w-full h-[20%]">
+                    <div className="border-b border-[#4F4F4F] pb-2 text-xs max-w-full h-[20%] -mt-2">
                         {data.description}
                     </div>
                     <div className="text-lg">
                         Pieces and Links
                     </div>
-                    <div className="border-b border-[#4F4F4F] pb-2 max-w-full h-[18%]">
-                        <div className="flex flex-wrap gap-3">
+                    <div className="border-b border-[#4F4F4F] pb-2 max-w-full h-[17%]">
+                        <div className="flex flex-wrap gap-3 -mt-1">
                             {renderLinks}
                         </div>
                     </div>
                     <div className="text-lg">
                         Style Tags
                     </div>
-                    <div className="border-b border-[#4F4F4F] pb-2 max-w-full h-[22%]">
-                        <div className="flex flex-wrap gap-3">
+                    <div className="border-b border-[#4F4F4F] pb-2 max-w-full h-[23%]">
+                        <div className="flex flex-wrap gap-3 -mt-1">
                             {renderStyles}
                         </div>
                     </div>

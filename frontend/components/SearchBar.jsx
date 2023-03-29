@@ -10,27 +10,34 @@ import { useAppContext } from "../context/userContext";
 
 export default function SearchBar({ setSearchBar }) {
     const [search, setSearch] = useState("")
-    const [results, setResults] = useState([])
+    const [results, setResults] = useState([""])
     const { user } = useAppContext()
     async function submitHandler(e) {
-        e.preventDefault()
-        const url = "http://localhost:8000/users/search";
-        
-        await Axios.get(url, {params:{
-            keyword: search
-            }
-        })
-        .then(function (response) {
-            if(response.status == 200){
-                setResults(response.data);
-            }  
-        })
-        .catch(function(error){
-            console.log(error)
-        })
-
+        // if(search.length > 0){
+            e.preventDefault()
+            const url = "http://localhost:8000/users/search";
+            
+            await Axios.get(url, {params:{
+                keyword: search
+                }
+            })
+            .then(function (response) {
+                if(response.status == 200){
+                    setResults(response.data);
+                }  
+            })
+            .catch(function(error){
+                console.log(error)
+            })
+        // } else{
+        //     e.preventDefault()
+        //     setResults([])
+        // }
     }
     const renderResults = (results.length > 0) ? results.map(result => {
+            if(result == ""){
+                return 
+            } else{
             return (
                 <Link className="p-2 text-2xl hover:bg-lightGrey flex items-center" href={ result.displayName == user.displayName ? "/users/me" :"/users/" + result.displayName}>
                     <Avatar 
@@ -41,13 +48,13 @@ export default function SearchBar({ setSearchBar }) {
                     
                     {result.displayName}
                 </Link>
-            )
+            )}
         }): <div className="text-2xl">No Results Found</div>
     
 
     return (
         <motion.div
-            className="fixed h-full w-[27%] bg-darkGrey border-r-4 border-lightGrey z-10 p-7"
+            className="fixed h-screen w-[27%] bg-darkGrey border-r-4 border-lightGrey z-10 p-7"
             initial={{ x: "-100vw" }}
             animate={{ x: 0 }}
             exit={{ x: "-100vw" }}
@@ -63,7 +70,7 @@ export default function SearchBar({ setSearchBar }) {
                 />
             </form>
             <div className="relative flex items-center justify-center mt-10 mb-5 border border-[#4F4F4F] w-full rounded-full" />
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 overflow-y-scroll max-h-full">
                 {renderResults}
             </div>
         </motion.div>
