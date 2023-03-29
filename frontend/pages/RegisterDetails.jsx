@@ -5,10 +5,8 @@ import { motion } from "framer-motion"
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import TextField from '@mui/material/TextField';
 import moment from 'moment';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import addButton from "../public/addPhoto.svg"
 import { Avatar } from '@mui/material'
 import { Country, State, City }  from 'country-state-city';
 import Select from "react-select";
@@ -17,11 +15,15 @@ import Axios from "axios";
 
 
 
+
+
+
 export default function RegisterDetails() {
     const [form2,setform2] = useState({first:"",last:"",country:"",state:"",birthday:"",phone:"",display:""})
     const [filePath, setFilePath] = useState()
     const[file,setFile] = useState()
     const [selectedLocation, setSelectedLocation] = useState({country:null,state:null})
+    console.log(form2)
       const countryOptions=[
       {
         name: "USA",
@@ -32,6 +34,7 @@ export default function RegisterDetails() {
         isoCode: 'CA',
       },
     ]
+    
 
     const customStyles = {
       control: (provided, state) => ({
@@ -46,6 +49,7 @@ export default function RegisterDetails() {
       }),
       menuList: (provided, state) => ({
         ...provided,
+        borderRadius: '1.5rem',
         backgroundColor: '#353535',
         border: '1px solid #ccc',
         boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
@@ -58,12 +62,19 @@ export default function RegisterDetails() {
           height: 0
         }
       }),
+      menu: (provided) => ({
+        ...provided,
+        borderRadius: '1.5rem',
+      }),
       option: (provided, state) => ({
         ...provided,
         padding: '10px',
         cursor: 'pointer',
         backgroundColor:state.isFocused ? 'grey' : '#353535',
-        color: state.isSelected ? '#FFFFFF' : '#FFFFFF'
+        color: state.isSelected ? '#FFFFFF' : '#FFFFFF',
+        '&:active': {
+          backgroundColor: '#575757'
+        }
       }),
       singleValue: (provided, state) => ({
         ...provided,
@@ -72,7 +83,7 @@ export default function RegisterDetails() {
       placeholder: (provided, state) => ({
         ...provided,
         color: '#FFFFFF'
-      })
+      }),
     };
 
     async function handleChangeFile(e) {
@@ -111,6 +122,7 @@ export default function RegisterDetails() {
                 '& .MuiInputBase-input': {
                   color: '#ffffff', 
                 },
+                fontFamily:'Bree Serif'
               },
             },
           },
@@ -121,17 +133,17 @@ export default function RegisterDetails() {
               }
             }
           },
-          MuiOutlinedInput: {
-            styleOverrides: {
-              root: {
-                color : '#DF6684'
+          MuiSvgIcon:{
+            styleOverrides:{
+              root:{
+                fill:'#DF6684'
               }
             }
           },
-          MuiInputLabel: {
+          MuiOutlinedInput:{
             styleOverrides: {
               root: {
-                color : '#DF6684'
+                color : '#FFFFFF'
               }
             }
           },
@@ -139,7 +151,7 @@ export default function RegisterDetails() {
             styleOverrides:{
               root:{
                 backgroundColor: '#353535',
-                color:'#DF6684',
+                color:'#FFFFFF',
                 borderRadius: '10px',
                 overflow: 'hidden',
               },
@@ -150,36 +162,56 @@ export default function RegisterDetails() {
               root:{
                 backgroundColor: '#353535',
                 borderRadius: '10px',
-                color:"#DF6684"
+                color:"#FFFFFF"
               }
             }
           },
           MuiPickersDay:{
             styleOverrides:{
               root:{
-                color:'#DF6684'
-              },
-              today:{
-                backgroundColor:'transparent'
-              }
-            }
+                color:'#FFFFFF',
+                '&.Mui-selected':{
+                  backgroundColor:'#DF6684',
+                },
+                '&:hover': {
+                  backgroundColor: '#DF6684'
+                },
+                '&:focus': {
+                  backgroundColor: '#DF6684',
+                  '&.Mui-selected':{
+                    backgroundColor:'#DF6684',
+                  },
+              },           
+            },
           },
+        },
           MuiDayCalendar:{
             styleOverrides:{
               weekDayLabel:{
-                color:'#DF6684'
+                color:'#FFFFFF'
               }
             }
           },
-         
+          MuiYearCalendar:{
+            styleOverrides:{
+              root:{
+                '&::-webkit-scrollbar': {
+                  width: 0,
+                  height: 0
+                }
+              }
+            }
+          },
+          
+   
         }
-      });
+      })
 
       
 
     const {steps,currentStepIndex,step, back,next,goto,isFirstStep,isLastStep,getWidth,width} = useMultistepForm([
         <div>
-            <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Tell us your Name</h1>
+            <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Tell us your name!</h1>
             <div className="flex flex-row justify-center">
                 <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2">
                     <input type="text" name="first" placeholder="first name" value = {form2.first} className="px-4 h-14 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]" onChange={handler2}/> 
@@ -190,7 +222,7 @@ export default function RegisterDetails() {
             </div>
         </div>,
             <div>
-            <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Where do you Live</h1>
+            <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Where do you live?</h1>
             <div className="flex flex-col item justify-center items-center">
                 <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2">
                 <Select
@@ -237,14 +269,14 @@ export default function RegisterDetails() {
                     }))
                     setform2(prevform2 =>({
                       ...prevform2,
-                      state : newValue.name
+                      state : newValue.isoCode
                     }))}}
                 />   
                 </div>
             </div>
         </div>,
           <div>
-          <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Some Additional Inform2ation</h1>
+          <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Can you provide some additional information?</h1>
           <div className="flex flex-row item justify-center">
               <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2">
               <ThemeProvider theme={theme}>
@@ -253,14 +285,17 @@ export default function RegisterDetails() {
                        slotProps={{
                         textField: {
                           placeholder: 'birthdate',
+                          font: 'Bree_Serif',
                         },
                         
                       }}
-                    format="YYYY/MM/DD"
+                    disableHighlightToday = 'true'
+                    selected = {true}
+                    format="MMMM D, YYYY"
                     onChange={(newValue)=>{
                         setform2(prevform2 =>({
                         ...prevform2,
-                        birthday : moment(new Date(newValue)).format('YYYY/MM/DD')
+                        birthday : moment(new Date(newValue)).format('YYYY-MM-DD')
 
                 }))}}/>
                 </LocalizationProvider>
@@ -285,16 +320,16 @@ export default function RegisterDetails() {
               </div>
           </div>
       </div>,
-        <div className="flex-col flex gap-10 justify-center items-center ">
+        <div className=" w-full h-full flex-col flex justify-center items-center ">
           <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Please add a Profile Picture</h1>
-          <div className="relative flex items-center justify-center w-[450px] h-[450px] bg-lightGrey rounded-full border-dashed border-2 border-pink  hover:bg-[#515151]">
-              <label htmlFor="dropzone-file" className="w-full h-full flex flex-col justify-center items-center " >
-                  <div className="flex flex-col items-center justify-center">
+          <div className="relative flex flex-col justify-center items-center w-[350px] h-[350px] bg-lightGrey rounded-full  hover:bg-[#515151]">
+              <label htmlFor="dropzone-file" className="w-full h-full flex flex-col justify-center items-center bg-cover" >
+                  <div className="flex flex-col items-center justify-center w-full h-full">
                       <Avatar alt=""
-                      sx={{ width: 450, height: 450 }}/>
+                      sx={{ width: '100%', height: '100%' }}/>
                   </div>
-                  <input id="dropzone-file" type="file" className="hidden" onChange={handleChangeFile} accept="image/*" />
-                  <img alt="" className="object-contain absolute max-w-full max-h-full rounded-full" src={filePath}  />
+                    <input id="dropzone-file" type="file" className="hidden" onChange={handleChangeFile} accept="image/*" />
+                    <div class=" absolute w-full h-full bg-cover bg-center rounded-full" style={{ backgroundImage: `url(${filePath})` }}></div>
               </label>
           </div>
         </div>,
@@ -319,7 +354,7 @@ export default function RegisterDetails() {
 
     return (
     <div className="w-full h-screen bg-grey">
-        <div className="h-2 overflow-hidden w-full rounded-full position absolute">
+        <div className="h-2 overflow-hidden w-full rounded-full absolute">
                         <motion.div className="h-2 px rounded-full bg-pink origin-top-left " style={{width: '0%'}}
                         animate={{
                             width: ((currentStepIndex)/steps.length) * 100 + '%'
@@ -329,7 +364,7 @@ export default function RegisterDetails() {
                         }}>
                         </motion.div>
         </div>
-        <form className=" h-full flex flex-col justify-center items-center text-center">
+        <form className=" h-full w-full flex flex-col justify-center items-center">
              <RegisterInformation handler2 = {handler2} setform2 = {setform2} form2 = {form2} steps = {steps} 
             currentStepIndex = {currentStepIndex} step = {step} back = {back} next = {next} goto = {goto} isFirstStep = {isFirstStep} isLastStep = {isLastStep} width={width} file = {file}
             setFile = {setFile} setSelectedLocation = {setSelectedLocation} filePath = {filePath} setFilePath = {setFilePath}/>
