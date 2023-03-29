@@ -34,8 +34,9 @@ const patchUser = async (req,res) => {
                 res.status(401).json({message: "Username already exists"});
             }
             else{
-                const newUser = await User.findByIdAndUpdate(req.body.userID, {
-                    firstName: req.body.firstName,
+                const newUser = await User.findByIdAndUpdate(
+                    req.body.userID, 
+                    {firstName: req.body.firstName,
                     lastName: req.body.lastName, 
                     displayName: req.body.displayName, 
                     address: {
@@ -49,8 +50,9 @@ const patchUser = async (req,res) => {
                         url:result.url, 
                         width: result.width,
                         height: result.width
-                    }
-                })
+                        }},
+                    {new: true}
+                )
                 res.status(200).json(newUser);
             }            
         } 
