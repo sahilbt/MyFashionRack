@@ -82,7 +82,7 @@ export default function Post({props, page}){
                     </div>
                 </div>
                 <AnimatePresence>
-                    {modal && <Modal data={props} modal={modal} like={like} num={num} handleLike={handleLike} handleClick={handleClick}/>}
+                    {modal && <Modal page={page} data={props} modal={modal} like={like} num={num} handleLike={handleLike} handleClick={handleClick}/>}
                 </AnimatePresence>
             </div>:
 
@@ -92,7 +92,7 @@ export default function Post({props, page}){
                         <Image alt="Outfit" className="object-cover rounded-lg" src={props.pictureRef.url} fill/>
                     </div>
                     <AnimatePresence>
-                        {modal && <Modal data={props} modal={modal} like={like} num={num} handleLike={handleLike} handleClick={handleClick}/>}
+                        {modal && <Modal page={page} data={props} modal={modal} like={like} num={num} handleLike={handleLike} handleClick={handleClick}/>}
                     </AnimatePresence>
                 </div>
             </div>}
