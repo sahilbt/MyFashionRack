@@ -18,7 +18,8 @@ const {
     findID,
     isFollowing,
     likedPosts,
-    searchUser
+    searchUser,
+    deletePost
 } = require("../controllers/postController");
 
 router.post('/create', createPost);
@@ -38,5 +39,6 @@ router.get('/find', findID);
 router.get('/checkFollowing', isFollowing);
 router.get('/getLikedPosts', likedPosts);
 router.get('/search', searchUser);
+router.delete('/deletePost', searchdeletePostUser);
 
 module.exports = router;

@@ -276,7 +276,6 @@ const likedPosts = async (req, res) => {
 
 const searchUser = async (req,res) => {
     const { keyword } = req.query;
-    console.log(keyword)
     try {
         const regex = new RegExp(keyword, 'i') // i for case insensitive
         const matchingUsers = await User.find({displayName: {$regex: regex}});
@@ -286,7 +285,16 @@ const searchUser = async (req,res) => {
         res.status(404).json({ error: "Could not retrieve the searched users" });
     }
 }
-  
+
+const deletePost = async(req,res) => {
+    const { postID } = req.query;
+    try {
+        await Post.deleteOne({ _id: postID});
+        res.status(200);
+    } catch (error) {
+        res.status(400);
+    }
+}
 
 module.exports = {
     createPost,
@@ -305,5 +313,6 @@ module.exports = {
     findID,
     isFollowing,
     likedPosts,
-    searchUser
+    searchUser,
+    deletePost
 }
