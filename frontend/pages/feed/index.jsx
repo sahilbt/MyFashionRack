@@ -2,8 +2,6 @@ import Link from "next/Link"
 import Image from "next/Image"
 import Navbar from "../../components/Navbar.jsx"
 import Post from "../../components/Post.jsx"
-// import posts from "../../posts"
-import user2 from "../../user"
 import { Avatar } from '@mui/material'
 import Like from "../../public/heart-solid.svg"
 import { useAppContext } from "../../context/userContext"
