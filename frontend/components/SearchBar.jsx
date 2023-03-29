@@ -21,15 +21,12 @@ export default function SearchBar({ setSearchBar }) {
             })
         }
     }
-    const renderResults = 
-    <div>
-        {(results.length > 0) ? results.map(result => {
+    const renderResults = (results.length > 0) ? results.map(result => {
             return (
-                <a href="#" className="block text-2xl">{result}</a>
+                <a href="#" className="p-2 block text-2xl hover:bg-lightGrey">{result}</a>
             )
-        }): <div className="text-2xl">No Results Found</div>}
-    </div>
-
+        }): <div className="text-2xl">No Results Found</div>
+    
     const usernames = ["pp", "new", "lilbaby", "pppoopoo"]
     return (
         <motion.div
@@ -49,7 +46,7 @@ export default function SearchBar({ setSearchBar }) {
                 />
             </form>
             <div className="relative flex items-center justify-center mt-10 mb-5 border border-[#4F4F4F] w-full rounded-full" />
-            <div>
+            <div className="flex flex-col gap-3">
                 {renderResults}
             </div>
         </motion.div>

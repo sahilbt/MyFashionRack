@@ -50,7 +50,7 @@ export default function Navbar() {
                         <div className="flex items-center space-x-6">
                             <Link href="/feed">
                                 <Image
-                                    className="w-auto h-14"
+                                    className="w-auto h-14 hover:scale-[1.1] duration-75"
                                     src = {Logo}
                                 />
                             </Link>

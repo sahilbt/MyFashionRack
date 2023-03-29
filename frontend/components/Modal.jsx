@@ -38,8 +38,7 @@ export default function Modal({data, handleClick, like, num, handleLike}){
                 <div className="flex flex-col w-full pt-4 pb-3 px-8 gap-3">
                     <div className="border-b border-[#4F4F4F] pt-2 pb-4 text-lg flex gap-5">
                         <Link className="flex items-center" href={"/users/" + data.user.displayName}>                       
-                            <Avatar 
-                                className="absolute"
+                            <Avatar
                                 src = {data && data.user.pictureRef.url}
                                 sx={{ width: 28, height: 28 }}
                             />
