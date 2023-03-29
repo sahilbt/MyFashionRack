@@ -59,6 +59,12 @@ export default function Login() {
           });
     }
 
+    const googleButton = (event) => {
+        console.log("triggered");
+        event.preventDefault();
+        window.location.href = "http://localhost:8000/authentication/google";
+    };
+
     return (
         <div className="flex flex-col items-center justify-center w-full h-screen text-center bg-darkGrey">
             <div className="flex w-full items-center content-center">
@@ -96,7 +102,9 @@ export default function Login() {
                      <div className="relative flex items-center justify-center mt-4 border border-t w-96">
                         <div className="absolute px-5 bg-darkGrey text-white">OR</div>
                     </div>
-                    <button className="bg-darkGrey text-white rounded-3xl mt-4 w-64 h-12 outline outline-2 outline-white hover:outline-pink">
+                    <button className="bg-darkGrey text-white rounded-3xl mt-4 w-64 h-12 outline outline-2 outline-white hover:outline-pink"
+                    onClick={googleButton}
+                    >
                         <Image src = {Google} className="h-1/2 w-auto inline-block mr-3"/>
                         Continue with Google
                     </button>

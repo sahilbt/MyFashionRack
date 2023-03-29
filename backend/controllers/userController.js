@@ -99,6 +99,22 @@ const logOutUser = (req, res) => {
   };
  
 
+  const editPassword = async(req,res) => {
+    
+    const {userName, newPassword} = req.body;
+    const sanitizedUser = await User.findByUsername(userName);
+
+    try {
+      await sanitizedUser.setPassword(newPassword);
+      await sanitizedUser.save();
+      res.status(200).json({ message: 'Successful!' });
+    } 
+    catch (err) {
+      res.status(422).send(err);
+    }
+ 
+  }
+
 
 // const protected = (req,res) => {
 //     if(req.isAuthenticated()){
@@ -132,6 +148,10 @@ const googleCheck =  (req,res) => {
       })(req, res);
 }
 
+const getGoogleUser = (req,res) => {
+    res.send(req.user)
+}
+
 
 
 // const CLIENT_ID = process.env.CLIENT_ID;
@@ -163,5 +183,7 @@ module.exports = {
     patchUser,
     googleAuth,
     googleAuthCallback,
-    googleCheck
+    googleCheck,
+    editPassword,
+    getGoogleUser
 }

@@ -9,6 +9,7 @@ import { useAppContext } from "../context/userContext";
 import Axios from "axios"
 import { Avatar } from "@mui/material"
 import { motion } from "framer-motion"
+import moment from "moment"
 
 
 export default function Post({props, page}){
@@ -75,7 +76,7 @@ export default function Post({props, page}){
                     </div>
                 </div>
                 <div className="bg-lightGrey py-2 rounded-b-xl flex justify-between px-4">
-                    <h1>{props.createdAt.substring(0,10)}</h1>
+                    <h1>{moment(new Date(props.createdAt.substring(0,10))).format("MMMM Do, YYYY")}</h1>
                     <div className="flex items-center gap-1">
                         <Image src={like ? Liked: Like} onClick={handleLike} className="h-4 w-auto cursor-pointer"/>
                         <h1>{num}</h1>

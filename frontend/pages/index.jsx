@@ -9,7 +9,6 @@ import Illustration4 from "../public/undraw_login_re_4vu2.svg"
 import { motion } from "framer-motion"
 
 export default function index(){
-    
     return(
         <div>
             <Head>
