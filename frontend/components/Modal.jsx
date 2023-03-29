@@ -31,19 +31,18 @@ export default function Modal({data, handleClick, like, num, handleLike}){
 
     return(
         <Backdrop handleClick={handleClick} >
-            <motion.div onClick={(event) => event.stopPropagation()} className="bg-lightGrey w-3/5 h-2/3 grid grid-cols-2 rounded-xl text-white">
+            <motion.div onClick={(event) => event.stopPropagation()} className="bg-lightGrey w-3/5 h-2/3 grid grid-cols-2 rounded-xl text-white ">
                 <div className="relative bg-black rounded-l-lg">
                     <Image alt="Outfit" className="object-contain" src={data.pictureRef.url} fill />
                 </div>
                 <div className="flex flex-col w-full pt-4 pb-3 px-8 gap-3">
                     <div className="border-b border-[#4F4F4F] pt-2 pb-4 text-lg flex gap-5">
-                        <Link href={"/users/" + data.user.displayName}>                       
-                            <Avatar 
-                                className="absolute"
+                        <Link className="flex items-center" href={"/users/" + data.user.displayName}>                       
+                            <Avatar
                                 src = {data && data.user.pictureRef.url}
                                 sx={{ width: 28, height: 28 }}
                             />
-                            <div className="ml-9">{data.user.displayName}</div>
+                            <div className="ml-3">{data.user.displayName}</div>
                         </Link>
                     </div>
                     <div className="text-lg">

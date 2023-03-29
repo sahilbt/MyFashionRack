@@ -123,7 +123,7 @@ export default function Feed() {
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-9 w-[30%]">
+                    <div className="flex flex-col gap-9 w-[30%] pb-8">
                         {renderPosts}
                     </div>
                     
@@ -133,7 +133,7 @@ export default function Feed() {
                             Suggested Users
                         </div>
 
-                        <div className="relative flex items-center justify-center mt-2  border-t border-[#4F4F4F] w-[85%]"></div>
+                        <div className="mt-2 border-t border-[#4F4F4F] w-[85%]"></div>
                     </div>
                         
 

@@ -87,7 +87,39 @@ export default function UserProfile(){
 
 
                         </div>
-                        <div className="bg-lightGrey h-60 w-60 rounded-xl outline outline-1 outline-pink">
+                        <div className="bg-lightGrey h-60 w-72 rounded-xl outline outline-1 outline-pink text-white flex flex-col items-center">
+                            <div className="text-2xl mt-2 ">
+                                Profile Settings
+                            </div>
+
+                            <div className="flex items-center justify-center mt-2  border-t border-[#4F4F4F] w-[85%]"></div>
+
+                            <div className="text-[#808080] group mt-2">
+                                Edit Location
+                                <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
+                            </div>
+
+                            <div className="text-[#808080] group mt-2">
+                                Edit Profile Picture
+                                <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
+                            </div>
+
+                            <div className="text-[#808080] group mt-2">
+                                Edit Password
+                                <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
+                            </div>
+
+                            <div className="flex items-center justify-center mt-2  border-t border-[#4F4F4F] w-[85%]"></div>
+
+                            <div className="text-[#808080] group mt-2">
+                                Contact Support
+                                <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
+                            </div>
+
+                            <div className="text-[#808080] group mt-2">
+                                Delete Account
+                                <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
+                            </div>
 
                         </div>
                     </div>
