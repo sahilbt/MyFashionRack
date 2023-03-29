@@ -25,7 +25,8 @@ const postSchema = mongoose.Schema({
     },
     like:{
         type: Map,
-        of: Boolean
+        of: Boolean,
+        default:{}
     },
     outfitPieces: [{
         name:String,

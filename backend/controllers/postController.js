@@ -85,7 +85,7 @@ const updateProfilePicture = async (req,res) => {
     const { image, userId } = req.body;
     let result;
     try{
-        const user = await User.findById(userID);
+        const user = await User.findById(userId);
         if (user.pictureRef.public_id === ''){
             const result = await cloudinary.uploader.upload(image);
             const newUser = await User.findByIdAndUpdate(userId, {pictureRef: {
@@ -111,22 +111,26 @@ const updateProfilePicture = async (req,res) => {
 
 const likePicture = async(req,res) => {
     const { postID, userID } = req.body;
-    const post = Post.findById(postID);
-    const liked = post.like.get(userID);
+    try{
+        const post = await Post.findById(postID);
+        const liked = post.like.get(userID);
 
-    if(liked){
-        post.like.delete(userID)
-    }else{
-        post.like.set(userID, true)
+        if(liked){
+            post.like.delete(userID)
+        }else{
+            post.like.set(userID, true)
+        }
+
+        const updatedPost = await Post.findByIdAndUpdate(
+            postID,
+            { like: post.like },
+            { new: true }
+        );
+
+        res.status(200).json({"liked": liked, "updatedPost": updatedPost})
+    } catch(error){
+        console.log(error)
     }
-
-    const updatedPost = await Post.findByIdAndUpdate(
-        id,
-        { likes: post.likes },
-        { new: true }
-    );
-
-    res.status(200).json(updatedPost, {"liked": liked})
 }
 
 const getRecommendedUsers = async(req,res) => {
@@ -259,6 +263,20 @@ const isFollowing = async (req,res) => {
     }
 }
 
+const likedPosts = async(req,res) => {
+    const { userID } = req.query;
+    try{
+        const posts = await Post.find({ like: { $exists: true, $eq: { [userID]: true}}}).populate("user").lean();;
+        console.log(posts);
+
+        res.status(200).json({ posts });
+    } 
+    catch(error){
+        console.log(error);
+        res.status(404).json({ error: "Could not retrieve the user feed" });
+    }
+}
+
 module.exports = {
     createPost,
     getPostsFromUser,
@@ -274,5 +292,6 @@ module.exports = {
     followUser,
     followStyle,
     findID,
-    isFollowing
+    isFollowing,
+    likedPosts
 }

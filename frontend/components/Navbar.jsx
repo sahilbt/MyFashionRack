@@ -75,13 +75,11 @@ export default function Navbar() {
                             </div>
 
                             <div className="grid place-items-center gap-y-1">
-                                <Link href="#">
-                                    <Image
-                                        className="w-auto h-10 hover:scale-[1.2] duration-75"
-                                        src={LogOutButton}
-                                        onClick={logOutButtonFunction}
-                                    />
-                                </Link>
+                                <Image
+                                    className="w-auto h-10 hover:scale-[1.2] duration-75"
+                                    src={LogOutButton}
+                                    onClick={logOutButtonFunction}
+                                />
                                 <div className="text-xs">
                                     Logout
                                 </div>
