@@ -49,7 +49,7 @@ export default function Style(params) {
                     <div className='grid grid-cols-3 grid-flow-row gap-11 pb-8'>
                         {renderPosts}
                     </div>
-                </div>    
+                </div>
             </div>
         </div>
     )
