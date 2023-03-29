@@ -290,9 +290,9 @@ const deletePost = async(req,res) => {
     const { postID } = req.query;
     try {
         await Post.deleteOne({ _id: postID});
-        res.status(200);
+        res.status(200).json({success: "Success"});
     } catch (error) {
-        res.status(400);
+        res.status(400).json({error: "Could not delete post"});
     }
 }
 

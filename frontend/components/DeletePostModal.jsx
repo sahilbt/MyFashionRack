@@ -2,12 +2,19 @@ import Backdrop from "./Backdrop"
 import { motion } from "framer-motion"
 import Axios from "axios"
 
-export default function DeletePostModal({handleClick}) {
-
-    const refresh = () => document.location.reload(true)
+export default function DeletePostModal({handleClick, data}) {
 
     async function deletePost(){
-        refresh()
+        try {
+            const response = await Axios.delete("http://localhost:8000/users/deletePost", { params: {
+                postID: data._id
+            }})
+            if (response.status == 200) {
+                window.location.reload()
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return(
@@ -18,7 +25,7 @@ export default function DeletePostModal({handleClick}) {
                     <button onClick={handleClick} className="bg-pink text-white rounded-3xl w-36 h-8 hover:bg-[#AA4E65] text-xl">
                         Cancel
                     </button>
-                    <button onclick={deletePost} className="bg-pink text-white rounded-3xl w-36 h-8 hover:bg-[#AA4E65] text-xl">
+                    <button onClick={deletePost} className="bg-pink text-white rounded-3xl w-36 h-8 hover:bg-[#AA4E65] text-xl">
                         Proceed
                     </button>
                 </div>

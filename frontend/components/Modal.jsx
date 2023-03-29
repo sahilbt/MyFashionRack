@@ -97,7 +97,7 @@ export default function Modal({data, handleClick, like, num, handleLike, page}){
                     </div>
                 </div>
                 <AnimatePresence>
-                    {deleteModal && <DeletePostModal handleClick={handleDelete}/>}
+                    {deleteModal && <DeletePostModal handleClick={handleDelete} data={data} />}
                 </AnimatePresence>
             </motion.div>
         </Backdrop>
