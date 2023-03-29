@@ -37,7 +37,7 @@ export default function Style(params) {
     const renderPosts = posts.map(post => {
         
         return(
-            <Post props={post} page="me"/>
+            <Post props={post} page="style"/>
         )
     })
 
