@@ -39,6 +39,6 @@ router.get('/find', findID);
 router.get('/checkFollowing', isFollowing);
 router.get('/getLikedPosts', likedPosts);
 router.get('/search', searchUser);
-router.delete('/deletePost', searchdeletePostUser);
+router.delete('/deletePost', deletePost);
 
 module.exports = router;
