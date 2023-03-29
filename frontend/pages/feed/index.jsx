@@ -133,7 +133,7 @@ export default function Feed() {
                             Suggested Users
                         </div>
 
-                        <div className="relative flex items-center justify-center mt-2  border-t border-[#4F4F4F] w-[85%]"></div>
+                        <div className="mt-2 border-t border-[#4F4F4F] w-[85%]"></div>
                     </div>
                         
 

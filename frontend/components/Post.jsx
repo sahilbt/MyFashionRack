@@ -49,17 +49,17 @@ export default function Post({props, page}){
 
     return(
         <div>
-            {page=="feed"?<div className="flex flex-col">
+            {page=="feed"?<div>
                 <div className="bg-lightGrey p-2 rounded-t-xl">
-                    
-                    <Link className="flex items-center" href={"/users/" + props.user.displayName}>
-                        <Avatar 
-                            className="absolute"
-                            src = {props && props.user.pictureRef.url}
-                            sx={{ width: 28, height: 28 }}
-                        />
-                        <div className="ml-3">{props.user.displayName}</div>
-                    </Link>
+                    <div className="flex">
+                        <Link className="flex items-center" href={"/users/" + props.user.displayName}>                       
+                            <Avatar
+                                src = {props && props.user.pictureRef.url}
+                                sx={{ width: 28, height: 28 }}
+                            />
+                            <div className="ml-3">{props.user.displayName}</div>
+                        </Link>
+                    </div>
                 </div>
                 <div onClick={handleClick} className="cursor-pointer">
                     <div className="bg-black h-[500px] relative -z-10">
