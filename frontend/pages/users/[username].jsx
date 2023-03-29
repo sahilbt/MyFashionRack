@@ -24,7 +24,7 @@ export default function Details(params) {
             }
             const fetchID = async () => {
                 try {
-                    const response = await Axios.get("http://localhost:8000/users/find", {params:{
+                    const response = await Axios.get(`${process.env.NEXT_PUBLIC_URL}/users/find`, {params:{
                         username: name
                     }});
 
@@ -36,7 +36,7 @@ export default function Details(params) {
                 }
 
                 try{
-                    const response = await Axios.get("http://localhost:8000/users/checkFollowing", {params:{
+                    const response = await Axios.get(`${process.env.NEXT_PUBLIC_URL}/users/checkFollowing`, {params:{
                         userID: user._id, 
                         userDisplayName: name
                     }})
@@ -57,7 +57,7 @@ export default function Details(params) {
         if (person) {
             const fetchPosts = async () => {
                 try {
-                    const response = await Axios.get("http://localhost:8000/users/userPosts", {params:{
+                    const response = await Axios.get(`${process.env.NEXT_PUBLIC_URL}/users/userPosts`, {params:{
                         userID: person._id
                     }});
 
@@ -85,7 +85,7 @@ export default function Details(params) {
 
     async function handleFollow(){
         try {
-            const response = await Axios.patch("http://localhost:8000/users/followUser", {
+            const response = await Axios.patch(`${process.env.NEXT_PUBLIC_URL}/users/followUser`, {
                 userID: user._id, 
                 userDisplayName: name
             });

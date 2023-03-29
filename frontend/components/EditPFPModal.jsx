@@ -34,7 +34,7 @@ export default function EditProfilePictureModal({handleClick}) {
 
     async function handleSubmit(){
         try {
-            const response = await Axios.patch("http://localhost:8000/users/updateProfilePicture", {
+            const response = await Axios.patch(`${process.env.NEXT_PUBLIC_URL}/users/updateProfilePicture`, {
                 image: file, 
                 userId: user._id
             })

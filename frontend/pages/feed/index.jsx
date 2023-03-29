@@ -13,7 +13,7 @@ export default function Feed() {
     const [posts, setPosts ]  = useState([]);
     const [me, setMe] = useState([]);
     useEffect(() => {
-        Axios.get("http://localhost:8000/users/postsFromFeed", {params:{
+        Axios.get(`${process.env.NEXT_PUBLIC_URL}/users/postsFromFeed`, {params:{
             userID: user._id
             }
         })

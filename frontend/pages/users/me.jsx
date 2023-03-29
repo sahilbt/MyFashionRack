@@ -33,7 +33,7 @@ export default function UserProfile(){
 
         if(user.displayName){
             const fetchUser = async () => {
-                await Axios.get("http://localhost:8000/users/find", {params:{
+                await Axios.get(`${process.env.NEXT_PUBLIC_URL}/users/find`, {params:{
                     username: user.displayName
                     }
                 })
@@ -51,7 +51,7 @@ export default function UserProfile(){
 
         
 
-        Axios.get("http://localhost:8000/users/userPosts", {params:{
+        Axios.get(`${process.env.NEXT_PUBLIC_URL}/users/userPosts`, {params:{
                 userID: user._id
                 }
             })

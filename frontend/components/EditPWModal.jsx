@@ -20,7 +20,7 @@ export default function EditPWModal({handleClick}) {
     async function submitHandler(){
         if(pw.pass == pw.verify){
             try {
-                const response = await Axios.post("http://localhost:8000/authentication/editPassword", {
+                const response = await Axios.post(`${process.env.NEXT_PUBLIC_URL}/authentication/editPassword`, {
                     userName: user.username, 
                     newPassword: pw.pass
                 })
