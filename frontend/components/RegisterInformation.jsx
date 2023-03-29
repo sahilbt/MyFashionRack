@@ -141,8 +141,7 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
             }
           })
           .catch(function (error) {
-            //invalidNameToast();
-            alert("hi");
+            invalidNameToast();
           });
     }
 
@@ -209,18 +208,29 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
             
             <div className="w-3/4 m-auto flex flex-col justify-center">
                 {step}
-                <div className="py-20 m-auto flex flex-end gap-x-12">
-                    {!isFirstStep && <button type = "button" onClick = {backPage} className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]">back</button>}
-                    {!isLastStep && <button  type = "button" onClick = {nextPage} className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]">next</button>}
-                    <ToastContainer hideProgressBar={true}/>
-                                    <style>
-                                    {
-                                    `.Toastify__toast--error .Toastify__toast-icon svg path {
-                                        fill: #DF6684;
-                                    }`}
-                                    </style>
-                    {isLastStep && <button  className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]" onClick = {registerButton}>Submit</button>}
-                </div>
+                <div className="py-20 flex items-center justify-center">
+                    {!isFirstStep && (
+                        <button type="button" onClick={backPage} className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65] mr-12">
+                        back
+                        </button>
+                    )}
+                    {!isLastStep && (
+                        <button type="button" onClick={nextPage} className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]">
+                        next
+                        </button>
+                    )}
+                    {isLastStep && (
+                        <button className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]" onClick={registerButton}>
+                        Submit
+                        </button>
+                    )}
+                    <ToastContainer hideProgressBar={true} />
+                    <style>
+                        {`.Toastify__toast--error .Toastify__toast-icon svg path {
+                            fill: #DF6684;
+                        }`}
+                    </style>
+                    </div>
             </div>
 
     )
