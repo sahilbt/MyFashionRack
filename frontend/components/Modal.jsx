@@ -9,6 +9,7 @@ import Liked from "../public/heart-solid.svg"
 import { Avatar } from "@mui/material"
 import Trash from "../public/trash-can-solid.svg"
 import DeletePostModal from "./DeletePostModal"
+import moment from "moment"
 
 
 export default function Modal({data, handleClick, like, num, handleLike, page}){
@@ -86,7 +87,7 @@ export default function Modal({data, handleClick, like, num, handleLike, page}){
                     </div>
                     <div className="flex mt-auto justify-between max-w-full">
                         <div>
-                            {data.createdAt.substring(0,10)}
+                            {moment(new Date(data.createdAt.substring(0,10))).format("MMMM Do, YYYY")}
                         </div>
                         <div>
                         <div className="flex items-center gap-1">

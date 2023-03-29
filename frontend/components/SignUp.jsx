@@ -124,7 +124,7 @@ export default function SignUp({handler1,form1}) {
                             <div className="absolute px-5 bg-darkGrey text-white">OR</div>
                         </div>
                         <button className="bg-darkGrey text-white rounded-3xl mt-4 w-64 h-12 outline outline-2 outline-white hover:outline-pink"
-                            >
+                            onClick={googleButton}>
                             <Image src = {Google} className="h-1/2 w-auto inline-block mr-3"/>
                             Continue with Google
                         </button>
@@ -134,7 +134,7 @@ export default function SignUp({handler1,form1}) {
                                 Login Here!
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-pink"></span>
                             </Link>
-                        </div>
+                        </div>  
                     </div>
                 </div>
             </div>
