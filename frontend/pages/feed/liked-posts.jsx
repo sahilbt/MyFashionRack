@@ -7,8 +7,8 @@ import Axios from 'axios'
 
 
 export default function Style(params) {
-    const { user } = useAppContext()
-    const[posts, setPosts] = useState()
+    const { user } = useAppContext();
+    const[posts, setPosts] = useState([]);
 
     useEffect(() => {
         console.log(user._id)
@@ -18,7 +18,7 @@ export default function Style(params) {
         })
         .then(function (response) {
             if(response.status == 200){
-                setPosts(response.data);
+                setPosts(response.data.posts);
             }  
         })
         .catch(function(error){
