@@ -83,26 +83,21 @@ const getPostsFromAStyle = async (req,res) => {
 
 const updateProfilePicture = async (req,res) => {
     const { image, userId } = req.body;
-    let result;
     try{
         const user = await User.findById(userId);
-        if (user.pictureRef.public_id === ''){
-            const result = await cloudinary.uploader.upload(image);
-            const newUser = await User.findByIdAndUpdate(userId, {pictureRef: {
-                public_id:result.public_id,
-                url:result.url, 
-                width: result.width,
-                height: result.width}
-            })
-        }
-        else{
-            const result = await cloudinary.uploader.upload(image, {
-                public_id: user.public_id,
-                overwrite: true
-             });
+        const result = await cloudinary.uploader.upload(image, {
+            public_id: user.pictureRef.public_id,
+            overwrite: true
+            });
 
-        }
-        res.json(200);
+        const newUser = await User.findByIdAndUpdate(userId, {pictureRef: {
+            public_id:result.public_id,
+            url:result.url, 
+            width: result.width,
+            height: result.height}
+        })
+
+        res.status(200).json({sucess: "Sucess"});
     } 
     catch(error){
         res.status(500).json({error: "Could not update profile pic"});

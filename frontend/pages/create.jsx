@@ -89,7 +89,7 @@ export default function create(params) {
                     {clothing.name}
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                 </Link>
-                <Image alt="" onClick={() => deleteHandler(clothing)} src={X} className="h-5 w-auto ml-1"/>
+                <Image alt="" onClick={() => deleteHandler(clothing)} src={X} className="h-5 w-auto ml-1 cursor-pointer"/>
             </div>
         )     
     })
@@ -123,7 +123,7 @@ export default function create(params) {
 
                 <div className="flex w-[65%] gap-10 justify-center my-10">
                     <div className="relative flex items-center justify-center w-1/2 h-[450px] bg-lightGrey rounded-lg border-dashed border-2 border-pink  hover:bg-[#515151]">
-                        <label htmlFor="dropzone-file" className="w-full h-full flex flex-col justify-center items-center" >
+                        <label htmlFor="dropzone-file" className="w-full h-full flex flex-col justify-center items-center cursor-pointer" >
                             <div className="flex flex-col items-center justify-center">
                                 <Image alt="" src = {addButton}/>
                                 <p className="text-sm">Click to upload an image!</p>

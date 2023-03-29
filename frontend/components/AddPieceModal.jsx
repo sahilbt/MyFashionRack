@@ -40,12 +40,12 @@ export default function AddPieceModal({setPost, handleClick}) {
 
                 <div className="flex flex-col ">
                     <h1 className="text-xl">Piece Name</h1>
-                    <input placeholder="Write the name of your piece" name="name" onChange={changeHandler} value={piece.name} className="mt-1 text-sm px-2 h-8 w-72 bg-lightGrey text-white rounded-3xl outline outline-white outline-1 focus:outline focus:outline-pink hover:outline hover:outline-pink"></input>
+                    <input placeholder="Write the name of your piece" name="name" onChange={changeHandler} value={piece.name} className="mt-1 text-sm px-3 h-8 w-72 bg-lightGrey text-white rounded-3xl outline outline-white outline-1 focus:outline focus:outline-pink hover:outline hover:outline-pink"></input>
                 </div>
 
                 <div className="flex flex-col">
                     <h1 className="text-xl">Link to Piece</h1>
-                    <input placeholder="Please start with http://" name="link" onChange={changeHandler} value={piece.link} className="mt-1 text-sm px-2 h-8 w-72 bg-lightGrey text-white rounded-3xl outline outline-white outline-1 focus:outline focus:outline-pink hover:outline hover:outline-pink"></input>
+                    <input placeholder="Please start with http://" name="link" onChange={changeHandler} value={piece.link} className="mt-1 text-sm px-3 h-8 w-72 bg-lightGrey text-white rounded-3xl outline outline-white outline-1 focus:outline focus:outline-pink hover:outline hover:outline-pink"></input>
                 </div>
 
                 <button disabled={(piece.name.length == 0 && piece.link.length == 0) || (!piece.link.startsWith("http://") && !piece.link.startsWith("https://"))} onClick={clickHandler} className="bg-pink text-white rounded-3xl w-36 h-8 hover:bg-[#AA4E65] text-xl ">Add Piece</button>
