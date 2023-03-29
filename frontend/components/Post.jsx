@@ -58,7 +58,7 @@ export default function Post({props, page}){
                             src = {props && props.user.pictureRef.url}
                             sx={{ width: 28, height: 28 }}
                         />
-                        <div className="ml-9">{props.user.displayName}</div>
+                        <div className="ml-3">{props.user.displayName}</div>
                     </Link>
                 </div>
                 <div onClick={handleClick} className="cursor-pointer">
