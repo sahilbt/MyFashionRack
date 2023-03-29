@@ -5,6 +5,9 @@ import Link from "next/Link"
 import { useState } from "react"
 import { useRouter } from 'next/router';
 import { useAppContext } from "../context/userContext";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 import Axios from "axios";
 Axios.defaults.withCredentials = true;
@@ -15,7 +18,33 @@ export default function Login() {
     const router = useRouter();
     const { setUser } = useAppContext();
 
+    const emptyFieldToast = () => {
+        toast.error('Please fill out all required fields', {
+            position: toast.POSITION.TOP_RIGHT,
+            toastId: "EmptyFieldLogin",
+            style: {
+                backgroundColor: '#353535',
+                color: '#DF6684'
+              },
+        });
+    };
+
+    const incorrectFieldToast = () => {
+        toast.error('Incorrect Username or password ', {
+            position: toast.POSITION.TOP_RIGHT,
+            toastId: "IncorrectLogin",
+            style: {
+                backgroundColor: '#353535',
+                color: '#DF6684'
+              },
+        });
+    };
+
     const logInButton = (event) => {
+        if(!fields.username||!fields.password){
+            emptyFieldToast()
+            return
+        }
         event.preventDefault();
         const url = "http://localhost:8000/authentication/login";
         Axios.post(url, fields )
@@ -26,8 +55,7 @@ export default function Login() {
             }
           })
           .catch(function (error) {
-            console.log(error);
-            
+            incorrectFieldToast()
           });
     }
 
@@ -54,6 +82,17 @@ export default function Login() {
                         <button className="bg-pink text-white rounded-3xl w-48 h-12 hover:bg-[#AA4E65]" onClick={logInButton}>
                             Login
                         </button>
+                        <ToastContainer hideProgressBar={true} />
+                        <style>
+                            {
+                                `.Toastify__toast--error .Toastify__toast-icon svg path {
+                                    fill: #DF6684;
+                                }
+                                .Toastify__close-button svg {
+                                fill: #DF6684;
+                                }`
+                            }
+                        </style>
                      <div className="relative flex items-center justify-center mt-4 border border-t w-96">
                         <div className="absolute px-5 bg-darkGrey text-white">OR</div>
                     </div>
