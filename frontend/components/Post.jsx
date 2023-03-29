@@ -50,14 +50,14 @@ export default function Post({props, page}){
     return(
         <div>
             {page=="feed"?<div>
-                <div className="bg-lightGrey p-2 rounded-t-xl">
+                <div className="bg-lightGrey px-4 py-2 rounded-t-xl">
                     <div className="flex">
                         <Link className="flex items-center" href={"/users/" + props.user.displayName}>                       
                             <Avatar
                                 src = {props && props.user.pictureRef.url}
                                 sx={{ width: 28, height: 28 }}
                             />
-                            <div className="ml-3">{props.user.displayName}</div>
+                            <div className="ml-2">{props.user.displayName}</div>
                         </Link>
                     </div>
                 </div>
@@ -66,7 +66,7 @@ export default function Post({props, page}){
                         <Image alt="Outfit" className="object-contain" src={props.pictureRef.url} fill/>
                     </div>
                 </div>
-                <div className="bg-lightGrey p-2 rounded-b-xl flex justify-between">
+                <div className="bg-lightGrey py-2 rounded-b-xl flex justify-between px-4">
                     <h1>{props.createdAt.substring(0,10)}</h1>
                     <div className="flex items-center gap-1">
                         <Image src={like ? Liked: Like} onClick={handleLike} className="h-4 w-auto cursor-pointer"/>
@@ -84,7 +84,7 @@ export default function Post({props, page}){
                         <Image alt="Outfit" className="object-cover rounded-lg" src={props.pictureRef.url} fill/>
                     </div>
                     <AnimatePresence>
-                        {modal && <Modal data={props} modal={modal} like={like} setLike={setLike} num={num} setNum={setNum} handleClick={handleClick}/>}
+                        {modal && <Modal data={props} modal={modal} like={like} num={num} handleLike={handleLike} handleClick={handleClick}/>}
                     </AnimatePresence>
                 </div>
             </div>}
