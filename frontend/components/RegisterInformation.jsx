@@ -121,7 +121,7 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
         }
 
         event.preventDefault();
-        const url = "http://localhost:8000/authentication/addUserDetail";
+        const url = `${process.env.NEXT_PUBLIC_URL}/authentication/addUserDetail`;
         const registerInformation = {
             userID: user._id,
             firstName: form2.first,

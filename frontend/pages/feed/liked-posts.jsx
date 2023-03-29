@@ -12,7 +12,7 @@ export default function Style(params) {
 
     useEffect(() => {
         console.log(user._id)
-        Axios.get("http://localhost:8000/users/getLikedPosts", {params:{
+        Axios.get(`${process.env.NEXT_PUBLIC_URL}/users/getLikedPosts`, {params:{
             userID: user._id
             }
         })

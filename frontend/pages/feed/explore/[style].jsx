@@ -18,7 +18,7 @@ export default function Style(params) {
         if(!style){
             console.log("Not ready");
         }else{
-            Axios.get("http://localhost:8000/users/postsFromStyle", {params:{
+            Axios.get(`${process.env.NEXT_PUBLIC_URL}/users/postsFromStyle`, {params:{
                 stylename: style,
                 }
             })

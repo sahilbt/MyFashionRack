@@ -15,7 +15,7 @@ export default function SearchBar({ setSearchBar }) {
     async function submitHandler(e) {
         if(search.length > 0){
             e.preventDefault()
-            const url = "http://localhost:8000/users/search";
+            const url = `${process.env.NEXT_PUBLIC_URL}/users/search`;
             
             await Axios.get(url, {params:{
                 keyword: search
