@@ -13,20 +13,29 @@ export default function UserProfile(){
     const {user} = useAppContext();
     const [posts, setPosts ]  = useState([]);
     const [loggedUser, setLoggedUser] = useState()
+
     useEffect(() => {
 
-        Axios.get("http://localhost:8000/users/find", {params:{
-                username: user.displayName
-                }
-            })
-            .then(function (response) {
-                if(response.status == 200){
-                    setLoggedUser(response.data);
-                }  
-            })
-            .catch(function(error){
-                console.log(error)
-            })
+        if(user.displayName){
+            const fetchUser = async () => {
+                await Axios.get("http://localhost:8000/users/find", {params:{
+                    username: user.displayName
+                    }
+                })
+                .then(function (response) {
+                    if(response.status == 200){
+                        console.log(response.data)
+                        setLoggedUser(response.data);
+                    }  
+                })
+                .catch(function(error){
+                    console.log(error)
+                })
+            }
+            fetchUser()
+        }
+
+        
 
         Axios.get("http://localhost:8000/users/userPosts", {params:{
                 userID: user._id

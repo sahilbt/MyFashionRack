@@ -45,7 +45,8 @@ export default function RegisterDetails() {
         boxShadow: state.isFocused ? '0 0 5px grey' : 'none',
         '&:hover': {
           borderColor: state.isFocused ? 'darkGrey' : 'grey'
-        }
+        },
+        minHeight: '3.5em'
       }),
       menuList: (provided, state) => ({
         ...provided,
@@ -74,7 +75,9 @@ export default function RegisterDetails() {
         color: state.isSelected ? '#FFFFFF' : '#FFFFFF',
         '&:active': {
           backgroundColor: '#575757'
-        }
+        },
+
+
       }),
       singleValue: (provided, state) => ({
         ...provided,
@@ -198,10 +201,32 @@ export default function RegisterDetails() {
                 '&::-webkit-scrollbar': {
                   width: 0,
                   height: 0
-                }
+                },
               }
             }
           },
+          MuiPickersYear:{
+            styleOverrides:{
+            yearButton:{
+                color:'#FFFFFF',
+                '&.Mui-selected':{
+                  backgroundColor:'#DF6684',
+                  '&:hover': {
+                    backgroundColor: '#DF6684'
+                  },
+                },
+                '&:hover': {
+                  backgroundColor: '#DF6684'
+                },
+                '&:focus': {
+                  backgroundColor: '#DF6684',
+                  '&.Mui-selected':{
+                    backgroundColor:'#DF6684',
+                }
+              },     
+            }
+          },
+        },
           
    
         }
@@ -360,7 +385,7 @@ export default function RegisterDetails() {
                             width: ((currentStepIndex)/steps.length) * 100 + '%'
                         }}
                         transition={{
-                            duration: 1.5
+                            duration: 1
                         }}>
                         </motion.div>
         </div>

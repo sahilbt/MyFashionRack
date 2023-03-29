@@ -8,6 +8,7 @@ import Liked from "../public/heart-solid.svg"
 import { useAppContext } from "../context/userContext";
 import Axios from "axios"
 import { Avatar } from "@mui/material"
+import { motion } from "framer-motion"
 
 
 export default function Post({props, page}){
@@ -46,18 +47,25 @@ export default function Post({props, page}){
             console.log(error);
         }
     }
-
     return(
         <div>
             {page=="feed"?<div>
                 <div className="bg-lightGrey px-4 py-2 rounded-t-xl">
                     <div className="flex">
-                        <Link className="flex items-center" href={"/users/" + props.user.displayName}>                       
-                            <Avatar
-                                src = {props && props.user.pictureRef.url}
-                                sx={{ width: 28, height: 28 }}
-                            />
-                            <div className="ml-2">{props.user.displayName}</div>
+                        <Link className="flex items-center group" href={"/users/" + props.user.displayName}>
+                            <motion.div
+                                whileHover={{rotate: 360}}
+                                transition={{duration: 0.4}}
+                            >
+                                <Avatar
+                                    src = {props && props.user.pictureRef.url}
+                                    sx={{ width: 28, height: 28 }}
+                                />
+                            </motion.div>
+                            <div className="ml-2 group">
+                                {props.user.displayName}
+                                <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
+                            </div>
                         </Link>
                     </div>
                 </div>
@@ -74,7 +82,7 @@ export default function Post({props, page}){
                     </div>
                 </div>
                 <AnimatePresence>
-                    {modal && <Modal data={props} modal={modal} like={like} num={num} handleLike={handleLike} handleClick={handleClick}/>}
+                    {modal && <Modal page={page} data={props} modal={modal} like={like} num={num} handleLike={handleLike} handleClick={handleClick}/>}
                 </AnimatePresence>
             </div>:
 
@@ -84,7 +92,7 @@ export default function Post({props, page}){
                         <Image alt="Outfit" className="object-cover rounded-lg" src={props.pictureRef.url} fill/>
                     </div>
                     <AnimatePresence>
-                        {modal && <Modal data={props} modal={modal} like={like} num={num} handleLike={handleLike} handleClick={handleClick}/>}
+                        {modal && <Modal page={page} data={props} modal={modal} like={like} num={num} handleLike={handleLike} handleClick={handleClick}/>}
                     </AnimatePresence>
                 </div>
             </div>}
