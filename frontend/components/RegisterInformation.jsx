@@ -133,14 +133,19 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
             phoneNumber: form2.phone,
             image: file
         };
-        Axios.patch(url, registerInformation)
+        await Axios.patch(url, registerInformation)
           .then(function (response) {
+            console.log(response);
             if(response.status === 200){
                 setUser(response.data);
                 router.push('/users/me');
             }
+            if (response.status === 401){
+                invalidNameToast();
+            }
           })
           .catch(function (error) {
+            console.log(error)
             invalidNameToast();
           });
     }
