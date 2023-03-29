@@ -1,5 +1,7 @@
 import Navbar from "../../components/Navbar"
 import Post from "../../components/Post"
+import EditPFPModal from "../../components/EditPFPModal"
+import EditPWModal from "../../components/EditPWModal"
 import Like from "../../public/heart-solid.svg"
 import { useAppContext } from "../../context/userContext";
 import { useEffect, useState } from "react";
@@ -7,12 +9,24 @@ import Axios from "axios";
 import Link from "next/Link";
 import Image from "next/Image";
 import { Avatar } from "@mui/material";
+import { AnimatePresence } from "framer-motion"
+import moment from "moment"
 
 
 export default function UserProfile(){
     const {user} = useAppContext();
     const [posts, setPosts ]  = useState([]);
     const [loggedUser, setLoggedUser] = useState()
+
+    const [editPFP, setEditPFP] = useState(false)
+    function handlePFP(){
+        setEditPFP(() => !editPFP)
+    }
+
+    const [editPW, setEditPW] = useState(false)
+    function handlePW(){
+        setEditPW(() => !editPW)
+    }
 
     useEffect(() => {
 
@@ -24,7 +38,6 @@ export default function UserProfile(){
                 })
                 .then(function (response) {
                     if(response.status == 200){
-                        console.log(response.data)
                         setLoggedUser(response.data);
                     }  
                 })
@@ -63,7 +76,7 @@ export default function UserProfile(){
             <div className="w-full flex justify-center items-center mt-10 ">
                 <div className="w-4/5 flex justify-between">
                     <div className="flex flex-col gap-9">
-                        <div className="bg-lightGrey h-64 w-72 rounded-xl outline outline-1 outline-pink text-white flex flex-col items-center">
+                        <div className="bg-lightGrey h-80 w-72 rounded-xl outline outline-1 outline-pink text-white flex flex-col items-center">
                             <Avatar 
                                 className="mt-4"
                                 src = {loggedUser && loggedUser.pictureRef.url}
@@ -76,7 +89,7 @@ export default function UserProfile(){
                                 @{loggedUser && loggedUser.displayName}
                             </div>
                            
-                            <div className="flex items-center justify-center mt-2  border-t border-[#4F4F4F] w-[85%]"></div>
+                            <div className="flex items-center justify-center mt-2 border-t border-[#4F4F4F] w-[85%]"></div>
 
                             <div className="mt-2">
                                 <p className="text-pink inline mr-2">{loggedUser && loggedUser.followers ? Object.keys(loggedUser.followers).length : 0}</p> Followers
@@ -94,42 +107,51 @@ export default function UserProfile(){
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                             </div>
 
+                            <div className="flex items-center justify-center mt-2  border-t border-[#4F4F4F] w-[85%]"></div>
+
+                            <div className="text-[#808080] mt-2">
+                                {loggedUser && moment(new Date(loggedUser.birthday)).format("MMMM Do, YYYY")}
+                            </div>
+
+                            <div className="text-[#808080]">
+                                {loggedUser && loggedUser.address.state}, {loggedUser && loggedUser.address.country}
+                            </div>
 
                         </div>
-                        <div className="bg-lightGrey h-60 w-72 rounded-xl outline outline-1 outline-pink text-white flex flex-col items-center">
+                        <div className="bg-lightGrey h-54 w-72 rounded-xl outline outline-1 outline-pink text-white flex flex-col items-center">
                             <div className="text-2xl mt-2 ">
                                 Profile Settings
                             </div>
 
                             <div className="flex items-center justify-center mt-2  border-t border-[#4F4F4F] w-[85%]"></div>
 
-                            <div className="text-[#808080] group mt-2">
-                                Edit Location
-                                <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
-                            </div>
-
-                            <div className="text-[#808080] group mt-2">
+                            <div onClick={handlePFP} className="text-[#808080] group mt-2 cursor-pointer">
                                 Edit Profile Picture
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
                             </div>
+                            <AnimatePresence>
+                                {editPFP && <EditPFPModal handleClick={handlePFP}/>}
+                            </AnimatePresence>                            
 
-                            <div className="text-[#808080] group mt-2">
+                            <div onClick={handlePW} className="text-[#808080] group mt-2 cursor-pointer">
                                 Edit Password
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
                             </div>
+                            <AnimatePresence>
+                                {editPW && <EditPWModal handleClick={handlePW}/>}
+                            </AnimatePresence>   
 
                             <div className="flex items-center justify-center mt-2  border-t border-[#4F4F4F] w-[85%]"></div>
 
-                            <div className="text-[#808080] group mt-2">
+                            <div className="text-[#808080] group mt-2 cursor-pointer">
                                 Contact Support
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
                             </div>
 
-                            <div className="text-[#808080] group mt-2">
+                            <div className="text-[#808080] group mt-2 mb-1 cursor-pointer">
                                 Delete Account
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
                             </div>
-
                         </div>
                     </div>
                     <div className="w-2/3 h-20 pb-4 ">

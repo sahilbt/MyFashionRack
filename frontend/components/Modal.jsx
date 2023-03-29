@@ -9,6 +9,7 @@ import Liked from "../public/heart-solid.svg"
 import { Avatar } from "@mui/material"
 import Trash from "../public/trash-can-solid.svg"
 import DeletePostModal from "./DeletePostModal"
+import moment from "moment"
 
 
 export default function Modal({data, handleClick, like, num, handleLike, page}){
@@ -65,28 +66,28 @@ export default function Modal({data, handleClick, like, num, handleLike, page}){
                     <div className="text-lg">
                         Description
                     </div>
-                    <div className="border-b border-[#4F4F4F] pb-2 text-xs max-w-full h-[20%]">
+                    <div className="border-b border-[#4F4F4F] pb-2 text-xs max-w-full h-[20%] -mt-2">
                         {data.description}
                     </div>
                     <div className="text-lg">
                         Pieces and Links
                     </div>
-                    <div className="border-b border-[#4F4F4F] pb-2 max-w-full h-[18%]">
-                        <div className="flex flex-wrap gap-3">
+                    <div className="border-b border-[#4F4F4F] pb-2 max-w-full h-[17%]">
+                        <div className="flex flex-wrap gap-3 -mt-1">
                             {renderLinks}
                         </div>
                     </div>
                     <div className="text-lg">
                         Style Tags
                     </div>
-                    <div className="border-b border-[#4F4F4F] pb-2 max-w-full h-[22%]">
-                        <div className="flex flex-wrap gap-3">
+                    <div className="border-b border-[#4F4F4F] pb-2 max-w-full h-[23%]">
+                        <div className="flex flex-wrap gap-3 -mt-1">
                             {renderStyles}
                         </div>
                     </div>
                     <div className="flex mt-auto justify-between max-w-full">
                         <div>
-                            {data.createdAt.substring(0,10)}
+                            {moment(new Date(data.createdAt.substring(0,10))).format("MMMM Do, YYYY")}
                         </div>
                         <div>
                         <div className="flex items-center gap-1">
@@ -97,7 +98,7 @@ export default function Modal({data, handleClick, like, num, handleLike, page}){
                     </div>
                 </div>
                 <AnimatePresence>
-                    {deleteModal && <DeletePostModal handleClick={handleDelete}/>}
+                    {deleteModal && <DeletePostModal handleClick={handleDelete} data={data} />}
                 </AnimatePresence>
             </motion.div>
         </Backdrop>

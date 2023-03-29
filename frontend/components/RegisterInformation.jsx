@@ -5,15 +5,17 @@ Axios.defaults.withCredentials = true;
 import { useAppContext } from "../context/userContext";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {motion,AnimatePresence } from "framer-motion"
 
 
-
-export default function RegisterInformation({handler2,setPage,setform2,form2,steps,currentStepIndex,step,back,next,goto,isFirstStep,isLastStep,width,file,setFile,setSelectedLocation,filePath,setFilePath}) {
+export default function RegisterInformation({handler2,setPage,setform2,form2,steps,currentStepIndex,step,back,next,goto,isFirstStep,isLastStep,width,file,setFile,setSelectedLocation,filePath,setFilePath,setAnimate,animate}) {
 
     const[disable,setDisable] = useState(true);
     const[validPhone,setValidPhone] = useState(true);
     const router = useRouter();
     const { user, setUser } = useAppContext();
+
+
 
     const emptyFieldToast = () => {
         toast.error('Please fill out all required fields', {
@@ -173,6 +175,7 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
             setFilePath(undefined)
 
         }
+        setAnimate("-100vw")
         setDisable(true);
         setValidPhone(true);
         back()
@@ -200,6 +203,7 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
             emptyPhotoToast()
         }
         else{
+            setAnimate("100vw")
             setDisable(true);
             next(); 
         }
@@ -210,14 +214,15 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
 
 
     return(
-            
             <div className="w-3/4 m-auto flex flex-col justify-center">
-                {step}
+                    <AnimatePresence>
+                        {step}
+                    </AnimatePresence>
                 <div className="py-20 flex items-center justify-center">
                     {!isFirstStep && (
-                        <button type="button" onClick={backPage} className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65] mr-12">
-                        back
-                        </button>
+                                <button type="button" onClick={backPage} className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65] mr-12">
+                                back
+                                </button>
                     )}
                     {!isLastStep && (
                         <button type="button" onClick={nextPage} className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]">
@@ -225,9 +230,11 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
                         </button>
                     )}
                     {isLastStep && (
+
                         <button className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65]" onClick={registerButton}>
                         Submit
                         </button>
+
                     )}
                     <ToastContainer hideProgressBar={true} />
                     <style>
@@ -240,7 +247,7 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
                                 }`
                             }
                     </style>
-                    </div>
+                </div>
             </div>
 
     )

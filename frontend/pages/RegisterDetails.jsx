@@ -1,7 +1,7 @@
 import RegisterInformation from "../components/RegisterInformation.jsx"
 import {useMultistepForm}  from "../hooks/RegisterHook.jsx";
 import { useState } from "react";
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -23,7 +23,10 @@ export default function RegisterDetails() {
     const [filePath, setFilePath] = useState()
     const[file,setFile] = useState()
     const [selectedLocation, setSelectedLocation] = useState({country:null,state:null})
-    console.log(form2)
+    const[animate,setAnimate] = useState("100vw")
+
+    
+
       const countryOptions=[
       {
         name: "USA",
@@ -227,32 +230,44 @@ export default function RegisterDetails() {
             }
           },
         },
-          
-   
         }
       })
 
       
 
-    const {steps,currentStepIndex,step, back,next,goto,isFirstStep,isLastStep,getWidth,width} = useMultistepForm([
+    const {steps,currentStepIndex,step, back,next,goto,isFirstStep,isLastStep,getWidth,width,length} = useMultistepForm([
+          <motion.div
+            key={0}
+            initial={{ x: animate }}
+            animate={{ x: 0 }}
+            transition={{ duration: 1 }}
+          >
         <div>
             <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Tell us your name!</h1>
-            <div className="flex flex-row justify-center">
-                <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2">
-                    <input type="text" name="first" placeholder="first name" value = {form2.first} className="px-4 h-14 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]" onChange={handler2}/> 
-                </div>
-                <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2">
-                    <input type="text" name="last" placeholder="last name" value = {form2.last}className="px-4 h-14 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"onChange={handler2}/> 
-                </div>
-            </div>
-        </div>,
-            <div>
+              <div className="flex flex-row justify-center">
+                  <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2">
+                      <input type="text" name="first" placeholder="first name" value = {form2.first} className="px-4 h-14 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]" onChange={handler2}/> 
+                  </div>
+                  <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2">
+                      <input type="text" name="last" placeholder="last name" value = {form2.last}className="px-4 h-14 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"onChange={handler2}/> 
+                  </div>
+              </div>
+        </div>
+        </motion.div>,
+         <div>
+            <motion.div
+            key={1}
+            initial={{ x: animate }}
+            animate={{ x: 0 }}
+            transition={{ duration: 1 }}
+          
+          >
             <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Where do you live?</h1>
             <div className="flex flex-col item justify-center items-center">
                 <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2">
                 <Select
                 styles = {customStyles}
-                  placeholder="Country"
+                  placeholder="country"
                   options={countryOptions}
                   getOptionLabel={(options) => {
                     return options["name"];
@@ -278,7 +293,8 @@ export default function RegisterDetails() {
                 />
                 <Select
                   styles = {customStyles}
-                  placeholder="State/Province"
+                  placeholder="state/province"
+                  
                   options={State?.getStatesOfCountry(selectedLocation.country?.isoCode)}
                   getOptionLabel={(options) => {
                     return options["name"];
@@ -299,8 +315,14 @@ export default function RegisterDetails() {
                 />   
                 </div>
             </div>
-        </div>,
-          <div>
+          </motion.div>
+          </div>,
+           <motion.div
+           key={2}
+           initial={{ x: animate }}
+           animate={{ x: 0 }}
+           transition={{ duration: 1 }}
+         >
           <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Can you provide some additional information?</h1>
           <div className="flex flex-row item justify-center">
               <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2">
@@ -314,7 +336,7 @@ export default function RegisterDetails() {
                         },
                         
                       }}
-                    disableHighlightToday = 'true'
+                    disableHighlightToday = {true}
                     selected = {true}
                     format="MMMM D, YYYY"
                     onChange={(newValue)=>{
@@ -344,26 +366,36 @@ export default function RegisterDetails() {
                   />
               </div>
           </div>
-      </div>,
+          </motion.div>,
+       <motion.div
+       key={3}
+       initial={{ x: animate}}
+       animate={{ x: 0 }}
+       transition={{ duration: 1 }}>
         <div className=" w-full h-full flex-col flex justify-center items-center ">
           <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Please add a Profile Picture</h1>
-          <div className="relative flex flex-col justify-center items-center w-[350px] h-[350px] bg-lightGrey rounded-full  hover:bg-[#515151]">
               <label htmlFor="dropzone-file" className="w-full h-full flex flex-col justify-center items-center bg-cover" >
                   <div className="flex flex-col items-center justify-center w-full h-full">
                       <Avatar alt=""
-                      sx={{ width: '100%', height: '100%' }}/>
+                      sx={{ width: '350px', height: '350px' }}/>
                   </div>
                     <input id="dropzone-file" type="file" className="hidden" onChange={handleChangeFile} accept="image/*" />
                     <div class=" absolute w-full h-full bg-cover bg-center rounded-full" style={{ backgroundImage: `url(${filePath})` }}></div>
               </label>
-          </div>
-        </div>,
+        </div>
+        </motion.div>,
+          <motion.div
+          key={4}
+          initial={{ x: animate }}
+          animate={{ x: 0 }}
+          transition={{ duration: 1 }}>
          <div>
          <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >What do you want Others to Call you</h1>
              <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2 m-auto">
              <input type="text" name="display" placeholder="display name" value = {form2.display} className="px-4 h-14 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"onChange={handler2}/> 
              </div>
-      </div>,
+      </div>
+      </motion.div>,
     ])
 
     function handler2(event){
@@ -378,7 +410,7 @@ export default function RegisterDetails() {
 
 
     return (
-    <div className="w-full h-screen bg-grey">
+    <div className="w-full h-screen bg-grey overflow-hidden">
         <div className="h-2 overflow-hidden w-full rounded-full absolute">
                         <motion.div className="h-2 px rounded-full bg-pink origin-top-left " style={{width: '0%'}}
                         animate={{
@@ -389,10 +421,10 @@ export default function RegisterDetails() {
                         }}>
                         </motion.div>
         </div>
-        <form className=" h-full w-full flex flex-col justify-center items-center">
+        <form className=" h-full w-full flex justify-between items-center">
              <RegisterInformation handler2 = {handler2} setform2 = {setform2} form2 = {form2} steps = {steps} 
             currentStepIndex = {currentStepIndex} step = {step} back = {back} next = {next} goto = {goto} isFirstStep = {isFirstStep} isLastStep = {isLastStep} width={width} file = {file}
-            setFile = {setFile} setSelectedLocation = {setSelectedLocation} filePath = {filePath} setFilePath = {setFilePath}/>
+            setFile = {setFile} setSelectedLocation = {setSelectedLocation} filePath = {filePath} setFilePath = {setFilePath} setAnimate = {setAnimate} animate = {animate}/>
         </form>
     </div>
 
