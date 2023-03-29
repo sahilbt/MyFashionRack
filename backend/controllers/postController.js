@@ -270,9 +270,22 @@ const likedPosts = async (req, res) => {
       res.status(200).json({ posts });
     } catch (error) {
       console.log(error);
-      res.status(404).json({ error: "Could not retrieve the user feed" });
+      res.status(404).json({ error: "Could not retrieve the liked posts" });
     }
   };
+
+const searchUser = async (req,res) => {
+    const { keyword } = req.query;
+    console.log(keyword)
+    try {
+        const regex = new RegExp(keyword, 'i') // i for case insensitive
+        const matchingUsers = await User.find({displayName: {$regex: regex}});
+        console.log(matchingUsers);
+        res.status(200).json(matchingUsers);
+    } catch (error) {
+        res.status(404).json({ error: "Could not retrieve the searched users" });
+    }
+}
   
 
 module.exports = {
@@ -291,5 +304,6 @@ module.exports = {
     followStyle,
     findID,
     isFollowing,
-    likedPosts
+    likedPosts,
+    searchUser
 }

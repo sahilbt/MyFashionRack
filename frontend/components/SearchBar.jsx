@@ -2,28 +2,45 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import X from "../public/xmark-solid.svg"
 import Image from "next/Image"
+import Axios from "axios";
 
 export default function SearchBar({ setSearchBar }) {
     const [search, setSearch] = useState("")
-    const [results, setResults] = useState([""])
-    function submitHandler(e) {
+    const [results, setResults] = useState([])
+    async function submitHandler(e) {
         e.preventDefault()
-        setResults([])
-        if(search.length > 0){
-            usernames.map(index => {
-                if (index.includes(search)) {
-                    setResults(prev => {
-                        return (
-                            [...prev, index]
-                        )
-                    })
-                }
-            })
-        }
+        const url = "http://localhost:8000/users/search";
+        
+        await Axios.get(url, {params:{
+            keyword: search
+            }
+        })
+        .then(function (response) {
+            if(response.status == 200){
+                setResults(response.data);
+            }  
+        })
+        .catch(function(error){
+            console.log(error)
+        })
+
+        
+
+        // if(search.length > 0){
+        //     usernames.map(index => {
+        //         if (index.includes(search)) {
+        //             setResults(prev => {
+        //                 return (
+        //                     [...prev, index]
+        //                 )
+        //             })
+        //         }
+        //     })
+        // }
     }
     const renderResults = (results.length > 0) ? results.map(result => {
             return (
-                <a href="#" className="p-2 block text-2xl hover:bg-lightGrey">{result}</a>
+                <a href="#" className="p-2 block text-2xl hover:bg-lightGrey">{result.displayName}</a>
             )
         }): <div className="text-2xl">No Results Found</div>
     
