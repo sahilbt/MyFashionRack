@@ -5,7 +5,7 @@ import Post from "../../components/Post.jsx"
 // import posts from "../../posts"
 import user2 from "../../user"
 import { Avatar } from '@mui/material'
-import Like from "../../public/like.svg"
+import Like from "../../public/heart-solid.svg"
 import { useAppContext } from "../../context/userContext"
 import { useEffect, useState } from "react"
 import Axios from "axios"
@@ -92,9 +92,9 @@ export default function Feed() {
                         <Link href="/users/me">
                             <Avatar 
                                 className="mt-4"
-                                src = {me.pictureRef.url}
+                                src = {me.pictureRef && me.pictureRef.url}
                                 sx={{ width: 90, height: 90 }}
-                                />
+                            />
                         </Link>
                         <div className="text-2xl -mb-1">
                             {me.firstName} {me.lastName} 
@@ -107,18 +107,19 @@ export default function Feed() {
                         <div className="relative flex items-center justify-center mt-2  border-t border-[#4F4F4F] w-[85%]"></div>
 
                         <div className="mt-2">
-                            <p className="text-pink inline mr-2"></p> {me.followers ? Object.keys(me.followers).length : 0} Followers
+                            <p className="text-pink inline mr-2">{me.followers ? Object.keys(me.followers).length : 0}</p>  Followers
                         </div>
 
                         <div className="">
-                            <p className="text-pink inline mr-2"></p> {me.following ? Object.keys(me.following).length : 0} Following
+                            <p className="text-pink inline mr-2">{me.following ? Object.keys(me.following).length : 0}</p>  Following
                         </div>
 
-                        <div className="">
+                        <div className="group">
                             <Link href="/feed/liked-posts" className="flex">
                                 <Image className="w-4" src={Like} />
                                 <p className="ml-2">Liked Posts</p>
                             </Link>
+                            <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                         </div>
                     </div>
 

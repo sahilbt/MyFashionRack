@@ -265,6 +265,7 @@ const isFollowing = async (req,res) => {
 
 const likedPosts = async(req,res) => {
     const { userID } = req.query;
+    console.log(userID)
     try{
         const posts = await Post.find({ like: { $has: userID } }).populate("user").lean();
         res.status(200).json({ posts });

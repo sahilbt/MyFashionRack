@@ -7,6 +7,8 @@ import Like from "../public/heart-regular.svg"
 import Liked from "../public/heart-solid.svg"
 import { useAppContext } from "../context/userContext";
 import Axios from "axios"
+import { Avatar } from "@mui/material"
+
 
 export default function Post({props, page}){
     const { user } = useAppContext()
@@ -49,7 +51,15 @@ export default function Post({props, page}){
         <div>
             {page=="feed"?<div className="flex flex-col">
                 <div className="bg-lightGrey p-2 rounded-t-xl">
-                    <Link href={"/users/" + props.user.displayName}>{props.user.displayName}</Link>
+                    
+                    <Link className="flex items-center" href={"/users/" + props.user.displayName}>
+                        <Avatar 
+                            className="absolute"
+                            src = {props && props.user.pictureRef.url}
+                            sx={{ width: 28, height: 28 }}
+                        />
+                        <div className="ml-9">{props.user.displayName}</div>
+                    </Link>
                 </div>
                 <div onClick={handleClick} className="cursor-pointer">
                     <div className="bg-black h-[500px] relative -z-10">

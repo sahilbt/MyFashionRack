@@ -1,16 +1,35 @@
-import { useRouter } from 'next/router'
 import Image from 'next/Image'
 import Navbar from '../../components/Navbar'
-import ProfilePost from "../../components/ProfilePost"
-import posts from "../../posts"
+import Post from "../../components/Post"
+import { useAppContext } from "../../context/userContext"
+import { useEffect, useState } from "react"
+import Axios from 'axios'
+
 
 export default function Style(params) {
-    const router = useRouter()
-    const style = router.query.style
+    const { user } = useAppContext()
+    const[posts, setPosts] = useState()
 
-    const renderPosts = posts.map(post => {
+    useEffect(() => {
+        console.log(user._id)
+        Axios.get("http://localhost:8000/users/getLikedPosts", {params:{
+            userID: user._id
+            }
+        })
+        .then(function (response) {
+            if(response.status == 200){
+                setPosts(response.data);
+            }  
+        })
+        .catch(function(error){
+            console.log(error)
+        })
+
+    }, [user._id])
+
+    const renderPosts = posts && posts.map(post => {
         return(
-            <ProfilePost {...post}/>
+            <Post props={post} page="me"/>
         )
     })
 
