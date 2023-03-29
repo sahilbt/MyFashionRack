@@ -75,7 +75,7 @@ export default function Details(params) {
 
     const renderPosts =  posts && posts.map(post => {
         return(
-            <Post props={post} page="me"/>
+            <Post props={post} page="other"/>
         )
     })
 

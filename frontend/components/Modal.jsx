@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import Backdrop from "./Backdrop"
 import Image from "next/Image"
 import Link from "next/Link"
@@ -7,8 +7,10 @@ import { useAppContext } from "../context/userContext"
 import Like from "../public/heart-regular.svg"
 import Liked from "../public/heart-solid.svg"
 import { Avatar } from "@mui/material"
+import Trash from "../public/trash-can-solid.svg"
+import DeletePostModal from "./DeletePostModal"
 
-export default function Modal({data, handleClick, like, num, handleLike}){
+export default function Modal({data, handleClick, like, num, handleLike, page}){
     const {user} = useAppContext();
     const renderLinks = data && data.outfitPieces.map(clothing => {
         return(
@@ -28,23 +30,26 @@ export default function Modal({data, handleClick, like, num, handleLike}){
             </div>
         )
     })
-
+    const [deleteModal, setDeleteModal] = useState(false)
+    function handleDelete(){
+        setDeleteModal(prev => !prev)
+    }
     return(
         <Backdrop handleClick={handleClick} >
-            <motion.div onClick={(event) => event.stopPropagation()} className="bg-lightGrey w-3/5 h-2/3 grid grid-cols-2 rounded-xl text-white ">
+            <motion.div onClick={(event) => event.stopPropagation()} className="bg-lightGrey w-3/5 h-2/3 grid grid-cols-2 rounded-xl text-white">
                 <div className="relative bg-black rounded-l-lg">
                     <Image alt="Outfit" className="object-contain" src={data.pictureRef.url} fill />
                 </div>
                 <div className="flex flex-col w-full pt-4 pb-3 px-8 gap-3">
-                    <div className="border-b border-[#4F4F4F] pt-2 pb-4 text-lg flex gap-5">
+                    <div className="border-b border-[#4F4F4F] pt-2 pb-4 text-lg flex justify-between items-center gap-5">
                         <Link className="flex items-center" href={"/users/" + data.user.displayName}>                       
-                            <Avatar 
-                                className="absolute"
+                            <Avatar
                                 src = {data && data.user.pictureRef.url}
                                 sx={{ width: 28, height: 28 }}
                             />
                             <div className="ml-3">{data.user.displayName}</div>
                         </Link>
+                        {page == "me" && <Image src={Trash} onClick={handleDelete} className="h-5 w-auto cursor-pointer hover:scale-[1.2] duration-75"/>}
                     </div>
                     <div className="text-lg">
                         Description
@@ -80,7 +85,10 @@ export default function Modal({data, handleClick, like, num, handleLike}){
                         </div>
                     </div>
                 </div>
-            </motion.div>      
+                <AnimatePresence>
+                    {deleteModal && <DeletePostModal handleClick={handleDelete}/>}
+                </AnimatePresence>
+            </motion.div>
         </Backdrop>
     )
 }

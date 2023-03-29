@@ -263,19 +263,17 @@ const isFollowing = async (req,res) => {
     }
 }
 
-const likedPosts = async(req,res) => {
+const likedPosts = async (req, res) => {
     const { userID } = req.query;
-    try{
-        const posts = await Post.find({ like: { $exists: true, $eq: { [userID]: true}}}).populate("user").lean();;
-        console.log(posts);
-
-        res.status(200).json({ posts });
-    } 
-    catch(error){
-        console.log(error);
-        res.status(404).json({ error: "Could not retrieve the user feed" });
+    try {
+      const posts = await Post.find().exists("like." + userID).populate("user").lean();
+      res.status(200).json({ posts });
+    } catch (error) {
+      console.log(error);
+      res.status(404).json({ error: "Could not retrieve the user feed" });
     }
-}
+  };
+  
 
 module.exports = {
     createPost,
