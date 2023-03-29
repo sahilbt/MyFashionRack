@@ -10,6 +10,7 @@ import { Avatar } from "@mui/material"
 import Trash from "../public/trash-can-solid.svg"
 import DeletePostModal from "./DeletePostModal"
 
+
 export default function Modal({data, handleClick, like, num, handleLike, page}){
     const {user} = useAppContext();
     const renderLinks = data && data.outfitPieces.map(clothing => {
@@ -42,13 +43,23 @@ export default function Modal({data, handleClick, like, num, handleLike, page}){
                 </div>
                 <div className="flex flex-col w-full pt-4 pb-3 px-8 gap-3">
                     <div className="border-b border-[#4F4F4F] pt-2 pb-4 text-lg flex justify-between items-center gap-5">
-                        <Link className="flex items-center" href={"/users/" + data.user.displayName}>                       
-                            <Avatar
-                                src = {data && data.user.pictureRef.url}
-                                sx={{ width: 28, height: 28 }}
-                            />
-                            <div className="ml-3">{data.user.displayName}</div>
-                        </Link>
+                        <Link className="flex items-center group" href={"/users/" + data.user.displayName}>      
+                            <motion.div
+                                whileHover={{rotate: 360}}
+                                transition={{duration: 0.4}}
+                            >
+                                <Avatar
+                                    src = {data && data.user.pictureRef.url}
+                                    sx={{ width: 28, height: 28 }}
+                                />
+                            </motion.div>    
+                                <div className="ml-3 group">
+                                    {data.user.displayName}
+                                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
+                                </div>
+
+                            </Link>
+                                     
                         {page == "me" && <Image src={Trash} onClick={handleDelete} className="h-5 w-auto cursor-pointer hover:scale-[1.2] duration-75"/>}
                     </div>
                     <div className="text-lg">

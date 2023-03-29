@@ -3,10 +3,15 @@ import { motion } from "framer-motion"
 import X from "../public/xmark-solid.svg"
 import Image from "next/Image"
 import Axios from "axios";
+import Link from "next/Link";
+import { Avatar } from "@mui/material";
+import { useAppContext } from "../context/userContext";
+
 
 export default function SearchBar({ setSearchBar }) {
     const [search, setSearch] = useState("")
     const [results, setResults] = useState([])
+    const { user } = useAppContext()
     async function submitHandler(e) {
         e.preventDefault()
         const url = "http://localhost:8000/users/search";
@@ -24,27 +29,22 @@ export default function SearchBar({ setSearchBar }) {
             console.log(error)
         })
 
-        
-
-        // if(search.length > 0){
-        //     usernames.map(index => {
-        //         if (index.includes(search)) {
-        //             setResults(prev => {
-        //                 return (
-        //                     [...prev, index]
-        //                 )
-        //             })
-        //         }
-        //     })
-        // }
     }
     const renderResults = (results.length > 0) ? results.map(result => {
             return (
-                <a href="#" className="p-2 block text-2xl hover:bg-lightGrey">{result.displayName}</a>
+                <Link className="p-2 text-2xl hover:bg-lightGrey flex items-center" href={ result.displayName == user.displayName ? "/users/me" :"/users/" + result.displayName}>
+                    <Avatar 
+                        className="mr-3"
+                        src = {result.pictureRef.url}
+                        sx={{ width: 40, height: 40 }}
+                    />
+                    
+                    {result.displayName}
+                </Link>
             )
         }): <div className="text-2xl">No Results Found</div>
     
-    const usernames = ["pp", "new", "lilbaby", "pppoopoo"]
+
     return (
         <motion.div
             className="fixed h-full w-[27%] bg-darkGrey border-r-4 border-lightGrey z-10 p-7"
