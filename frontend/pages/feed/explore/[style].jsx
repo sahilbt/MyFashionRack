@@ -12,7 +12,7 @@ export default function Style(params) {
     const[style,setStyle] = useState();
     const {user} = useAppContext();
     const [posts, setPosts ]  = useState([]);
-
+    
     useEffect(()=>{
         setStyle(router.query.style);
         if(!style){
