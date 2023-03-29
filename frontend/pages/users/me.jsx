@@ -146,10 +146,10 @@ export default function UserProfile(){
 
                             <div className="flex items-center justify-center mt-2  border-t border-[#4F4F4F] w-[85%]"></div>
 
-                            <div className="text-[#808080] group mt-2 cursor-pointer">
+                            <Link href="mailto:myfashionrackapp@gmail.com" className="text-[#808080] group mt-2 cursor-pointer">
                                 Contact Support
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
-                            </div>
+                            </Link>
 
                             <div className="text-[#808080] group mb-1 cursor-pointer">
                                 Delete Account
