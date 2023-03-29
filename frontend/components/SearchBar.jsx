@@ -13,7 +13,7 @@ export default function SearchBar({ setSearchBar }) {
     const [results, setResults] = useState([""])
     const { user } = useAppContext()
     async function submitHandler(e) {
-        if(search.length > 0){
+        // if(search.length > 0){
             e.preventDefault()
             const url = "http://localhost:8000/users/search";
             
@@ -29,10 +29,10 @@ export default function SearchBar({ setSearchBar }) {
             .catch(function(error){
                 console.log(error)
             })
-        } else{
-            e.preventDefault()
-            setResults([])
-        }
+        // } else{
+        //     e.preventDefault()
+        //     setResults([])
+        // }
     }
     const renderResults = (results.length > 0) ? results.map(result => {
             if(result == ""){
@@ -70,7 +70,7 @@ export default function SearchBar({ setSearchBar }) {
                 />
             </form>
             <div className="relative flex items-center justify-center mt-10 mb-5 border border-[#4F4F4F] w-full rounded-full" />
-            <div className="flex flex-col gap-3 overflow-y-scroll h-[80%] scrollbar-hide">
+            <div className="flex flex-col gap-3 overflow-y-scroll h-[78%] scrollbar-hide">
                 {renderResults}
             </div>
         </motion.div>
