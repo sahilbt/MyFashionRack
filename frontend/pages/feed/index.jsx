@@ -87,7 +87,7 @@ export default function Feed() {
 
 
             <div className='w-full grid place-items-center h-96 text-white mt-10'>
-                <div className="flex justify-between h-96 w-[80%]">
+                <div className="flex justify-between w-[80%]">
                     <div className="bg-lightGrey h-64 w-72 rounded-xl outline outline-1 outline-pink flex flex-col items-center">
                         <Link href="/users/me">
                             <Avatar 
@@ -135,9 +135,6 @@ export default function Feed() {
 
                         <div className="mt-2 border-t border-[#4F4F4F] w-[85%]"></div>
                     </div>
-                        
-
-  
                 </div>
             </div>
 
