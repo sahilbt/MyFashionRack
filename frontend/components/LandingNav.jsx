@@ -44,28 +44,28 @@ export default function LandingNav(){
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                 </div>
                 <div className="flex ml-6 mr-6 gap-6 mb-3">
-                    <a href="#" className="group">
+                    <a href="https://www.instagram.com/myfashionrackapp/" className="group" target="_blank">
                         <Image
                             className="h-10"
                             src = {Insta}
                         />
                         <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                     </a>
-                    <a href="#" className="group">
+                    <a href="https://twitter.com/MFRackApp" className="group" target="_blank">
                         <Image
                             className="h-10"
                             src = {Twit}
                         />
                         <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                     </a>
-                    <a href="#" className="group">
+                    <a href="https://www.facebook.com/MyFashionRackApp/" className="group" target="_blank">
                         <Image
                             className="h-10"
                             src = {Facebook}
                         />
                         <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                     </a>
-                    <a href="#" className="group">
+                    <a href="mailto:myfashionrackapp@gmail.com" className="group">
                         <Image
                             className="h-10"
                             src = {Mail}
