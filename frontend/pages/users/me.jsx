@@ -11,6 +11,7 @@ import Image from "next/Image";
 import { Avatar } from "@mui/material";
 import { AnimatePresence } from "framer-motion"
 import moment from "moment"
+import Lock from "../../public/lock-solid.svg"
 
 
 export default function UserProfile(){
@@ -131,12 +132,14 @@ export default function UserProfile(){
                             </div>
                             <AnimatePresence>
                                 {editPFP && <EditPFPModal handleClick={handlePFP}/>}
-                            </AnimatePresence>                            
-
-                            <div onClick={handlePW} className="text-[#808080] group mt-2 cursor-pointer">
-                                Edit Password
-                                <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
-                            </div>
+                            </AnimatePresence>
+                            <div className="flex items-center gap-2">
+                                {user.googleId && <Image src={Lock} className="h-4 w-auto"/>}
+                                <div onClick={handlePW} className={`text-[#808080] group cursor-pointer ${user.googleId && "pointer-events-none"}`}>
+                                    Edit Password
+                                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
+                                </div>
+                            </div>                         
                             <AnimatePresence>
                                 {editPW && <EditPWModal handleClick={handlePW}/>}
                             </AnimatePresence>   
@@ -148,7 +151,7 @@ export default function UserProfile(){
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
                             </div>
 
-                            <div className="text-[#808080] group mt-2 mb-1 cursor-pointer">
+                            <div className="text-[#808080] group mb-1 cursor-pointer">
                                 Delete Account
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
                             </div>
