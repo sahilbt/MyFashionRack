@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion"
 import Backdrop from "./Backdrop"
-import Image from "next/Image"
+import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import { useAppContext } from "../context/userContext"
