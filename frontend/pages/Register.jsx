@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SignUp from "../components/SignUp.jsx";
+import SignUp from "../components/SignUp";
 
 export default function Register() {
     const [form1,setForm1] = useState({email:"",password:"",verify:""})
