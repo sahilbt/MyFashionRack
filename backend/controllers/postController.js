@@ -295,7 +295,6 @@ const deletePost = async(req,res) => {
 
   const delAccount = async(req,res) => {
     const { userID } = req.query;
-    
     //Remove user from 
     try {
         const users = await User.find(); 
@@ -343,7 +342,6 @@ const deletePost = async(req,res) => {
       console.error(error);
       res.status(500).json({ error: "Could not delete account" });
     }
-
     res.status(200).json({success: "account deleted"})
   }
 
