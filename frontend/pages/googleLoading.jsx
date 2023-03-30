@@ -14,7 +14,6 @@ export default function googleLoading (){
         const  google = async() => {
             await Axios.get(`${process.env.NEXT_PUBLIC_URL}/authentication/google/getGoogle`)
             .then(function (response) {
-                console.log(response.data)
                 if(response.data.displayName){
                     setUser(response.data);
                     router.push('/users/me');

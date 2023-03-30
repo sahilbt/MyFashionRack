@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import Image from 'next/Image'
+import Image from 'next/image'
 import Navbar from '../../../components/Navbar'
 import Post from "../../../components/Post"
 import Compass from '../../../public/compass.svg'
@@ -27,7 +27,6 @@ export default function Style(params) {
                 }
             })
             .then(function (response) {
-                console.log(response);
                 if(response.status == 200){
                     setPosts(response.data);
                 }  

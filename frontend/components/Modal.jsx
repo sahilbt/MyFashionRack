@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion"
 import Backdrop from "./Backdrop"
 import Image from "next/Image"
-import Link from "next/Link"
+import Link from "next/link"
 import { useState } from "react"
 import { useAppContext } from "../context/userContext"
 import Like from "../public/heart-regular.svg"

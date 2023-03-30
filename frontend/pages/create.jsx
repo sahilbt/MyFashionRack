@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import addButton from "../public/addPhoto.svg"
-import Image from "next/Image"
-import Link from "next/Link"
+import Image from "next/image"
+import Link from "next/link"
 import addButton2 from "../public/add-button.svg"
 import { AnimatePresence } from "framer-motion"
 import AddPieceModal from '../components/AddPieceModal';

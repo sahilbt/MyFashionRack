@@ -7,8 +7,8 @@ import Like from "../../public/heart-solid.svg"
 import { useAppContext } from "../../context/userContext";
 import { useEffect, useState } from "react";
 import Axios from "axios";
-import Link from "next/Link";
-import Image from "next/Image";
+import Link from "next/link";
+import Image from "next/image";
 import { Avatar } from "@mui/material";
 import { AnimatePresence } from "framer-motion"
 import moment from "moment"

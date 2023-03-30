@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import X from "../public/xmark-solid.svg"
-import Image from "next/Image"
+import Image from "next/image"
 import Axios from "axios";
-import Link from "next/Link";
+import Link from "next/link";
 import { Avatar } from "@mui/material";
 import { useAppContext } from "../context/userContext";
 

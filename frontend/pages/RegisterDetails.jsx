@@ -11,16 +11,9 @@ import { Avatar } from '@mui/material'
 import { Country, State, City }  from 'country-state-city';
 import Select from "react-select";
 import { PatternFormat } from 'react-number-format';
-import Axios from "axios";
-import { fontWeight } from "@mui/system";
 import { useAppContext } from "../context/userContext";
 import { useEffect } from "react";
 import { useRouter } from 'next/router';
-
-
-
-
-
 
 
 export default function RegisterDetails() {
@@ -284,7 +277,6 @@ export default function RegisterDetails() {
                   }}
                   value={selectedLocation.country}
                   onChange={(newValue) => {
-                    console.log(newValue)
                     setSelectedLocation(prevLocation=>({
                       ...prevLocation,
                       country:newValue,

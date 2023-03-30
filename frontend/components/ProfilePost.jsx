@@ -1,4 +1,4 @@
-import Image from "next/Image"
+import Image from "next/image"
 import Modal from "./Modal.jsx"
 import { useState } from "react"
 import { AnimatePresence } from "framer-motion"

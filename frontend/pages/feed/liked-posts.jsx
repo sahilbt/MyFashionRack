@@ -1,4 +1,3 @@
-import Image from 'next/Image'
 import Navbar from '../../components/Navbar'
 import Post from "../../components/Post"
 import { useAppContext } from "../../context/userContext"
@@ -13,12 +12,8 @@ export default function Style(params) {
     const[rendered,setRendered] = useState(false)
     const router = useRouter()
     const {isLoading} = useAppContext();
-    console.log('siwon: ' + rendered)
-
-
 
     useEffect(() => {
-        console.log(user._id)
         Axios.get(`${process.env.NEXT_PUBLIC_URL}/users/getLikedPosts`, {params:{
             userID: user._id
             }

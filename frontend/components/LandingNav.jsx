@@ -1,10 +1,10 @@
-import Image from "next/Image"
+import Image from "next/image"
 import Logo from "../public/LogoWhite.png"
 import Insta from "../public/instagram.svg"
 import Twit from "../public/twitter.svg"
 import Facebook from "../public/square-facebook.svg"
 import Mail from "../public/envelope-solid.svg"
-import Link from "next/Link"
+import Link from "next/link"
 import { useAppContext } from "../context/userContext"
 
 export default function LandingNav(){

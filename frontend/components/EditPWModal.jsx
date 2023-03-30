@@ -1,7 +1,6 @@
 import Backdrop from "./Backdrop"
 import { motion } from "framer-motion"
 import Axios from "axios"
-import { Avatar } from "@mui/material"
 import { useState } from "react" 
 import { useAppContext } from "../context/userContext"
 

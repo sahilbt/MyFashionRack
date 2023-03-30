@@ -1,8 +1,8 @@
-import Image from "next/Image"
+import Image from "next/image"
 import Modal from "./Modal.jsx"
 import { useEffect, useState } from "react"
 import { AnimatePresence } from "framer-motion"
-import Link from 'next/Link'
+import Link from 'next/link'
 import Like from "../public/heart-regular.svg"
 import Liked from "../public/heart-solid.svg"
 import { useAppContext } from "../context/userContext";

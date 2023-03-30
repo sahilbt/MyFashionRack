@@ -1,12 +1,9 @@
 import { motion } from "framer-motion"
 import Backdrop from "./Backdrop"
-import Image from "next/Image"
-import Link from "next/Link"
 import { useState } from "react"
 
 export default function AddPieceModal({setPost, handleClick}) {
     const [piece, setPiece] = useState({name:"", link:""})
-    console.log(piece)
     function changeHandler(event){
         setPiece(prev=>{
             return(

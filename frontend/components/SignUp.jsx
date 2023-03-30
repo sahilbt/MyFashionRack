@@ -1,7 +1,7 @@
-import Image from "next/Image"
+import Image from "next/image"
 import Logo from "../public/LogoPink.png"
 import Google from "../public/google.svg"
-import Link from "next/Link"
+import Link from "next/link"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
@@ -88,7 +88,6 @@ export default function SignUp({handler1,form1}) {
     }
 
     const googleButton = (event) => {
-        console.log("triggered");
         event.preventDefault();
         window.location.href = `${process.env.NEXT_PUBLIC_URL}/authentication/google`;
     };

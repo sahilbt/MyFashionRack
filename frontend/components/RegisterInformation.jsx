@@ -138,7 +138,6 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
         };
         await Axios.patch(url, registerInformation)
           .then(function (response) {
-            console.log(response);
             if(response.status === 200){
                 setUser(response.data);
                 router.push('/users/me');

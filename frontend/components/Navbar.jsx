@@ -1,5 +1,5 @@
-import Image from "next/Image"
-import Link from "next/Link"
+import Image from "next/image"
+import Link from "next/link"
 import Logo from "../public/NavLogo.png"
 import AddButton from "../public/add-button.svg"
 import LogOutButton from "../public/logout-button.svg"
