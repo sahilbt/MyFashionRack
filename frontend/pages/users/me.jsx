@@ -12,12 +12,17 @@ import { Avatar } from "@mui/material";
 import { AnimatePresence } from "framer-motion"
 import moment from "moment"
 import Lock from "../../public/lock-solid.svg"
+import { useRouter } from "next/router"
 
 
 export default function UserProfile(){
     const {user} = useAppContext();
+    const{isLoading} = useAppContext();
     const [posts, setPosts ]  = useState([]);
     const [loggedUser, setLoggedUser] = useState()
+    const[rendered,setRendered] = useState(false)
+    const router = useRouter();
+
 
     const [editPFP, setEditPFP] = useState(false)
     function handlePFP(){
@@ -28,6 +33,23 @@ export default function UserProfile(){
     function handlePW(){
         setEditPW(() => !editPW)
     }
+
+    useEffect(() => {
+        if(isLoading)
+            return
+        else if(!user._id&&!isLoading){
+          router.push('/');
+        }
+        else if(!user.displayName&&!isLoading){
+            router.push('/RegisterDetails')
+        }
+        else{
+          setRendered(true)
+        }
+      }, [user._id,isLoading,user.displayName,]);
+
+
+
 
     useEffect(() => {
 
@@ -66,12 +88,16 @@ export default function UserProfile(){
     },[user._id]);
 
 
+
+
     const renderPosts =  posts && posts.map(post => {
         return(
             <Post props={post} page="me"/>
         )
     })
     return(
+        <>
+        {rendered&&(
         <div className="w-full">
             <Navbar />
             <div className="w-full flex justify-center items-center mt-10 ">
@@ -172,5 +198,6 @@ export default function UserProfile(){
                 </div>
             </div>
         </div>
-    )
-}
+        )}
+    </>
+    )}

@@ -7,6 +7,7 @@ const AppContext = createContext();
 
 export function AppWrapper({ children }) {
   const [user, setUser] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const storedUser = cookies.get('user');
@@ -19,10 +20,11 @@ export function AppWrapper({ children }) {
     if (Object.keys(user).length > 0) {
       cookies.set('user', JSON.stringify(user), { path: '/' });
     }
-  }, [user]);
+    setIsLoading(false)
+  }, [user,]);
 
   return (
-    <AppContext.Provider value={{ user, setUser }}>
+    <AppContext.Provider value={{ user, setUser, isLoading, setIsLoading}}>
       {children}
     </AppContext.Provider>
   );

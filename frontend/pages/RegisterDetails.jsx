@@ -29,18 +29,21 @@ export default function RegisterDetails() {
     const[file,setFile] = useState()
     const [selectedLocation, setSelectedLocation] = useState({country:null,state:null})
     const[rendered,setRendered] = useState(false)
-    const auth = useAppContext()
     const router = useRouter();
     const { user } = useAppContext();
+    const {isLoading} = useAppContext();
 
+    
     useEffect(() => {
-        if(!user._id||(user._id&&user.displayName)){
-          router.push('/');
-        }
-        else{
-          setRendered(true)
-        }
-      }, [user._id,user.displayName]);
+      if(isLoading)
+          return
+      else if(!user._id&&!isLoading){
+        router.push('/');
+      }
+      else{
+        setRendered(true)
+      }
+    }, [user._id,isLoading]);
 
 
       const countryOptions=[

@@ -7,11 +7,15 @@ import Like from "../../public/heart-solid.svg"
 import { useAppContext } from "../../context/userContext"
 import { useEffect, useState } from "react"
 import Axios from "axios"
+import { useRouter } from "next/router"
 
 export default function Feed() {
     const {user} = useAppContext();
     const [posts, setPosts ]  = useState([]);
     const [me, setMe] = useState([]);
+    const [rendered,setRendered] = useState(false)
+    const router = useRouter()
+    const {isLoading} = useAppContext();
     useEffect(() => {
         Axios.get("http://localhost:8000/users/postsFromFeed", {params:{
             userID: user._id
@@ -28,12 +32,28 @@ export default function Feed() {
         })
     },[user._id]);
 
+
+    useEffect(() => {
+        if(isLoading)
+            return
+        else if(!user._id&&!isLoading){
+          router.push('/');
+        }
+        else{
+          setRendered(true)
+        }
+      }, [user._id,isLoading]);
+
+      
+
     const renderPosts = posts.map(post => {
         return(
             <Post props={post} page="feed"/>
         )
     })
     return(
+        <div>
+        {rendered&&(
         <div className="w-full">
             <Navbar/>
             <div className='w-full h-9 text-white mt-10'>
@@ -132,6 +152,8 @@ export default function Feed() {
                     </div>
                 </div>
             </div>
+        </div>
+        )}
         </div>
     )
 }

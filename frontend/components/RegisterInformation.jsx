@@ -236,17 +236,17 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
                     )}
                     <ToastContainer hideProgressBar={true} />
                     <style>
-                            {
-                                `.Toastify__toast--error .Toastify__toast-icon svg path {
-                                    fill: #DF6684;
-                                }
-                                .Toastify__close-button svg {
+                        {
+                            `.Toastify__toast--error .Toastify__toast-icon svg path {
                                 fill: #DF6684;
-                                }
-                                .Toastify__toast-body {
-                                    font-family: 'Bree_Serif;
-                                }`
                             }
+                            .Toastify__close-button svg {
+                                fill: #DF6684;
+                            }
+                            .Toastify__toast-body {
+                                font-family: 'Bree Serif', serif;
+                            }`
+                        }
                     </style>
                 </div>
             </div>

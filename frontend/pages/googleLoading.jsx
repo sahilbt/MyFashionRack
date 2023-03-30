@@ -8,6 +8,8 @@ import { useAppContext } from "../context/userContext";
 export default function googleLoading (){
     const { user, setUser } = useAppContext();
     const router = useRouter();
+    const[rendered,setRendered] = useState(false)
+    const {isLoading} = useAppContext();
     useEffect(() => {
         const  google = async() => {
             await Axios.get("http://localhost:8000/authentication/google/getGoogle")
@@ -32,6 +34,17 @@ export default function googleLoading (){
         
     },
     [])
+
+    useEffect(() => {
+        if(isLoading)
+            return
+        else if(!user._id&&!isLoading){
+          router.push('/');
+        }
+        else{
+          setRendered(true)
+        }
+      }, [user._id,isLoading]);
     
     return(
         <div>    

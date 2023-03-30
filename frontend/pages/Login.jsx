@@ -17,6 +17,7 @@ export default function Login() {
     const[fields,setFields] = useState({username: "", password: ""})
     const router = useRouter();
     const { setUser } = useAppContext();
+    
 
     const emptyFieldToast = () => {
         toast.error('Please fill out all required fields', {

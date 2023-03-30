@@ -12,10 +12,24 @@ export default function Details(params) {
     const [posts, setPosts ]  = useState([]);
     const [person, setPerson] = useState()
     const [following, setFollowing] = useState();
+    const[rendered,setRendered] = useState(false)
+    const {isLoading} = useAppContext();
+    
 
     useEffect(() => {
         setName(router.query.username);
     }, [router.query.username]);
+
+    useEffect(() => {
+        if(isLoading)
+            return
+        else if(!user._id&&!isLoading){
+          router.push('/');
+        }
+        else{
+          setRendered(true)
+        }
+      }, [user._id,isLoading]);
 
     useEffect(() => {
         if (name) {
@@ -99,6 +113,8 @@ export default function Details(params) {
     }
 
     return (
+        <>
+        {rendered&&(
         <div className="w-full">
             <Navbar />
             <div className="w-full flex justify-center items-center mt-10">
@@ -158,7 +174,10 @@ export default function Details(params) {
                 </div>
             </div>
         </div>
+        )}
+    </>
     )
+
 }
 
 Details.getInitialProps = async ({ query }) => {

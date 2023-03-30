@@ -17,8 +17,8 @@ export default function SignUp({handler1,form1}) {
     const router = useRouter();
     const { setUser } = useAppContext();
 
-    const invalidEmailToast = () => {
-        toast.error('Invalid Email', {
+    const emailInUseToast = () => {
+        toast.error('Email already registered', {
             position: toast.POSITION.TOP_RIGHT,
             toastId: "InvalidEmail",
             style: {
@@ -80,7 +80,7 @@ export default function SignUp({handler1,form1}) {
                 .catch(function (error) {
                     console.log(error);
                     if(error.response.status === 401){
-                        invalidEmailToast();
+                        emailInUseToast();
                     }
                 });
         }
