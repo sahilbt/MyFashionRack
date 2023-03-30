@@ -132,9 +132,15 @@ const getRecommendedUsers = async(req,res) => {
     try{
         const { userID } = req.body;
         const user = User.findById(userID);
-        const followedUsers = user.following;
-        const recommended = await User.find({_id:{$nin: followedUsers}}).limit(5);
-        res.status(200).json(recommended);
+        if(user.following){
+            const followedUsers = user.following;
+            const followedUserIds = Array.from(followedUsers.keys());
+            const recommended = await User.find({userID:{$nin: followedUserIds}}).limit(5);
+            res.status(200).json(recommended);
+        }else{
+            const recommended = await User.find().limit(5);
+            res.status(200).json(recommended);
+        }   
     }
     catch(error){
         res.status(500).json({error: "Could not retrieve users"})
@@ -291,6 +297,60 @@ const deletePost = async(req,res) => {
     }
 }
 
+  const delAccount = async(req,res) => {
+    const { userID } = req.query;
+    
+    //Remove user from 
+    try {
+        const users = await User.find(); 
+        for (const user of users) {
+            if(user.following){
+                user.following.set(userID, undefined, { strict: false }); 
+            }
+            if(user.follower){
+                user.followers.set(userID, undefined, { strict: false }); 
+            } 
+            await user.save(); 
+        }
+    } catch (error) {
+        res.send({error: "Couldnt remove user from follower/following maps"});
+        console.log(error)
+    }
+    
+    try {
+        const posts = await Post.find(); 
+        for (const post of posts) {
+            if(post.like){
+                post.like.set(userID, undefined, { strict: false }); 
+            }
+            await post.save(); 
+        }
+    } catch (error) {
+        res.send({error: "Couldnt remove user from all likes"});
+        console.log(error)
+    }
+  
+    // Remove all posts made by the user
+    try {
+      const result = await Post.deleteMany({ user: userID });
+      console.log(`Deleted ${result.deletedCount} posts for user ${userID}`);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Could not remove user's posts" });
+    }
+  
+    // Remove the user account
+    try {
+      await User.deleteOne({ _id: userID });
+      console.log(`Deleted account for user ${userID}`);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Could not delete account" });
+    }
+
+    res.status(200).json({success: "account deleted"})
+  }
+
 module.exports = {
     createPost,
     getPostsFromUser,
@@ -309,5 +369,6 @@ module.exports = {
     isFollowing,
     likedPosts,
     searchUser,
-    deletePost
+    deletePost,
+    delAccount
 }

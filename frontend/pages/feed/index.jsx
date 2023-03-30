@@ -13,11 +13,13 @@ export default function Feed() {
     const {user} = useAppContext();
     const [posts, setPosts ]  = useState([]);
     const [me, setMe] = useState([]);
+    const [suggested, setSuggested] = useState()
+
     const [rendered,setRendered] = useState(false)
     const router = useRouter()
     const {isLoading} = useAppContext();
     useEffect(() => {
-        Axios.get("http://localhost:8000/users/postsFromFeed", {params:{
+        Axios.get(`${process.env.NEXT_PUBLIC_URL}/users/postsFromFeed`, {params:{
             userID: user._id
             }
         })
@@ -30,6 +32,20 @@ export default function Feed() {
         .catch(function(error){
             console.log(error)
         })
+
+        Axios.get(`${process.env.NEXT_PUBLIC_URL}/users/recommendedUsers`, {params:{
+            userID: user._id
+            }
+        })
+        .then(function (response) {
+            if(response.status == 200){
+                setSuggested(response.data)
+            }  
+        })
+        .catch(function(error){
+            console.log(error)
+        })
+        
     },[user._id]);
 
 
@@ -49,6 +65,20 @@ export default function Feed() {
     const renderPosts = posts.map(post => {
         return(
             <Post props={post} page="feed"/>
+        )
+    })
+
+    const renderUsers = suggested && suggested.map(u => {
+        return(
+            <Link className="flex items-center justify-start hover:bg-[#515151] w-full p-1" href={`users/${u.displayName}`}>
+                <Avatar 
+                        className="mr-3"
+                        src = {u.pictureRef.url}
+                        sx={{ width: 35, height: 35 }}
+                />
+
+                {u.displayName}
+            </Link>
         )
     })
     return(
@@ -144,11 +174,15 @@ export default function Feed() {
                         {renderPosts}
                     </div>
                     
-                    <div className="bg-lightGrey h-64 w-72 rounded-xl outline outline-1 outline-pink flex flex-col items-center">
+                    <div className="bg-lightGrey h-80 w-72 rounded-xl outline outline-1 outline-pink flex flex-col items-center">
                         <div className="text-2xl mt-2">
                             Suggested Users
                         </div>
                         <div className="mt-2 border-t border-[#4F4F4F] w-[85%]"></div>
+
+                        <div className="-mt-1 flex flex-col items-start w-full gap-2 p-4">
+                            {renderUsers}
+                        </div>
                     </div>
                 </div>
             </div>

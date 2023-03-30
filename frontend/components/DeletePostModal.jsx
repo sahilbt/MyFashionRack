@@ -6,7 +6,7 @@ export default function DeletePostModal({handleClick, data}) {
 
     async function deletePost(){
         try {
-            const response = await Axios.patch("http://localhost:8000/users/deletePost", { params: {
+            const response = await Axios.delete(`${process.env.NEXT_PUBLIC_URL}/users/deletePost`, { params: {
                 postID: data._id
             }})
             if (response.status == 200) {

@@ -2,6 +2,7 @@ import Navbar from "../../components/Navbar"
 import Post from "../../components/Post"
 import EditPFPModal from "../../components/EditPFPModal"
 import EditPWModal from "../../components/EditPWModal"
+import DeleteAccountModal from "../../components/DeleteAccountModal"
 import Like from "../../public/heart-solid.svg"
 import { useAppContext } from "../../context/userContext";
 import { useEffect, useState } from "react";
@@ -27,6 +28,11 @@ export default function UserProfile(){
     const [editPFP, setEditPFP] = useState(false)
     function handlePFP(){
         setEditPFP(() => !editPFP)
+    }
+
+    const [delAccount, setDelAccount] = useState(false)
+    function handleDel(){
+        setDelAccount(() => !delAccount)
     }
 
     const [editPW, setEditPW] = useState(false)
@@ -55,7 +61,7 @@ export default function UserProfile(){
 
         if(user.displayName){
             const fetchUser = async () => {
-                await Axios.get("http://localhost:8000/users/find", {params:{
+                await Axios.get(`${process.env.NEXT_PUBLIC_URL}/users/find`, {params:{
                     username: user.displayName
                     }
                 })
@@ -73,7 +79,7 @@ export default function UserProfile(){
 
         
 
-        Axios.get("http://localhost:8000/users/userPosts", {params:{
+        Axios.get(`${process.env.NEXT_PUBLIC_URL}/users/userPosts`, {params:{
                 userID: user._id
                 }
             })
@@ -177,10 +183,13 @@ export default function UserProfile(){
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
                             </Link>
 
-                            <div className="text-[#808080] group mb-1 cursor-pointer">
+                            <div onClick={handleDel} className="text-[#808080] group mb-1 cursor-pointer">
                                 Delete Account
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
                             </div>
+                            <AnimatePresence>
+                                {delAccount && <DeleteAccountModal handleClick={handleDel}/>}
+                            </AnimatePresence>   
                         </div>
                     </div>
                     <div className="w-2/3 h-20 pb-4 ">

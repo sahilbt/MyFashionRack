@@ -31,7 +31,7 @@ export default function Post({props, page}){
 
     async function handleLike(){
         try {
-            const response = await Axios.patch("http://localhost:8000/users/like", {
+            const response = await Axios.patch(`${process.env.NEXT_PUBLIC_URL}/users/like`, {
                 postID: props._id, 
                 userID: user._id
             });

@@ -47,7 +47,8 @@ export default function Login() {
             return
         }
         event.preventDefault();
-        const url = "http://localhost:8000/authentication/login";
+        console.log(process.env.NEXT_PUBLIC_URL)
+        const url = `${process.env.NEXT_PUBLIC_URL}/authentication/login`;
         Axios.post(url, fields )
           .then(function (response) {
             if(response.status === 200){
@@ -63,7 +64,7 @@ export default function Login() {
     const googleButton = (event) => {
         console.log("triggered");
         event.preventDefault();
-        window.location.href = "http://localhost:8000/authentication/google";
+        window.location.href = `${process.env.NEXT_PUBLIC_URL}/authentication/google`;
     };
 
     return (

@@ -106,7 +106,7 @@ export default function create(params) {
     })
 
     const addPostButton = (req,res) => {
-        Axios.post("http://localhost:8000/users/create", post)
+        Axios.post(`${process.env.NEXT_PUBLIC_URL}/users/create`, post)
         .then(function (response) {
             router.push('/users/me');
         })

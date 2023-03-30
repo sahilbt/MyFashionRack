@@ -22,7 +22,7 @@ export default function Navbar() {
 
     const logOutButtonFunction = (event) => {
         event.preventDefault();
-        const url = "http://localhost:8000/authentication/logout";
+        const url = `${process.env.NEXT_PUBLIC_URL}/authentication/logout`;
         Axios.get(url)
         .then((response)=>{
             setUser({});
