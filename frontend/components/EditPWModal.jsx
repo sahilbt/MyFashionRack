@@ -1,7 +1,6 @@
 import Backdrop from "./Backdrop"
 import { motion } from "framer-motion"
 import Axios from "axios"
-import { Avatar } from "@mui/material"
 import { useState } from "react" 
 import { useAppContext } from "../context/userContext"
 
@@ -20,7 +19,7 @@ export default function EditPWModal({handleClick}) {
     async function submitHandler(){
         if(pw.pass == pw.verify){
             try {
-                const response = await Axios.post("http://localhost:8000/authentication/editPassword", {
+                const response = await Axios.post(`${process.env.NEXT_PUBLIC_URL}/authentication/editPassword`, {
                     userName: user.username, 
                     newPassword: pw.pass
                 })

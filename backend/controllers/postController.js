@@ -133,9 +133,15 @@ const getRecommendedUsers = async(req,res) => {
     try{
         const { userID } = req.body;
         const user = User.findById(userID);
-        const followedUsers = user.following;
-        const recommended = await User.find({_id:{$nin: followedUsers}}).limit(5);
-        res.status(200).json(recommended);
+        if(user.following){
+            const followedUsers = user.following;
+            const followedUserIds = Array.from(followedUsers.keys());
+            const recommended = await User.find({userID:{$nin: followedUserIds}}).limit(5);
+            res.status(200).json(recommended);
+        }else{
+            const recommended = await User.find().limit(5);
+            res.status(200).json(recommended);
+        }   
     }
     catch(error){
         res.status(500).json({error: "Could not retrieve users"})
@@ -303,7 +309,7 @@ const deletePost = async(req,res) => {
                 user.following.set(userID, undefined, { strict: false }); 
             }
             if(user.follower){
-                user.follower.set(userID, undefined, { strict: false }); 
+                user.followers.set(userID, undefined, { strict: false }); 
             } 
             await user.save(); 
         }
@@ -343,7 +349,7 @@ const deletePost = async(req,res) => {
       res.status(500).json({ error: "Could not delete account" });
     }
 
-    res.status(200).json({error: "account deleted"})
+    res.status(200).json({success: "account deleted"})
   }
 
 module.exports = {

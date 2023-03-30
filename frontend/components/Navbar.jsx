@@ -1,5 +1,5 @@
-import Image from "next/Image"
-import Link from "next/Link"
+import Image from "next/image"
+import Link from "next/link"
 import Logo from "../public/NavLogo.png"
 import AddButton from "../public/add-button.svg"
 import LogOutButton from "../public/logout-button.svg"
@@ -22,7 +22,7 @@ export default function Navbar() {
 
     const logOutButtonFunction = (event) => {
         event.preventDefault();
-        const url = "http://localhost:8000/authentication/logout";
+        const url = `${process.env.NEXT_PUBLIC_URL}/authentication/logout`;
         Axios.get(url)
         .then((response)=>{
             setUser({});

@@ -1,1 +1,0 @@
-{ "extends": "@sanity/eslint-config-studio", "eslint.workingDirectories": ["./web", "./studio"] }

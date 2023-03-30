@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion"
 import Backdrop from "./Backdrop"
-import Image from "next/Image"
-import Link from "next/Link"
+import Image from "next/image"
+import Link from "next/link"
 import { useState } from "react"
 import { useAppContext } from "../context/userContext"
 import Like from "../public/heart-regular.svg"
@@ -22,10 +22,14 @@ export default function Modal({data, handleClick, like, num, handleLike, page}){
             </Link>
         )
     })
+    function redirect(style){
+        handleClick()
+        window.location.href = `/feed/explore/${style}`
+    }
     const renderStyles = data && data.styleTags.map(style => {
         return(
             <div className="bg-pink rounded-full px-3 py-[2px] text-sm group">
-                <Link onClick={handleClick} href={'/feed/explore/' + style} >
+                <Link onClick={() => redirect(style)} href={`/feed/explore/${style}`}>
                     {style}
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                 </Link>
@@ -104,3 +108,9 @@ export default function Modal({data, handleClick, like, num, handleLike, page}){
         </Backdrop>
     )
 }
+
+export async function getServerSideProps(context) {
+    return {
+      props: { params: context.params }, 
+    };
+  }

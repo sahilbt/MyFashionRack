@@ -2,26 +2,37 @@ import Navbar from "../../components/Navbar"
 import Post from "../../components/Post"
 import EditPFPModal from "../../components/EditPFPModal"
 import EditPWModal from "../../components/EditPWModal"
+import DeleteAccountModal from "../../components/DeleteAccountModal"
 import Like from "../../public/heart-solid.svg"
 import { useAppContext } from "../../context/userContext";
 import { useEffect, useState } from "react";
 import Axios from "axios";
-import Link from "next/Link";
-import Image from "next/Image";
+import Link from "next/link";
+import Image from "next/image";
 import { Avatar } from "@mui/material";
 import { AnimatePresence } from "framer-motion"
 import moment from "moment"
 import Lock from "../../public/lock-solid.svg"
+import { useRouter } from "next/router"
 
 
 export default function UserProfile(){
     const {user} = useAppContext();
+    const{isLoading} = useAppContext();
     const [posts, setPosts ]  = useState([]);
     const [loggedUser, setLoggedUser] = useState()
+    const[rendered,setRendered] = useState(false)
+    const router = useRouter();
+
 
     const [editPFP, setEditPFP] = useState(false)
     function handlePFP(){
         setEditPFP(() => !editPFP)
+    }
+
+    const [delAccount, setDelAccount] = useState(false)
+    function handleDel(){
+        setDelAccount(() => !delAccount)
     }
 
     const [editPW, setEditPW] = useState(false)
@@ -30,10 +41,27 @@ export default function UserProfile(){
     }
 
     useEffect(() => {
+        if(isLoading)
+            return
+        else if(!user._id&&!isLoading){
+          router.push('/');
+        }
+        else if(!user.displayName&&!isLoading){
+            router.push('/RegisterDetails')
+        }
+        else{
+          setRendered(true)
+        }
+      }, [user._id,isLoading,user.displayName,]);
+
+
+
+
+    useEffect(() => {
 
         if(user.displayName){
             const fetchUser = async () => {
-                await Axios.get("http://localhost:8000/users/find", {params:{
+                await Axios.get(`${process.env.NEXT_PUBLIC_URL}/users/find`, {params:{
                     username: user.displayName
                     }
                 })
@@ -51,7 +79,7 @@ export default function UserProfile(){
 
         
 
-        Axios.get("http://localhost:8000/users/userPosts", {params:{
+        Axios.get(`${process.env.NEXT_PUBLIC_URL}/users/userPosts`, {params:{
                 userID: user._id
                 }
             })
@@ -66,12 +94,16 @@ export default function UserProfile(){
     },[user._id]);
 
 
+
+
     const renderPosts =  posts && posts.map(post => {
         return(
             <Post props={post} page="me"/>
         )
     })
     return(
+        <>
+        {rendered&&(
         <div className="w-full">
             <Navbar />
             <div className="w-full flex justify-center items-center mt-10 ">
@@ -146,15 +178,18 @@ export default function UserProfile(){
 
                             <div className="flex items-center justify-center mt-2  border-t border-[#4F4F4F] w-[85%]"></div>
 
-                            <div className="text-[#808080] group mt-2 cursor-pointer">
+                            <Link href="mailto:myfashionrackapp@gmail.com" className="text-[#808080] group mt-2 cursor-pointer">
                                 Contact Support
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
-                            </div>
+                            </Link>
 
-                            <div className="text-[#808080] group mb-1 cursor-pointer">
+                            <div onClick={handleDel} className="text-[#808080] group mb-1 cursor-pointer">
                                 Delete Account
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-[#808080]"></span>
                             </div>
+                            <AnimatePresence>
+                                {delAccount && <DeleteAccountModal handleClick={handleDel}/>}
+                            </AnimatePresence>   
                         </div>
                     </div>
                     <div className="w-2/3 h-20 pb-4 ">
@@ -172,5 +207,6 @@ export default function UserProfile(){
                 </div>
             </div>
         </div>
-    )
-}
+        )}
+    </>
+    )}

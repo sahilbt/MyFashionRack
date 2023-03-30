@@ -1,5 +1,5 @@
-import RegisterInformation from "../components/RegisterInformation.jsx"
-import {useMultistepForm}  from "../hooks/RegisterHook.jsx";
+import RegisterInformation from "../components/RegisterInformation"
+import useMultistepForm  from "../Hooks/RegisterHook";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion"
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -11,11 +11,9 @@ import { Avatar } from '@mui/material'
 import { Country, State, City }  from 'country-state-city';
 import Select from "react-select";
 import { PatternFormat } from 'react-number-format';
-import Axios from "axios";
-
-
-
-
+import { useAppContext } from "../context/userContext";
+import { useEffect } from "react";
+import { useRouter } from 'next/router';
 
 
 export default function RegisterDetails() {
@@ -23,9 +21,23 @@ export default function RegisterDetails() {
     const [filePath, setFilePath] = useState()
     const[file,setFile] = useState()
     const [selectedLocation, setSelectedLocation] = useState({country:null,state:null})
-    const[animate,setAnimate] = useState("100vw")
+    const[rendered,setRendered] = useState(false)
+    const router = useRouter();
+    const { user } = useAppContext();
+    const {isLoading} = useAppContext();
 
     
+    useEffect(() => {
+      if(isLoading)
+          return
+      else if(!user._id&&!isLoading){
+        router.push('/');
+      }
+      else{
+        setRendered(true)
+      }
+    }, [user._id,isLoading]);
+
 
       const countryOptions=[
       {
@@ -124,11 +136,13 @@ export default function RegisterDetails() {
                   '& fieldset': {
                     border: 'none',
                   },
+                  fontFamily: '__Bree_Serif_daf8a0,__Bree_Serif_Fallback_daf8a0',
+                  fontWeight: '400'
                 },
                 '& .MuiInputBase-input': {
                   color: '#ffffff', 
                 },
-                fontFamily:'Bree Serif'
+  
               },
             },
           },
@@ -236,12 +250,6 @@ export default function RegisterDetails() {
       
 
     const {steps,currentStepIndex,step, back,next,goto,isFirstStep,isLastStep,getWidth,width,length} = useMultistepForm([
-          <motion.div
-            key={0}
-            initial={{ x: animate }}
-            animate={{ x: 0 }}
-            transition={{ duration: 1 }}
-          >
         <div>
             <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Tell us your name!</h1>
               <div className="flex flex-row justify-center">
@@ -252,16 +260,8 @@ export default function RegisterDetails() {
                       <input type="text" name="last" placeholder="last name" value = {form2.last}className="px-4 h-14 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"onChange={handler2}/> 
                   </div>
               </div>
-        </div>
-        </motion.div>,
+        </div>,
          <div>
-            <motion.div
-            key={1}
-            initial={{ x: animate }}
-            animate={{ x: 0 }}
-            transition={{ duration: 1 }}
-          
-          >
             <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Where do you live?</h1>
             <div className="flex flex-col item justify-center items-center">
                 <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2">
@@ -277,7 +277,6 @@ export default function RegisterDetails() {
                   }}
                   value={selectedLocation.country}
                   onChange={(newValue) => {
-                    console.log(newValue)
                     setSelectedLocation(prevLocation=>({
                       ...prevLocation,
                       country:newValue,
@@ -315,14 +314,8 @@ export default function RegisterDetails() {
                 />   
                 </div>
             </div>
-          </motion.div>
           </div>,
-           <motion.div
-           key={2}
-           initial={{ x: animate }}
-           animate={{ x: 0 }}
-           transition={{ duration: 1 }}
-         >
+          <div>
           <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Can you provide some additional information?</h1>
           <div className="flex flex-row item justify-center">
               <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2">
@@ -366,15 +359,11 @@ export default function RegisterDetails() {
                   />
               </div>
           </div>
-          </motion.div>,
-       <motion.div
-       key={3}
-       initial={{ x: animate}}
-       animate={{ x: 0 }}
-       transition={{ duration: 1 }}>
+          </div>,
         <div className=" w-full h-full flex-col flex justify-center items-center ">
           <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >Please add a Profile Picture</h1>
-              <label htmlFor="dropzone-file" className="w-full h-full flex flex-col justify-center items-center bg-cover" >
+          <div className="relative flex flex-col justify-center items-center w-[350px] h-[350px] bg-lightGrey rounded-full  hover:bg-[#515151]">
+              <label htmlFor="dropzone-file" className="w-full h-full flex flex-col justify-center items-center bg-cover cursor-pointer" >
                   <div className="flex flex-col items-center justify-center w-full h-full">
                       <Avatar alt=""
                       sx={{ width: '350px', height: '350px' }}/>
@@ -382,20 +371,14 @@ export default function RegisterDetails() {
                     <input id="dropzone-file" type="file" className="hidden" onChange={handleChangeFile} accept="image/*" />
                     <div class=" absolute w-full h-full bg-cover bg-center rounded-full" style={{ backgroundImage: `url(${filePath})` }}></div>
               </label>
-        </div>
-        </motion.div>,
-          <motion.div
-          key={4}
-          initial={{ x: animate }}
-          animate={{ x: 0 }}
-          transition={{ duration: 1 }}>
-         <div>
+          </div>
+        </div>,
+        <div>
          <h1 className="text-5xl text-white pb-1 text-center tracking-widest mb-7" >What do you want Others to Call you</h1>
              <div className="flex flex-col gap-y-12 flex-grow p-10 w-1/2 m-auto">
              <input type="text" name="display" placeholder="display name" value = {form2.display} className="px-4 h-14 bg-lightGrey text-white rounded-3xl outline-white outline-2 focus:outline focus:outline-white hover:outline hover:outline-[#464646]"onChange={handler2}/> 
              </div>
-      </div>
-      </motion.div>,
+      </div>,
     ])
 
     function handler2(event){
@@ -410,23 +393,26 @@ export default function RegisterDetails() {
 
 
     return (
-    <div className="w-full h-screen bg-grey overflow-hidden">
-        <div className="h-2 overflow-hidden w-full rounded-full absolute">
-                        <motion.div className="h-2 px rounded-full bg-pink origin-top-left " style={{width: '0%'}}
-                        animate={{
-                            width: ((currentStepIndex)/steps.length) * 100 + '%'
-                        }}
-                        transition={{
-                            duration: 1
-                        }}>
-                        </motion.div>
-        </div>
-        <form className=" h-full w-full flex justify-between items-center">
-             <RegisterInformation handler2 = {handler2} setform2 = {setform2} form2 = {form2} steps = {steps} 
-            currentStepIndex = {currentStepIndex} step = {step} back = {back} next = {next} goto = {goto} isFirstStep = {isFirstStep} isLastStep = {isLastStep} width={width} file = {file}
-            setFile = {setFile} setSelectedLocation = {setSelectedLocation} filePath = {filePath} setFilePath = {setFilePath} setAnimate = {setAnimate} animate = {animate}/>
-        </form>
-    </div>
-
+      <>
+      {rendered &&(
+      <div className="w-full h-screen bg-grey overflow-hidden">
+          <div className="h-2 overflow-hidden w-full rounded-full absolute">
+                          <motion.div className="h-2 px rounded-full bg-pink origin-top-left " style={{width: '0%'}}
+                          animate={{
+                              width: ((currentStepIndex)/steps.length) * 100 + '%'
+                          }}
+                          transition={{
+                              duration: 1
+                          }}>
+                          </motion.div>
+          </div>
+          <form className=" h-full w-full flex justify-between items-center">
+              <RegisterInformation handler2 = {handler2} setform2 = {setform2} form2 = {form2} steps = {steps} 
+              currentStepIndex = {currentStepIndex} step = {step} back = {back} next = {next} goto = {goto} isFirstStep = {isFirstStep} isLastStep = {isLastStep} width={width} file = {file}
+              setFile = {setFile} setSelectedLocation = {setSelectedLocation} filePath = {filePath} setFilePath = {setFilePath} />
+          </form>
+      </div>
+        )}
+      </>
     )
 }

@@ -1,10 +1,10 @@
-import Image from "next/Image"
+import Image from "next/image"
 import Logo from "../public/LogoWhite.png"
 import Insta from "../public/instagram.svg"
 import Twit from "../public/twitter.svg"
 import Facebook from "../public/square-facebook.svg"
 import Mail from "../public/envelope-solid.svg"
-import Link from "next/Link"
+import Link from "next/link"
 import { useAppContext } from "../context/userContext"
 
 export default function LandingNav(){
@@ -44,33 +44,29 @@ export default function LandingNav(){
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                 </div>
                 <div className="flex ml-6 mr-6 gap-6 mb-3">
-                    <a href="https://www.instagram.com/myfashionrackapp/" className="group" target="_blank">
+                    <a href="https://www.instagram.com/myfashionrackapp/" className="hover:scale-[1.2] duration-75" target="_blank">
                         <Image
                             className="h-10"
                             src = {Insta}
-                        />
-                        <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
+                        />                    
                     </a>
-                    <a href="https://twitter.com/MFRackApp" className="group" target="_blank">
+                    <a href="https://twitter.com/MFRackApp" className="hover:scale-[1.2] duration-75" target="_blank">
                         <Image
                             className="h-10"
                             src = {Twit}
-                        />
-                        <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
+                        />   
                     </a>
-                    <a href="https://www.facebook.com/MyFashionRackApp/" className="group" target="_blank">
+                    <a href="https://www.facebook.com/MyFashionRackApp/" className="hover:scale-[1.2] duration-75" target="_blank">
                         <Image
                             className="h-10"
                             src = {Facebook}
                         />
-                        <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                     </a>
-                    <a href="mailto:myfashionrackapp@gmail.com" className="group">
+                    <a href="mailto:myfashionrackapp@gmail.com" className="hover:scale-[1.2] duration-75">
                         <Image
                             className="h-10"
                             src = {Mail}
                         />
-                        <span className="block max-w-0 group-hover:max-w-full transition-all duration-200 h-0.5 bg-white"></span>
                     </a>
                 </div>
             </div>          

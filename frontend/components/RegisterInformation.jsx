@@ -6,9 +6,10 @@ import { useAppContext } from "../context/userContext";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {motion,AnimatePresence } from "framer-motion"
+import { Suspense } from "react";
 
 
-export default function RegisterInformation({handler2,setPage,setform2,form2,steps,currentStepIndex,step,back,next,goto,isFirstStep,isLastStep,width,file,setFile,setSelectedLocation,filePath,setFilePath,setAnimate,animate}) {
+export default function RegisterInformation({handler2,setPage,setform2,form2,steps,currentStepIndex,step,back,next,goto,isFirstStep,isLastStep,width,file,setFile,setSelectedLocation,filePath,setFilePath}) {
 
     const[disable,setDisable] = useState(true);
     const[validPhone,setValidPhone] = useState(true);
@@ -121,7 +122,7 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
         }
 
         event.preventDefault();
-        const url = "http://localhost:8000/authentication/addUserDetail";
+        const url = `${process.env.NEXT_PUBLIC_URL}/authentication/addUserDetail`;
         const registerInformation = {
             userID: user._id,
             firstName: form2.first,
@@ -137,7 +138,6 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
         };
         await Axios.patch(url, registerInformation)
           .then(function (response) {
-            console.log(response);
             if(response.status === 200){
                 setUser(response.data);
                 router.push('/users/me');
@@ -175,7 +175,6 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
             setFilePath(undefined)
 
         }
-        setAnimate("-100vw")
         setDisable(true);
         setValidPhone(true);
         back()
@@ -203,7 +202,6 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
             emptyPhotoToast()
         }
         else{
-            setAnimate("100vw")
             setDisable(true);
             next(); 
         }
@@ -214,10 +212,9 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
 
 
     return(
+        <Suspense>
             <div className="w-3/4 m-auto flex flex-col justify-center">
-                    <AnimatePresence>
-                        {step}
-                    </AnimatePresence>
+                    {step}
                 <div className="py-20 flex items-center justify-center">
                     {!isFirstStep && (
                                 <button type="button" onClick={backPage} className="bg-pink text-white rounded-3xl w-48 h-14 hover:bg-[#AA4E65] mr-12">
@@ -238,17 +235,21 @@ export default function RegisterInformation({handler2,setPage,setform2,form2,ste
                     )}
                     <ToastContainer hideProgressBar={true} />
                     <style>
-                            {
-                                `.Toastify__toast--error .Toastify__toast-icon svg path {
-                                    fill: #DF6684;
-                                }
-                                .Toastify__close-button svg {
+                        {
+                            `.Toastify__toast--error .Toastify__toast-icon svg path {
                                 fill: #DF6684;
-                                }`
                             }
+                            .Toastify__close-button svg {
+                                fill: #DF6684;
+                            }
+                            .Toastify__toast-body {
+                                font-family: 'Bree Serif', serif;
+                            }`
+                        }
                     </style>
                 </div>
             </div>
+        </Suspense>
 
     )
 }

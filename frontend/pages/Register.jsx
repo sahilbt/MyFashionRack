@@ -1,5 +1,5 @@
-import { useState } from "react";
-import SignUp from "../components/SignUp.jsx";
+import { useEffect, useState } from "react";
+import SignUp from "../components/SignUp";
 
 export default function Register() {
     const [form1,setForm1] = useState({email:"",password:"",verify:""})
@@ -12,6 +12,7 @@ export default function Register() {
             [event.target.name]:event.target.value
         }
     })}
+
     return (
         <div className="w-full h-screen bg-grey">
             <form className=" h-full flex flex-col justify-center items-center text-center">

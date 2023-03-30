@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import addButton from "../public/addPhoto.svg"
-import Image from "next/Image"
-import Link from "next/Link"
+import Image from "next/image"
+import Link from "next/link"
 import addButton2 from "../public/add-button.svg"
 import { AnimatePresence } from "framer-motion"
 import AddPieceModal from '../components/AddPieceModal';
@@ -11,10 +11,13 @@ import X from '../public/xmark-solid.svg'
 import Axios from "axios";
 import { useAppContext } from '../context/userContext'
 import { useRouter } from "next/router";
+import { useEffect } from 'react'
 export default function create(params) {
     const router = useRouter();
     const { user } = useAppContext();
-    
+    const[rendered,setRendered] = useState(false)
+    const {isLoading} = useAppContext();
+
     const [modal, setModal] = useState(false)
     function handleClick(){
         setModal(() => !modal)
@@ -103,7 +106,7 @@ export default function create(params) {
     })
 
     const addPostButton = (req,res) => {
-        Axios.post("http://localhost:8000/users/create", post)
+        Axios.post(`${process.env.NEXT_PUBLIC_URL}/users/create`, post)
         .then(function (response) {
             router.push('/users/me');
         })
@@ -111,8 +114,23 @@ export default function create(params) {
             console.log(error);
         });
     }
+
+    useEffect(() => {
+        if(isLoading)
+            return
+        else if(!user._id&&!isLoading){
+          router.push('/');
+        }
+        else{
+          setRendered(true)
+        }
+      }, [user._id,isLoading]);
+
+
     
     return(
+        <>
+        {rendered&&(
         <div className="w-full h-screen">
             <Navbar/>
             <div className="w-full flex flex-col justify-center items-center mt-10 text-white">
@@ -178,6 +196,8 @@ export default function create(params) {
                 </div>
             </div>
         </div>
+        )}
+    </>
     )
 }
 

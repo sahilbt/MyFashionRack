@@ -1,8 +1,8 @@
-import Image from "next/Image"
+import Image from "next/image"
 import Modal from "./Modal.jsx"
 import { useEffect, useState } from "react"
 import { AnimatePresence } from "framer-motion"
-import Link from 'next/Link'
+import Link from 'next/link'
 import Like from "../public/heart-regular.svg"
 import Liked from "../public/heart-solid.svg"
 import { useAppContext } from "../context/userContext";
@@ -31,7 +31,7 @@ export default function Post({props, page}){
 
     async function handleLike(){
         try {
-            const response = await Axios.patch("http://localhost:8000/users/like", {
+            const response = await Axios.patch(`${process.env.NEXT_PUBLIC_URL}/users/like`, {
                 postID: props._id, 
                 userID: user._id
             });

@@ -1,8 +1,6 @@
 import { motion } from "framer-motion"
 import Backdrop from "./Backdrop"
-import Image from "next/Image"
-import Link from "next/Link"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 
 export default function AddPieceModal({setPost, handleClick}) {
