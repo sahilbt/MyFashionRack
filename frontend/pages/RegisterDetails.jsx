@@ -1,5 +1,5 @@
 import RegisterInformation from "../components/RegisterInformation.jsx"
-import {useMultistepForm}  from "../hooks/RegisterHook.jsx";
+import useMultistepForm  from "../hooks/RegisterHook.jsx";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion"
 import { LocalizationProvider } from '@mui/x-date-pickers';
