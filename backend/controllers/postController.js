@@ -130,17 +130,13 @@ const likePicture = async(req,res) => {
 
 const getRecommendedUsers = async(req,res) => {
     try{
-        const { userID } = req.body;
-        const user = User.findById(userID);
+        const { userID } = req.query;
+        const user = await User.findById(userID).lean();
         if(user.following){
-            const followedUsers = user.following;
-            const followedUserIds = Array.from(followedUsers.keys());
-            const recommended = await User.find({userID:{$nin: followedUserIds}}).limit(5);
+            const followingUserIds = Object.keys(user.following);
+            const recommended = await User.find({_id:{$nin: followingUserIds}}).limit(5);
             res.status(200).json(recommended);
-        }else{
-            const recommended = await User.find().limit(5);
-            res.status(200).json(recommended);
-        }   
+        }
     }
     catch(error){
         res.status(500).json({error: "Could not retrieve users"})

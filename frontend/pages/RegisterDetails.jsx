@@ -142,7 +142,9 @@ export default function RegisterDetails() {
                 '& .MuiInputBase-input': {
                   color: '#ffffff', 
                 },
-  
+                '& .MuiInputBase-input::placeholder': {
+                  color: '#cccccc',
+                },
               },
             },
           },
