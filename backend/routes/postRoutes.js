@@ -19,7 +19,8 @@ const {
     isFollowing,
     likedPosts,
     searchUser,
-    deletePost
+    deletePost,
+    delAccount
 } = require("../controllers/postController");
 
 router.post('/create', createPost);
@@ -40,5 +41,6 @@ router.get('/checkFollowing', isFollowing);
 router.get('/getLikedPosts', likedPosts);
 router.get('/search', searchUser);
 router.delete('/deletePost', deletePost);
+router.delete('/deleteAccount', delAccount);
 
 module.exports = router;
