@@ -51,6 +51,7 @@ const getUserFeed = async(req,res) => {
         res.status(200).json({ allPosts: posts, userInfo: currentUser });
     } 
     catch(error){
+        console.log(error)
         res.status(404).json({ error: "Could not retrieve the user feed" });
     }
 }
@@ -337,7 +338,6 @@ const deletePost = async(req,res) => {
     try {
       await User.deleteOne({ _id: userID });
       console.log(`Deleted account for user ${userID}`);
-      res.status(200).json({ success: "Account deleted" });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Could not delete account" });
