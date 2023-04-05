@@ -20,7 +20,7 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: 'https://myfashionrack-7fvzltmfqq-uw.a.run.app/authentication/google/callback',
+      callbackURL: 'http://localhost:8000/authentication/google/callback',
       userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
     },
     function (accessToken, refreshToken, profile, done) {

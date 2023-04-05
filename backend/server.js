@@ -17,7 +17,7 @@ app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb',extended: false}));
 
 app.use(cors({
-  origin: 'https://myfashionrack.vercel.app',
+  origin: 'http://localhost:3000',
   credentials: true,
   methods: "GET, POST, PATCH, DELETE, PUT",
   allowedHeaders: "Content-Type, Authorization",
